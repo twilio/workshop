@@ -70,3 +70,26 @@ the output matches below
 
 .. _zipfile: https://github.com/twilio/calworkshop/zipball/master
 .. _twilio-python: https://github.com/twilio/twilio-python
+
+Create a Twilio Account
+-----------------------
+
+First, `sign up`_ for a free Twilio account. You won't need a credit card, but
+you will need a phone number to prove you aren't a robot. Once you've signed
+up, you'll have your own Twilio phone number. We'll use this number for the
+rest of the workshop.
+
+.. _sign up: https://www.twilio.com/try-twilio
+
+After you've created your account and verified your phone number, you should
+end up at a screen that looks like this.
+
+.. image:: _static/testdrive.png
+
+This is your first chance to test out what Twilio can do. Send yourself a text
+message and receive a call. Congratulations, you've used Twilio for the first
+time!
+
+However, how would you do this from your own code? I'm glad you asked.
+
+
