@@ -3,8 +3,48 @@
 Initial Setup
 =============
 
-Before we can build a Twilio application, there are some steps you'll need to
-complete. This setup shouldn't take more than five minutes.
+Before we start the workshop, we're going to need to make sure we have a few
+things. This guide assumes you have nothing currently set up on your computer.
+Feel free to skip any sections you've already completed.
+
+This guide will also setup your computer to build web applications using
+Google App Engine. If you're planning on using a different development stack
+during the workshop, please make sure it meets the `deployment requirements`_.
+We want to make sure everyone can easily and quickly develop on Twilio during
+the day.
+
+
+Create a Twilio Account
+-----------------------
+
+First, `sign up`_ for a free Twilio account. You won't need a credit card, but
+you will need a phone number to prove you aren't a robot. Once you've signed
+up, you'll have your own Twilio phone number. We'll use this number for the
+rest of the workshop.
+
+**Make sure to use the promo code you were provided for the workshop.**
+
+.. _sign up: https://www.twilio.com/try-twilio
+
+After you've created your account and verified your phone number, you should
+end up at a screen that looks like this.
+
+.. image:: _static/testdrive.png
+
+This is your first chance to test out what Twilio can do. Send yourself a text
+message and receive a call. Congratulations, you've used Twilio for the first
+time!
+
+Download Workshop Materials
+---------------------------
+
+Download and unzip the `workshop materials
+<https://github.com/twilio/workshop/zipball/master>`_. You can also clone this
+repository if you have git installed.
+
+.. code-block:: bash
+
+   $ git clone https://github.com/twilio/workshop.git
 
 Install a Text Editor
 ---------------------
@@ -22,15 +62,14 @@ code. **If you already have a text-editor or IDE of choice, skip this section**.
 Install Python
 --------------
 
-Open up a terminal or command prompt window and type the following
+Open up Terminal or command prompt window and type the following command. If
+you aren't sure how launch your command prompt, ask a TA or a neighbor help.
 
 .. code-block:: bash
 
    $ python --version
 
-If the output contains either Python 2.6.x or Python 2.7.x, your Python
-installation is ready to go. Some of you may have Python 3.x installed. Sadly,
-the twilio-python_ helper library only works with Python 2.6 or Python 2.7.
+If the output contains Python 2.7.x, your Python installation is ready to go.
 
 Find and download the installation for your operating system.
 
@@ -49,47 +88,38 @@ verify the output is now the same
    $ python --version
    Python 2.7.3
 
-Download Workshop Materials
----------------------------
+Install the App Engine SDK
+--------------------------
 
-Download the workshop materials as a zipfile_. You can also clone this
-repository if you have git installed.
+We'll be deploying our Twilio applications to Google App Engine during the
+workshop. `Google App Engine` provides an easy and free way to host your code.
+Download the SDK for your operating system below. After downloading the
+installer, double click it and follow the on screen instructions.
 
-.. code-block:: bash
+- `App Engine SDK Windows Installer <http://googleappengine.googlecode.com/files/GoogleAppEngine-1.7.2.msi>`_
+- `App Engine SDK OS X Installer <http://googleappengine.googlecode.com/files/GoogleAppEngineLauncher-1.7.2.dmg>`_
+- `App Engine SDK Linux/Other Platforms <http://googleappengine.googlecode.com/files/google_appengine_1.7.2.zip>`_
 
-   $ git clone https://github.com/twilio/calworkshop.git
+Aside from the App Engine SDK, you'll also need to sign up for an App Engine
+account. If you already have a Google account, you're ready to go. If not, sign
+up `here <http://appengine.google.com>`_.
 
-To verify that everything is working correctly, run ``check.py`` and make sure
-the output matches below
+On your `App Engine dashboard  <http://appengine.google.com>`_, click "Create
+Application"
 
-.. code-block:: bash
+.. image:: _static/appenginedashboard.png
 
-   $ cd calworkshop
-   $ python check.py
-   :)
+You'll need to pick a name and title for your application. I'd suggest a name
+of the form ``{lastname}-twilio-workshop``.
 
-.. _zipfile: https://github.com/twilio/calworkshop/zipball/master
-.. _twilio-python: https://github.com/twilio/twilio-python
+.. image:: _static/createapp.png
 
-Create a Twilio Account
------------------------
+Accept the terms and conditions and click "Create Application"
 
-First, `sign up`_ for a free Twilio account. You won't need a credit card, but
-you will need a phone number to prove you aren't a robot. Once you've signed
-up, you'll have your own Twilio phone number. We'll use this number for the
-rest of the workshop.
+Run the Web Application
+~~~~~~~~~~~~~~~~~~~~~~~
 
-.. _sign up: https://www.twilio.com/try-twilio
+To run your application, open the Google App Engine launcher.
 
-After you've created your account and verified your phone number, you should
-end up at a screen that looks like this.
-
-.. image:: _static/testdrive.png
-
-This is your first chance to test out what Twilio can do. Send yourself a text
-message and receive a call. Congratulations, you've used Twilio for the first
-time!
-
-However, how would you do this from your own code? I'm glad you asked.
-
-
+Deploy your Application
+~~~~~~~~~~~~~~~~~~~~~~~
