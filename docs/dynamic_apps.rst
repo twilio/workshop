@@ -3,9 +3,9 @@
 Building Dynamic Applications
 =============================
 
-So far we've built some awesome Twilio applications, but we've been limited to
-static TwiML. The true power of Twilio is unlocked with the full power of a web
-application.
+We've built awesome Twilio applications in the last two sections, but we've
+been limited to static TwiML. The true power of Twilio can only be unlocked by
+using a web application.
 
 This section assumes you've completed :ref:`setup` and have the Google App Engine
 SDK running locally on your computer.
@@ -13,49 +13,59 @@ SDK running locally on your computer.
 Your first web application
 --------------------------
 
-The first part of the guide just showed you how to run a sample application.
-You should have made it far enough to open a webpage in your browser that shows
-'Hello World'. We didn't actually explain how that example work, so let's do
-that now.
+The first part of the guide walked you through running a sample application.
+Before continuing, make sure that example is running and you have "Hello World"
+displayed in your browser. If you can't remember how to run the sample app,
+refer back to :ref:`setup`
+
+
+Before we can write our web application, we need to understand the Hello World
+example. Let's go through the example line-by-line and how it works.
 
 .. literalinclude:: ../main.py
    :language: python
    :lines: 1 
 
 
-We need to use the `webapp2` module for creating our web application, so we
-import it into our own main module.
+This line is first part of our application. We use the `webapp2
+<http://webapp-improved.appspot.com/>`_ module to create our web application,
+so we must import before we can use it in our code.
 
 .. literalinclude:: ../main.py
    :language: python
    :lines: 3-6
 
-This class handles requests to out application. Whenever an HTTP request is
-made to our app, a method on this class in envoked. The method will usuually
-write some contents out to the response for display in a browser.
+This class handles incoming requests to our application at a specific URL.
+Whenever a user makes a request to our application, a method on this class will
+be envoked. The method will usually write out a response for display in a
+browser. 
 
 Here, we only define a single method on the class called `get`. If you remember
-your HTTP versb from the first section, this method name corresponds to that
-method. We'll show later how to handle different types of requests.
+your HTTP verbs from the first section, this method name corresponds to a HTTP
+GET. We'll show later how to handle different HTTP verbs, such as POST or
+DELETE.
 
 .. literalinclude:: ../main.py
    :language: python
    :lines: 8-
 
-Here we actually create our web application objects. In the `webapp2`
-framework, web applications are just a mapping of URLs to request handlers. The
-above mapping says "Whenever someone vists the front page of my application,
-process that requests using this handler class".
+Here we actually create our application. In the `webapp2` framework, web
+applications are a mapping of URLs to request handler classes. The above
+mapping says "Whenever someone vists the front page of my application, process
+that requests using the HelloWorld request handler class".
 
 Your first task will be to change the message displayed in your browser. Open
 up `main.py` in your text editor and change the "Hello World" message on line 6
 to "Hello TwilioCon". Refresh the page to see your new message.
 
+Congratulations, you've just created your first web application!
+
 Responding with TwiML
 ---------------------
 
-A simple message is great, but how do we respond with TwiML instead of plain text?
-First, let's change the message we responsd with to valid TwiML.
+A simple message is great, but we want to use our applicatin to serve TwiML?
+How do we respond with TwiML instead of plain text?  First, let's change the
+message we responsd with to valid TwiML.
 
 .. code-block:: python
    :emphasize-lines: 6
@@ -72,10 +82,11 @@ First, let's change the message we responsd with to valid TwiML.
        ('/', HelloWorld),
    ], debug=True)
 
-If you refresh your page, nothing seems to have changed. This is strange. To
-see our changes, we'll need tell the broswer that the content we are returning
-is XML, not HTML.
-
+When someone requests the frontpage of our application, they will now get TwiML
+instead of HTML. However, if you refresh your page, nothing seems to have
+changed. The problem is that while we're sending back TwiML, the browser still
+thinks we're sending it HTML. To fix this problem, we'll include additional
+metadata to tell the browser we're sending valid TwiML.
 
 .. code-block:: python
    :emphasize-lines: 6
@@ -91,6 +102,9 @@ is XML, not HTML.
    app = webapp2.WSGIApplication([
        ('/', HelloWorld),
    ], debug=True)
+
+When you refresh the page, you should now see the entire TwiML response (and
+maybe it's even highlighted and formatted).
 
 
 Using the Twilio Helper Library
@@ -121,13 +135,39 @@ messing up the syntax.
    ], debug=True)
 
 
+When you refresh your page, nothing should look different. The helper library
+code we just wrote is equivalent to the static TwiML we had before. Let's
+explain what the added code is actually doing.
+
+.. code-block:: python
+
+   response = twiml.Response()
+
+Here we create a new Response object. We'll add additional TwiML verbs using
+methods on this object. We also use this object to output our TwiML into a
+string.
+
+.. code-block:: python
+
+   respone.say("Hello TwilioCon")
+
+This methods adds a Say verb to the response. There are similar methods on the
+resonse object for Play, Gather, Record, and Dial. We've already covered these
+verbs in the previous sections.
+
+.. code-block:: python
+
+   self.response.write(str(response))
+
+Here we turn our response object into a string using Python's built in string
+function. We then write this string to the response object.
+
 Personalized Greetings
 ----------------------
 
-So far, this all seems like a big waste of time. We're just returning static
-TwiML, and we did that the last two sessions. Now we're about to show you why
-building a dyanmic application is so much better.
-
+So far, all our responses look the same. We're just returning static TwiML, and
+we did that the last two sessions. Now we're about to show you why building a
+dyanmic application is so powerful. First, a simple example.
 
 .. code-block:: python
    :emphasize-lines: 10
@@ -150,13 +190,36 @@ building a dyanmic application is so much better.
 
 
 Now visit your page. You'll see the message "Hello " without a name. To add a
-name to your message, add a parameter to your URL. Introduce query string
-arguments. Talk about all the data that Twilio sends your way.
+name to your message, add a parameter to your URL. 
 
 .. code-block:: bash
 
-    http://localhost:8080/?FromNumebr=+5005550000
+    http://localhost:8080/?From=+5005550000
 
+Whenever an HTTP request is sent to your application, it includes data in query
+string and body of the request. The line we added
+
+.. code-block:: python
+
+   self.request.params('FromNumber')
+
+Incoming Twilio Data
+~~~~~~~~~~~~~~~~~~~~
+
+Adding this parameter to your URL mimics the request that Twilio will send to
+your server. All TwiML requests made by Twilio include additional information
+about the caller. Here is short list of some of the data that Twilio will send your way.
+
+Introduce query string and form data. Talk about parameters
+
+=========== ===========
+Parameter   Description
+=========== ===========
+From        The phone number or client identifier of the party that initiated the call. Phone numbers are formatted with a '+' and country code, e.g. +1617555121
+To          The phone number or client identifier of the called party. Phone numbers are formatted with a '+' and country code, e.g. +16175551212
+CallStatus  A descriptive status for the call. The value is one of queued, ringing, in-progress, completed, busy, failed or no-answer
+Body        The text body of the SMS message. Up to 160 characters long.
+=========== ===========
 
 Deploy your Twilio application
 ------------------------------
