@@ -1,6 +1,6 @@
 .. _custom_twiml:
 
-Custome TwiML
+Custom TwiML
 =============
 
 Using Twimlbin
