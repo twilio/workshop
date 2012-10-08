@@ -13,7 +13,6 @@ during the workshop, please make sure it meets the `deployment requirements`_.
 We want to make sure everyone can easily and quickly develop on Twilio during
 the day.
 
-
 Create a Twilio Account
 -----------------------
 
@@ -55,9 +54,11 @@ code. **If you already have a text-editor or IDE of choice, skip this section**.
 - Windows - Download and install `Notepad++`_
 - OS X - Download and install `Text Wrangler`_
 - Linux - Install gedit via your package manager
+- Any Platform - Download and install `Sublime Text`_ functional demo
 
 .. _Text Wrangler: http://www.barebones.com/products/textwrangler/
 .. _Notepad++: http://notepad-plus-plus.org/
+.. _Sublime Text: http://www.sublimetext.com/
 
 Install Python
 --------------
@@ -116,10 +117,34 @@ of the form ``{lastname}-twilio-workshop``.
 
 Accept the terms and conditions and click "Create Application"
 
+Basic Application Setup
+~~~~~~~~~~~~~~~~~~~~~~~
+
+The workshop directory you downloaded earlier contains a basic web application 
+that we'll be extending during the workshop. We'll use this location to perform local testing and the code we edit here we'll later deploy to `Google App Engine`. To do this We need to tell the `Google App Engine Launcher` where to find our files.
+
+Open the `Google App Engine Launcher` and from the file menu select `Add 
+Existing Application…` In the next dialog click the `Browse` button and 
+locate the workshop folder. 
+
+Click `Add` to finish setting up the application.
+
 Run the Web Application
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-To run your application, open the Google App Engine launcher.
+To run your application, open the `Google App Engine Launcher`. Select your 
+application from the list and click the `Browse` button. Your app will launch 
+in a browser window.
+
+In your text editor let's open up the file ``main.py`` at the root level of the workshop directory. Change the work "World" to your name and save the file. Return to the web browser and refresh the window to see your change.
 
 Deploy your Application
 ~~~~~~~~~~~~~~~~~~~~~~~
+
+App Engine sites require a configuration file to run. Inside your workshop 
+directory there is a file named ``app.yaml``. Inside this file replace the 
+``helloworld`` portion of ``application: helloworld`` with the application 
+name you registered.
+
+Open a browser window and go to ``http://{your-application-name}.appspot.com`` 
+to view your application in action.
