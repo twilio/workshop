@@ -141,7 +141,7 @@ In your text editor let's open up the file ``main.py`` at the root level of the 
 Debugging your Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Quite often while developing applications you will encounter errors in your code. The `Google App Engine Launcher` helps you deal with these errors by exposing helpful log information when running hte local development environment.
+Quite often while developing applications you will encounter errors in your code. The `Google App Engine Launcher` helps you deal with these errors by exposing helpful log information when running the local development environment.
 
 Open the `Google App Engine Launcher`. Select your application from the list and click the `Logs` button. This will launch a console that outputs activity from your local development environment.
 
