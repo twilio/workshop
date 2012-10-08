@@ -138,13 +138,27 @@ in a browser window.
 
 In your text editor let's open up the file ``main.py`` at the root level of the workshop directory. Change the work "World" to your name and save the file. Return to the web browser and refresh the window to see your change.
 
+Debugging your Application
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Quite often while developing applications you will encounter errors in your code. The `Google App Engine Launcher` helps you deal with these errors by exposing helpful log information when running hte local development environment.
+
+Open the `Google App Engine Launcher`. Select your application from the list and click the `Logs` button. This will launch a console that outputs activity from your local development environment.
+
+Your application's access and error logging information will show up in this window as you reload the web browser to see your changes.
+
 Deploy your Application
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 App Engine sites require a configuration file to run. Inside your workshop 
-directory there is a file named ``app.yaml``. Inside this file replace the 
-``helloworld`` portion of ``application: helloworld`` with the application 
-name you registered.
+directory there is a file named ``app.yaml``. There are a few configuration 
+directives in this file but at this time we only need to be concerned with the 
+Application Name. Replace the ``helloworld`` portion of ``application: 
+helloworld`` with the application name you registered and save the file.
 
-Open a browser window and go to ``http://{your-application-name}.appspot.com`` 
-to view your application in action.
+Open the `Google App Engine Launcher`, highlight your application if it is not already highlighted and then click the `Deploy` button. The Launcher app will upload your code and deploy it.
+
+Once you see ``Completed update of app: {your-application-name}, version: 1`` 
+your application is ready to view. Open a browser window and go to 
+``http://{your-application-name}.appspot.com`` to view your application in 
+action.
