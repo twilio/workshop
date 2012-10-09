@@ -7,11 +7,10 @@ Before we start the workshop we're going to need to make sure we have a few
 things. This guide assumes you have nothing currently set up on your computer.
 Feel free to skip any sections you've already completed.
 
-This guide will also setup your computer to build web applications using
-Google App Engine. If you're planning on using a different development stack
-during the workshop please make sure it meets the `deployment requirements`_.
-We want to make sure everyone can easily and quickly develop on Twilio during
-the day.
+This guide will also setup your computer to build web applications using Google
+App Engine. If you're planning on using a different development stack during
+the workshop please make sure you can easily deploy new code to it during the
+day.
 
 Create a Twilio Account
 -----------------------
@@ -70,7 +69,8 @@ you aren't sure how launch your command prompt, ask a TA or a neighbor for help.
 
    $ python --version
 
-If the output contains ``Python 2.7.x``, your Python installation is ready to go.
+If the output contains ``Python 2.7.x``, your Python installation is ready to
+go.
 
 Find and download the installation for your operating system.
 
@@ -79,7 +79,8 @@ Find and download the installation for your operating system.
 - `Python 2.7.3 OS X Installer <http://www.python.org/ftp/python/2.7.3/python-2.7.3-macosx10.6.dmg>`_
 - `Python 2.7.3 compressed source tarball <http://www.python.org/ftp/python/2.7.3/Python-2.7.3.tgz>`_
 
-More downloads are available on the `Python downloads <http://www.python.org/download/>`_ page.
+More downloads are available on the `Python downloads
+<http://www.python.org/download/>`_ page.
 
 Once you are finished, opening up Terminal (OS X) or Powershell (Windows) and
 verify the output is now the same
@@ -110,8 +111,9 @@ click "Create Application"
 
 .. image:: _static/appenginedashboard.png
 
-You'll need to pick a name and title for your application. Names in `Google App 
-Engine` need to be unique so I'd suggest a workshop specific name like ``{lastname}-twilio-workshop``.
+You'll need to pick a name and title for your application. Names in `Google App
+Engine` need to be unique so I'd suggest a workshop specific name like
+``{lastname}-twilio-workshop``.
 
 .. image:: _static/createapp.png
 
@@ -120,8 +122,11 @@ Accept the terms and conditions and click "Create Application"
 Basic Application Setup
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-The workshop directory you downloaded earlier contains a basic web application 
-that we'll be extending during the workshop. We'll use this location to perform local testing and the code we edit here we'll later deploy to `Google App Engine`. To do this We need to tell the `Google App Engine Launcher` where to find our files.
+The workshop directory you downloaded earlier contains a basic web application
+that we'll be extending during the workshop. We'll use this location to perform
+local testing and the code we edit here we'll later deploy to `Google App
+Engine`. To do this We need to tell the `Google App Engine Launcher` where to
+find our files.
 
 Open the `Google App Engine Launcher` and from the file menu select `Add 
 Existing Application…` In the next dialog click the `Browse` button and 
@@ -132,33 +137,54 @@ Click `Add` to finish setting up the application.
 Run the Web Application
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-To run your application, open the `Google App Engine Launcher`. Select your 
-application from the list and click the `Browse` button. Your app will launch 
-in a browser window.
+To run your application, open the `Google App Engine Launcher`. Select your
+application from the list and click the `Run` button. Your app is now running
+and ready to use.
 
-In your text editor let's open up the file ``main.py`` at the root level of the workshop directory. Change the word "World" on line 6 to your name and save the file. Return to the web browser and refresh the window to see your change.
+.. image:: _static/startapp.png
+
+To use your application, click the `Browse` button. Your app will launch in a
+browser window.
+
+.. image:: _static/browseapp.png
+
+In your text editor let's open up the file ``main.py`` at the root level of the
+workshop directory. Change the word "World" on line 6 to your name and save the
+file. Return to the web browser and refresh the window to see your change.
 
 Debugging your Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Quite often while developing applications you will encounter errors in your code. The `Google App Engine Launcher` helps you deal with these errors by exposing helpful log information when running the local development environment.
+Quite often while developing applications you will encounter errors in your
+code. The `Google App Engine Launcher` helps you deal with these errors by
+exposing helpful log information when running the local development
+environment.
 
-Open the `Google App Engine Launcher`. Select your application from the list and click the `Logs` button. This will launch a console that outputs activity from your local development environment.
+Open the `Google App Engine Launcher`. Select your application from the list
+and click the `Logs` button. This will launch a console that outputs activity
+from your local development environment.
 
-Your application's access and error logging information will show up in this window as you access your application.
+.. image:: _static/logsapp.png
+
+Your application's access and error logging information will show up in this
+window as you access your application.
 
 Deploy your Application
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-App Engine sites require a configuration file to run. Inside your workshop 
-directory there is a file named ``app.yaml``. There are a few configuration 
-directives in this file but at this time we only need to be concerned with the 
-Application Name. Replace the ``helloworld`` portion of ``application: 
+App Engine sites require a configuration file to run. Inside your workshop
+directory there is a file named ``app.yaml``. There are a few configuration
+directives in this file but at this time we only need to be concerned with the
+Application Name. Replace the ``helloworld`` portion of ``application:
 helloworld`` with the application name you registered and save the file.
 
-Open the `Google App Engine Launcher`, highlight your application if it is not already highlighted and then click the `Deploy` button. The Launcher app will upload your code and deploy it.
+Open the `Google App Engine Launcher`, highlight your application if it is not
+already highlighted and then click the `Deploy` button. The Launcher app will
+upload your code and deploy it.
 
-Once you see ``Completed update of app: {your-application-name}, version: 1`` 
-your application is ready to view. Open a browser window and go to 
-``http://{your-application-name}.appspot.com`` to view your application in 
+.. image:: _static/deployapp.png
+
+Once you see ``Completed update of app: {your-application-name}, version: 1``
+your application is ready to view. Open a browser window and go to
+``http://{your-application-name}.appspot.com`` to view your application in
 action.
