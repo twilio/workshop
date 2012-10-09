@@ -41,7 +41,7 @@ be envoked. The method will usually write out a response for display in a
 browser. 
 
 Here, we only define a single method on the class called `get`. If you remember
-your HTTP verbs from the first section, this method name corresponds to a HTTP
+your HTTP verbs from the first section, this method name corresponds to an HTTP
 GET. We'll show later how to handle different HTTP verbs, such as POST or
 DELETE.
 
