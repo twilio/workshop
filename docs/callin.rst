@@ -25,7 +25,7 @@ We'll need two Twilio phone numbers to work with Queue - one for the DJ to
 dequeue calls from, and one for the queue that the listener will call into.
 
 First, we'll enqueue some calls via TwiML. In the example below, we enqueue
-to a queue named `my-new-twilio-queue`. Note that queues are created on
+to a queue named ``radio-callin-queue``. Note that queues are created on
 <Enqueue> if they do not already exist.
 
 .. code-block:: xml
@@ -33,49 +33,53 @@ to a queue named `my-new-twilio-queue`. Note that queues are created on
     <?xml version="1.0" encoding="UTF-8"?>
     <Response>
         <Say>You are being enqueued now.</Say>
-        <Enqueue>my-new-twilio-queue</Enqueue>
+        <Enqueue>radio-callin-queue</Enqueue>
     </Response>
 
 Bind this TwiML to your listener queue number.
 
-We can spice it up by adding some wait music, using the `waitUrl` parameter.
+We can spice it up by adding some wait music, using the ``waitUrl`` parameter.
 
 .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
     <Response>
-        <Enqueue waitUrl="my_wait_twiml.xml">my-new-twilio-queue</Enqueue>
+        <Enqueue waitUrl="/wait-loop">radio-callin-queue</Enqueue>
     </Response>
 
-The `my_wait_twiml.xml` points to some TwiML that plays music. Like any other
-TwiML, we could also <Say> stuff here as well.
+The ``/wait-loop`` endpoint goes to some TwiML that plays music. The ``waitUrl``
+TwiML document supports a `subset of TwiML verbs`_.
 
 .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
     <Response>
+        <Say>Please hold.</Say>
         <Play>http://com.twilio.sounds.music.s3.amazonaws.com/MARKOVICHAMP-Borghestral.mp3</Play>
     </Response>
 
 
 
 For the DJ dequeuing number, we use some TwiML that bridges the current call
-to the queue.
+to the queue. Note that <Dial>ing into a queue represents dequeuing a caller
+on the queue, while the only way to get onto a queue is to be <Enqueue>d.
 
 .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
     <Response>
         <Dial>
-            <Queue>my-new-twilio-queue</Queue>
+            <Queue>radio-callin-queue</Queue>
         </Dial>
     </Response>
 
 Now, the DJ can call the DJ dequeuing number, and will automatically be routed
 to the first member on the queue.
 
-Dynamic Queue Information (REST API)
-------------------------------------
+.. _subset of TwiML verbs: http://www.twilio.com/docs/api/twiml/enqueue#attributes-waitUrl
+
+Dynamic Queue Information
+-------------------------
 Twilio's Queue exposes dynamic inforrmation about the queue state that
 you can use to build rich applications. In this section, we'll move past
 static TwiML applications and start using the data Queue gives you to
@@ -87,11 +91,9 @@ even the average wait time for their queue? Twilio exposes `all these
 parameters`_ when invoking your application's waiting logic via HTTP, so
 you can pass it along in your dynamic TwiML!
 
-.. _all these parameters: http://www.twilio.com/docs/api/twiml/enqueue#attributes-waiturl-parameters
-
 .. code-block:: python
 
-    class WaitingLoop(webapp2.RequestHandler):
+    class WaitLoop(webapp2.RequestHandler):
         def post(self):
             response = twiml.Response()
             response.say("You are number %s in line." % self.request.get('QueuePosition'))
@@ -101,14 +103,14 @@ you can pass it along in your dynamic TwiML!
             self.response.out.write(str(response))
 
 You can also take advantage of similar information when a call is dequeued,
-through the `action` parameter when enqueuing.
+through the ``action`` parameter when enqueuing.
 
 .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
     <Response>
         <Say>You are being enqueued now.</Say>
-        <Enqueue action="/dequeue-logic">my-new-twilio-queue</Enqueue>
+        <Enqueue action="/dequeue-logic">radio-callin-queue</Enqueue>
     </Response>
 
 .. code-block:: python
@@ -120,26 +122,90 @@ through the `action` parameter when enqueuing.
                 # save to db, ping analytics, whatever you want!
 
 
+.. _all these parameters: http://www.twilio.com/docs/api/twiml/enqueue#attributes-waiturl-parameters
 
-Play a Specific Message for the Nth Caller
-------------------------------------------
+Queue Times Are Too Long! - A Call to Action
+--------------------------------------------
+We can use the ``action`` parameter to collect all sorts of useful metrics
+on the backend, or even issue hasty apologies for long queue wait times.
 
-* HEY! I'm going to figure out another app for this, since we don't want persistence.
-* and we want to showcase queue, and Nth caller is something we can do without queue, duh.
+Let's try to implement some small features on our dequeue action call to
+let our users know we care. Using the `action URL parameters`_, we can
+send an SMS apology if the wait time exceeded 30 seconds, or if their
+call was rejected from a full queue.
 
-* Dequeue via REST API: http://www.twilio.com/docs/api/rest/member#instance-post
+You may find the `helper library documentation`_ for your `language of choice`_
+helpful in sending SMS.
+
+Here is some stub code that may help, if you are taking the Python / Google
+App Engine route...
+
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <Response>
+        <Say>You are being enqueued now.</Say>
+        <Enqueue action="/dequeue-logic">radio-callin-queue</Enqueue>
+    </Response>
+
+.. code-block:: python
+
+    import webapp2
+    class DequeueLogic(webapp2.RequestHandler):
+        def post(self):
+            
+            # ... FILL ME IN ...
+            # res = self.request.get('QueueResult')
+
+    app = webapp2.WSGIApplication([('/dequeue-logic', DequeueLogic)], debug=True)
+
+.. _action URL parameters: http://www.twilio.com/docs/api/twiml/enqueue#attributes-action-parameters
+.. _helper library documentation: https://twilio-python.readthedocs.org/en/latest/api/rest/resources.html#sms-messages
+.. _language of choice: http://www.twilio.com/docs/libraries
 
 
-HTTP -> TwiML
-Stub out a flask app, users can fill this in, or webapp2
+See You Next Time - Closing Out the Queue
+-----------------------------------------
+Unfortunately, all good things must come to an end. It's time for our
+radio show to close down until next time - but what about the people
+still on the waiting queue?
 
-* TwiML for enqueuing calls.
-* Using the twilio.twiml.Response class to generate TwiML
+We can use `Queue`_ and `Member`_ REST API resources to programmatically
+look at all of our account's queues and active members on those queues.
 
-* Action on dequeue (specified at enqueue time) [ this is the key for keeping track of the nth caller ]
+Let's write a quick script that will find our queue, loop through its
+members, and dequeue each of them with a thank you message. 
 
-* waitUrl parameters passed in - 
-* action parameters passed in - time call spent in queue
-* Intro to the twilio.client.queues resource
-    * List and confirm that our queue exists
-    * See the amount of calls on it.
+.. code-block:: python
+
+    from twilio.rest import TwilioRestClient
+    client = TwilioRestClient("ACCOUNT_SID", "AUTH_TOKEN")
+    my_queue_name = "radio-callin-queue"
+
+First, we need to `find our queue`_.
+
+.. code-block:: python
+
+    my_queue = None
+    for queue in client.queues.list():
+        if queue.friendly_name == my_queue_name:
+            my_queue = queue
+
+
+Then, we can iterate over its members and dequeue with some static thank
+you TwiML. Try it yourself! Hint: issuing `an HTTP POST to a Member instance`_
+will dequeue that member.
+    
+As a bonus, try allowing the callers being dequeued to record a message 
+for the DJs to listen to at the beginning of the next show.
+
+Finally, we can delete the queue using a REST API call.
+
+.. code-block:: python
+
+    my_queue.delete()
+
+.. _Queue: http://www.twilio.com/docs/api/rest/queue
+.. _Member: http://www.twilio.com/docs/api/rest/member
+.. _find our queue: https://twilio-python.readthedocs.org/en/latest/usage/queues.html
+.. _an HTTP POST to a Member instance: http://www.twilio.com/docs/api/rest/member#instance-post
