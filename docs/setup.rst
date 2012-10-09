@@ -156,9 +156,36 @@ directives in this file but at this time we only need to be concerned with the
 Application Name. Replace the ``helloworld`` portion of ``application: 
 helloworld`` with the application name you registered and save the file.
 
-Open the `Google App Engine Launcher`, highlight your application if it is not already highlighted and then click the `Deploy` button. The Launcher app will upload your code and deploy it.
+.. literalinclude:: ../app.yaml
+   :language: yaml
+   :emphasize-lines: 1
 
-Once you see ``Completed update of app: {your-application-name}, version: 1`` 
-your application is ready to view. Open a browser window and go to 
+Open the `Google App Engine Launcher`, highlight your application if it is not already highlighted and then click the `Deploy` button. The Launcher app will upload your code and deploy it. The Launcher app will also output progress information in to the Log:
+
+.. code-block:: text
+	
+	*** Running appcfg.py with the following flags:
+	    --no_cookies --email=user@email.com --passin update
+	04:42 PM Host: appengine.google.com
+	04:42 PM Application: my-application-name; version: 1
+	04:42 PM Starting update of app: my-application-name, version: 1
+	04:42 PM Getting current resource limits.
+	04:42 PM Scanning files on local disk.
+	04:42 PM Cloning 68 application files.
+	04:42 PM Uploading 4 files and blobs.
+	04:42 PM Uploaded 4 files and blobs
+	04:42 PM Compilation starting.
+	04:42 PM Compilation completed.
+	04:42 PM Starting deployment.
+	04:42 PM Checking if deployment succeeded.
+	04:42 PM Deployment successful.
+	04:42 PM Checking if updated app version is serving.
+	04:42 PM Completed update of app: my-application-name, version: 1
+	Password for user@email.com: If deploy fails you might need to 'rollback' manually.
+	The "Make Symlinks..." menu option can help with command-line work.
+	*** appcfg.py has finished with exit code 0 ***
+	
+Once you see ``*** appcfg.py has finished with exit code 0 ***`` your 
+application is ready to view. Open a browser window and go to 
 ``http://{your-application-name}.appspot.com`` to view your application in 
 action.
