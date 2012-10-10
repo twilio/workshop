@@ -12,7 +12,7 @@ A simple HTTP request might look like:
 
 .. code-block:: text
 
-	GET / HTTP/1.0
+	GET / HTTP/1.1
 	Host: www.twilio.com
 	
 And the server response would be:
@@ -22,7 +22,7 @@ And the server response would be:
 	HTTP/1.1 200 OK
 	Content Type: text/html
 	 
-	Response body appears here...
+	Response body appears here…
 
 The ``Content Type`` entry tells the browser how to interpret the response. If it had been ``image/png`` the browser would have known to expect PNG data, or in the case of ``application/json`` it would have expected a JSON formatted data response.
 
@@ -43,11 +43,6 @@ In this case an authorization response must be returned to access the resource. 
 
 	Authorization: Basic dHdpbGlvOnR3aWxpbyByb2Nrcw==
 
-HTTP Cookies
-^^^^^^^^^^^^
-
-TBD - shawn
-
 HTTP Verbs/Methods
 ^^^^^^^^^^^^^^^^^^
 
@@ -55,6 +50,13 @@ HTTP defines methods, also known as Verbs, that allow the request specify the ac
 
 **GET**
 	The request is for a representation of the requested resource that is identified by the request URI.
+	
+.. code-block:: text
+
+	GET / HTTP/1.1
+	Host: api.example.com/v1/path/to/resource
+	
+.. code-block:: text
 
 **POST**
 	The request is to submit data to be processed for the specified resource. This may create a new resource or update an existing resource.
@@ -64,6 +66,28 @@ HTTP defines methods, also known as Verbs, that allow the request specify the ac
 
 **DELETE**
 	The request is to delete the specified resource.
+
+HTTP Cookies
+^^^^^^^^^^^^
+
+An HTTP Cookie is a small piece of information that is sent in a server's response and stored by the client. When returning to the site the client will send that cookie data back to the server each time it requests a resource.
+
+Cookies have many uses but are generally used to help the server identify returning users so that the server can maintain the state of your session. For example, after logging in to a website you are given a cookie that allows the server to identify you and verify that you are logged in during your browser session.
+
+There are two types of cookies:
+
+Session Cookie
+	Session cookies are stored in memory and are discarded when you close your browser. 
+
+Persistent Cookie
+	Permanent Cookies are stored on your hard drive until they expire or until the cookie is manually deleted.
+	
+Cookies are comprised of a name, value, expiration date, path, domain, and secure flag. 
+
+- The name & value are a simple key/value pair of information. The value can be any string of text. 
+- The expiration date controls how long the cookie is valid. If an expiration date is not set then the cookie is a session cookie and will not be saved past the browser session.
+- The path and domain tells the browser when to send the cookie to the server. A cookie with a domain of ``www.example.com`` and a path of ``/resource/name`` will only be sent when the browser requests ``www.example.com/resource/name``. Cookies can be set to allow subdomain access by using the ``.example.com`` format. In this case the cookie is valid for ``www.example.com`` and ``sub.example.com``.
+- The secure flag tells the client to only send the cookie when the connection to the server is secure.
 
 WebHooks
 ^^^^^^^^
