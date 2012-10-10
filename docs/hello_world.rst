@@ -6,6 +6,70 @@ Hello World
 HTTP and Webhooks
 -----------------
 
+When a web browser requests a web page it needs to talk to a web server. Browsers talk to servers using a language known as HTTP, or Hypertext Transfer Protocol. The language is simple and easy to understand and this request/response model of communication is referred to as REST, or `REpresentational State Transfer`. 
+
+A simple HTTP request might look like:
+
+.. code-block:: text
+
+	GET / HTTP/1.0
+	Host: www.twilio.com
+	
+And the server response would be:
+
+.. code-block:: text
+
+	HTTP/1.1 200 OK
+	Content Type: text/html
+	 
+	Response body appears here...
+
+The ``Content Type`` entry tells the browser how to interpret the response. If it had been ``image/png`` the browser would have known to expect PNG data, or in the case of ``application/json`` it would have expected a JSON formatted data response.
+
+HTTP Authentication
+^^^^^^^^^^^^^^^^^^^
+
+In the case of a server that requires authentication the response would include an extra header that identifies the type of authentication required, for example:
+
+.. code-block:: text
+
+	HTTP/1.1 401 Unauthorized
+	Content Type: text/html
+	WWW-Authenticate: Basic Realm="Protected Resource"
+	
+In this case an authorization response must be returned to access the resource. The response has to signify what kind of authentication scheme it is using and provide the proper credentials. HTTP authorization response a Base64 encoded string of the user's credentials in ``username:password`` format. So a response to an authentication response would include:
+
+.. code-block:: text
+
+	Authorization: Basic dHdpbGlvOnR3aWxpbyByb2Nrcw==
+
+HTTP Cookies
+^^^^^^^^^^^^
+
+TBD - shawn
+
+HTTP Verbs/Methods
+^^^^^^^^^^^^^^^^^^
+
+HTTP defines methods, also known as Verbs, that allow the request specify the action to perform on the resource. While there are many methods defined by HTTP, we only really need 4 of them to maintain a RESTful application structure.
+
+**GET**
+	The request is for a representation of the requested resource that is identified by the request URI.
+
+**POST**
+	The request is to submit data to be processed for the specified resource. This may create a new resource or update an existing resource.
+
+**PUT**
+	The request is to upload a representation of the specified resource that should be stored at the request URI.
+
+**DELETE**
+	The request is to delete the specified resource.
+
+WebHooks
+^^^^^^^^
+
+TBD - shawn
+
 Twilio Account Portal
 ---------------------
 
