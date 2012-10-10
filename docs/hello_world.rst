@@ -13,7 +13,7 @@ A simple HTTP request might look like:
 .. code-block:: text
 
 	GET / HTTP/1.1
-	Host: www.twilio.com
+	Host: www.example.com
 	
 And the server response would be:
 
@@ -24,12 +24,29 @@ And the server response would be:
 	 
 	Response body appears here…
 
-The ``Content Type`` entry tells the browser how to interpret the response. If it had been ``image/png`` the browser would have known to expect PNG data, or in the case of ``application/json`` it would have expected a JSON formatted data response.
+The response is comprised of a header block and a content block. The ``Content Type`` header tells the browser how to interpret the response. If it had been ``image/png`` the browser would have known to expect PNG data, or in the case of ``application/json`` it would have expected a JSON formatted data response.
 
-HTTP Authentication
-^^^^^^^^^^^^^^^^^^^
+HTTP Headers
+^^^^^^^^^^^^
 
-In the case of a server that requires authentication the response would include an extra header that identifies the type of authentication required, for example:
+Clients and servers need to pass information about the requests and response and do so by setting what are called headers. These headers can describe many things, among them the request type, the response type, and the server state.
+
+While not required, it is up to the client to tell the server what kind of information it can accept.
+
+A browser request for a web page should include an ``Accept`` header that tells the server what kind of information it can understand. Browsers can understand a wide range of information so their requests often look like:
+
+.. code-block:: text
+
+	GET / HTTP/1.1
+	Host: www.example.com
+	Accept: text/html,application/xhtml+xml,application/xml
+	Accept-Language: en-US,en
+	
+This request tells the server how it can respond to the request in a way that the client will understand as well as how it can compress the response to reduce the size of the response content.
+
+It is server's responsibility to tell the client how to interpret the response. As we saw above the ``Content Type`` header tells the browser what to expect in the content block of the response.
+
+In the case of a server that requires authentication the response would also include an extra header that identifies the type of authentication required, for example:
 
 .. code-block:: text
 
@@ -43,6 +60,15 @@ In this case an authorization response must be returned to access the resource. 
 
 	Authorization: Basic dHdpbGlvOnR3aWxpbyByb2Nrcw==
 
+HTTP Headers in Action
+^^^^^^^^^^^^^^^^^^^^^^
+
+Lets try this out on `Hurl.it <http://hurl.it/?url=http://www.twilio.com>`_ to see how we can change the way a server responds.
+
+By just loading the server's response we see a content body of HTML that we can read. Now click on `add header`, enter ``Accept-Encoding`` and ``gzip,deflate`` and submit the request.
+
+The response now includes a header ``Content-Encoding: gzip`` and the content body is compressed with gzip compression and is unreadable by mortal man.
+
 HTTP Verbs/Methods
 ^^^^^^^^^^^^^^^^^^
 
@@ -50,13 +76,6 @@ HTTP defines methods, also known as Verbs, that allow the request specify the ac
 
 **GET**
 	The request is for a representation of the requested resource that is identified by the request URI.
-	
-.. code-block:: text
-
-	GET / HTTP/1.1
-	Host: api.example.com/v1/path/to/resource
-	
-.. code-block:: text
 
 **POST**
 	The request is to submit data to be processed for the specified resource. This may create a new resource or update an existing resource.
@@ -73,21 +92,6 @@ HTTP Cookies
 An HTTP Cookie is a small piece of information that is sent in a server's response and stored by the client. When returning to the site the client will send that cookie data back to the server each time it requests a resource.
 
 Cookies have many uses but are generally used to help the server identify returning users so that the server can maintain the state of your session. For example, after logging in to a website you are given a cookie that allows the server to identify you and verify that you are logged in during your browser session.
-
-There are two types of cookies:
-
-Session Cookie
-	Session cookies are stored in memory and are discarded when you close your browser. 
-
-Persistent Cookie
-	Permanent Cookies are stored on your hard drive until they expire or until the cookie is manually deleted.
-	
-Cookies are comprised of a name, value, expiration date, path, domain, and secure flag. 
-
-- The name & value are a simple key/value pair of information. The value can be any string of text. 
-- The expiration date controls how long the cookie is valid. If an expiration date is not set then the cookie is a session cookie and will not be saved past the browser session.
-- The path and domain tells the browser when to send the cookie to the server. A cookie with a domain of ``www.example.com`` and a path of ``/resource/name`` will only be sent when the browser requests ``www.example.com/resource/name``. Cookies can be set to allow subdomain access by using the ``.example.com`` format. In this case the cookie is valid for ``www.example.com`` and ``sub.example.com``.
-- The secure flag tells the client to only send the cookie when the connection to the server is secure.
 
 WebHooks
 ^^^^^^^^
