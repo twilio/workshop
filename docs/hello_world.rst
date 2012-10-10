@@ -96,7 +96,9 @@ Cookies have many uses but are generally used to help the server identify return
 WebHooks
 ^^^^^^^^
 
-TBD - shawn
+Webhooks are a pattern of enabling user-defined callbacks in web applications. A webhook is simply an HTTP callback to a specific URI that is triggered by an event.
+
+In Twilio the Request URLs you define for Voice and SMS are webhooks. When Twilio receives a call to your number it will make a request to the URL you defined to notify your application of the event and to get TwiML to use in response to the event.
 
 Twilio Account Portal
 ---------------------
