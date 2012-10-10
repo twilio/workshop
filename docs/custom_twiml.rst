@@ -1,7 +1,12 @@
 .. _custom_twiml:
 
+<<<<<<< HEAD
 Introduction to TwiML
 =======================
+=======
+Custom TwiML
+=============
+>>>>>>> 126f260751c5fdd62b8cffbf2ed13bba8696ac92
 
 We've successfully made a phone ring, but how do we actually control call flow?
 `TwiML <https://www.twilio.com/docs/api/twiml>`_ is the
