@@ -14,6 +14,7 @@ Idea Factory
 
    hello_world
    custom_twiml
+   static_apps
    dynamic_apps
    deploy
    voting
