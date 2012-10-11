@@ -63,11 +63,7 @@ Install Python
 --------------
 
 Open up Terminal or command prompt window and type the following command. If
-<<<<<<< HEAD
 you aren't sure how to launch your command prompt, ask a TA or a neighbor for help.
-=======
-you aren't sure how launch your command prompt, ask a TA or a neighbor for help.
->>>>>>> 126f260751c5fdd62b8cffbf2ed13bba8696ac92
 
 .. code-block:: bash
 
