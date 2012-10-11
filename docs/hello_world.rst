@@ -15,15 +15,15 @@ displayed.
 
 These are your account credentials. The Account SID acts as a username and the 
 Auth Token acts as a password. Twilio uses your Account Sid and Auth Token to 
-authenticate the API requests your Twilio application sends. 
+authenticate the API requests made by your application. 
 
 Analytics about your Voice and SMS application are also shown here, we'll go
 over these after we've made some calls and sent some SMS messages.
 
 At the bottom of your Account Dashboard is the API Explorer and the Debugger. 
 
-Hello World - SMS
------------------
+Hello World: Sending an SMS
+---------------------------
 
 Let's send a text message using Python and the Twilio REST API. Open the
 ``send_sms.py`` file in your text editor. First, replace the dummy account
@@ -62,8 +62,8 @@ We're now ready to send a SMS message.
 
 Your phone should be getting a message in a few seconds.
 
-Hello World - Voice
--------------------
+Hello World: Making a Phone Call
+---------------------------------
 
 It's time to make a call to your phone using the REST API. 
 Open ``make_call.py`` in your text editor and, just like the last section,
