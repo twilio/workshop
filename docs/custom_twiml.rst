@@ -1,12 +1,7 @@
 .. _custom_twiml:
 
-<<<<<<< HEAD
 Introduction to TwiML
 =======================
-=======
-Custom TwiML
-=============
->>>>>>> 126f260751c5fdd62b8cffbf2ed13bba8696ac92
 
 We've successfully made a phone ring, but how do we actually control call flow?
 `TwiML <https://www.twilio.com/docs/api/twiml>`_ is the
@@ -41,7 +36,10 @@ http://twimlets.com/message?Message[1]=Hello+World in your browser.
     <?xml version="1.0" encoding="UTF-8"?>
     <Response><Say>Hello World</Say></Response>
 
-This TwiML uses the `Say`_ verb and says "Hello World" with a text-to-speech engine. For outgoing calls, we choose the TwiML URL at the time of the call. For incoming calls, we set a TwiML URL that is fetched each time someone calls into your Twilio number.
+This TwiML uses the `Say`_ verb and says "Hello World" with a text-to-speech
+engine. For outgoing calls, we choose the TwiML URL at the time of the call.
+For incoming calls, we set a TwiML URL that is fetched each time someone calls
+into your Twilio number.
 
 Twimlbin
 ----------
@@ -69,11 +67,17 @@ Your final application should look like this.
 Configuring your phone number
 ------------------------------
 
-Once you're done building your application, we'll want to configure your Twilio phone number. By configuring our Twilio phone number, whenever an incoming call is received on this number, Twilio will fetch the TwiML that is located at that URL.
+Once you're done building your application, we'll want to configure your Twilio
+phone number. By configuring our Twilio phone number, whenever an incoming call
+is received on this number, Twilio will fetch the TwiML that is located at that
+URL.
 
 First, we'll need to copy the "Public" URL of your Twimlbin.
 
-Go to `your Twilio numbers page <https://www.twilio.com/user/account/phone-numbers/incoming>`_ and click on your Twilio phone number. Change the "Voice URL" field to your Twimlbin URL and "Save Changes"
+Go to `your Twilio numbers page
+<https://www.twilio.com/user/account/phone-numbers/incoming>`_ and click on
+your Twilio phone number. Change the "Voice URL" field to your Twimlbin URL and
+"Save Changes"
 
 Now give your Twilio number a call! You should hear a "Hello World" greeting.
 
@@ -88,18 +92,22 @@ Now your probably thinking:
 
 All this information and more can be found in your `Call Logs`_. 
 
-Let's head over to your `Call Logs`_ by clicking on the Logs tab from your Account Dashboard.
+Let's head over to your `Call Logs`_ by clicking on the Logs tab from your
+Account Dashboard.
 
-You'll notice that the call duration is listed as 1. Call durations with Twilio are rounded up to the nearest minute. 
+You'll notice that the call duration is listed as 1. Call durations with Twilio
+are rounded up to the nearest minute. 
 
-You SMS Messages logs can also be found under the subheader `SMS Messages <https://www.twilio.com/user/account/log/sms>`_
+You SMS Messages logs can also be found under the subheader `SMS Messages
+<https://www.twilio.com/user/account/log/sms>`_
 
 Have any questions about your Logs? Ask your TA!
 
 Debugger
 ---------
 
-Let's rebuild your application. This time, use the following link as your Voice Request URL.
+Let's rebuild your application. This time, use the following link as your Voice
+Request URL.
 
 .. code-block:: bash
 
@@ -107,16 +115,27 @@ Let's rebuild your application. This time, use the following link as your Voice 
 
 What did you hear this time?
 
-Now let's find out why your application error has occured. The first place we'll want to look is the `debugger <https://www.twilio.com/user/account/debugger>`_. Navigate to your account dashboard and find your debugger. *Note: Your debugger can also be found under the 'Dev Tools' tab.*
+Now let's find out why your application error has occured. The first place
+we'll want to look is the `debugger
+<https://www.twilio.com/user/account/debugger>`_. Navigate to your account
+dashboard and find your debugger. *Note: Your debugger can also be found under
+the 'Dev Tools' tab.*
 
 Click on the error to see more detail. 
 
-The Debugger lets you know where in your application, Twilio ran into an error. This page is broken down into two sections.
+The Debugger lets you know where in your application, Twilio ran into an error.
+This page is broken down into two sections.
 
-- The `Request <http://www.twilio.com/docs/api/twiml/twilio_request>`_ section provides information on the data Twilio sent to your server.
-- The `Response <http://www.twilio.com/docs/api/twiml/your_response>`_ section lets you know how your server responded to Twilio. Twilio will always expect correctly formated TwiML as a response. If your application tries to respond to Twilio with anything else, you will likely run into an error.
+- The `Request <http://www.twilio.com/docs/api/twiml/twilio_request>`_ section
+  provides information on the data Twilio sent to your server.
+- The `Response
+  <http://www.twilio.com/docs/api/twiml/your_response>`_ section lets you know
+  how your server responded to Twilio. Twilio will always expect correctly
+  formated TwiML as a response. If your application tries to respond to Twilio
+  with anything else, you will likely run into an error.
 
-Find the error within the response your application sent to Twilio. What should it look like?
+Find the error within the response your application sent to Twilio. What should
+it look like?
 
 *Hint: You may also click on the more information link at the top of the page.*
 
@@ -139,6 +158,4 @@ Additional Information
 .. _Gather: https://www.twilio.com/docs/api/twiml/gather
 .. _Call Logs: https://www.twilio.com/user/account/log/calls
 .. _Twimlbin: http://twimlbin.com
-
-
 

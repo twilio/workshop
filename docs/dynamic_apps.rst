@@ -227,6 +227,11 @@ Deploy your Twilio application
 We're now ready to hook up your brand new application to a Twilio number. Open
 the Google App Engine Launcher application, highlight your application, and hit
 the 'Deploy' button. A window will pop up and show you the status of your
-deployemnt. It should take less than a minute to deploy. Once it's deployed,
-get the url for your application and set it as the voice number for your Twilio
-phone number. Now give it a call. You should hear a custom message. Hooray.
+deployemnt. It should take less than a minute to deploy. 
+
+.. image:: _static/deployapp.png
+
+Once it's deployed, get the url for your application and set it as the voice
+number for your Twilio phone number, just like you've done in previous
+sections. Now give it a call. You should hear a custom message. Hooray.
+
