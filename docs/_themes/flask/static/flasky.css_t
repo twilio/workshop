@@ -284,15 +284,24 @@ img.screenshot {
 }
 
 table.docutils {
-    border: 1px solid #888;
+    border: 1px solid #CCC;
     -moz-box-shadow: 2px 2px 4px #eee;
     -webkit-box-shadow: 2px 2px 4px #eee;
     box-shadow: 2px 2px 4px #eee;
 }
 
 table.docutils td, table.docutils th {
-    border: 1px solid #888;
+    border: 1px solid #CCC;
     padding: 0.25em 0.7em;
+}
+
+table.docutils th {
+	background-color: #F8F8F8;
+}
+
+table.docutils td {
+	padding: 0.5em 0.7em;
+	font-size: 0.9em;
 }
 
 table.field-list, table.footnote {

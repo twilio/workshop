@@ -10,8 +10,9 @@ Call Forwarding
 ---------------
 
 The `Dial`_ verb allows you to connect calls to other people. The following
-TwiML will forward any call received on your Twilio phone number to your personal phone number. Once
-you've wired up this TwiML to your number, get a neighbor to test it out. 
+TwiML will forward any call received on your Twilio phone number to your 
+personal phone number. Once you've wired up this TwiML to your number get a 
+neighbor to test it out. 
 
 .. code-block:: xml
 
@@ -24,10 +25,10 @@ you've wired up this TwiML to your number, get a neighbor to test it out.
 Twilio Call Legs
 ~~~~~~~~~~~~~~~~~
 
-Find this call in your `Call Logs <https://www.twilio.com/user/account/log/calls>`_. You should notice two call records listed. What's are the difference between the two call records?
+Find this call in your `Call Logs <https://www.twilio.com/user/account/log/calls>`_. You should notice two call records listed. What's the difference between the two call records?
 
 - **Direction:** For applications like Call Forwarding, your call will include two call legs. The inbound call leg noted under *Incoming* is the call made into Twilio. The outbound call leg noted under *Outgoing Dial* is the call made from Twilio with the Dial verb out to another phone number. Call Forwarding applications include both an inbound leg and an outbound leg.
-- **Cost:** The cost of inbound and outbound calls are different. Inbound calls cost 1¢ per minute while outbound calls start at 2¢ per minute. The cost of outbound calls may also differ depending on the end destination of your outbound call. `Voice Pricing`_ Page
+- **Cost:** The cost of inbound and outbound calls are different. Inbound calls cost 1¢ per minute while outbound calls start at 2¢ per minute. The cost of outbound calls may also differ depending on the end destination of your outbound call. See the `Voice Pricing`_ Page for more pricing information.
 - **To:** While the "From" phone numbers are the same, the "To" phone number are different based on the phone number receiving your call.
 
 Introducing Attributes
@@ -35,7 +36,7 @@ Introducing Attributes
 
 Each TwiML verb and noun has a set of attributes that allow you to modify its behavior. Let's change our robot voice to a female voice by adding the `voice attribute <http://www.twilio.com/docs/api/twiml/say#attributes-voice>`_ and setting it to "woman". Additionally, let's record our call by including the `record attribute <http://www.twilio.com/docs/api/twiml/dial#attributes-record>`_ and mark that as "true". 
 
-For our last call, the caller ID displayed was the phone number where the call originated from. Let's change your caller ID using the `callerId attribute <http://www.twilio.com/docs/api/twiml/dial#attributes-caller-id>`_ so that it displays your Twilio phone number instead. Early, we verified your personal phone number, so you may also use that as your caller ID. To use other phone numbers as your caller ID, you can also verifying those numbers in your Twilio Account.
+For our last call, the caller ID displayed was the phone number where the call originated from. Let's change your caller ID using the `callerId attribute <http://www.twilio.com/docs/api/twiml/dial#attributes-caller-id>`_ so that it displays your Twilio phone number instead. Earlier we verified your personal phone number so you may also use that as your caller ID. To use other phone numbers as your caller ID you can verifying those numbers in your Twilio Account.
 
 Test out the following code and see how the attributes have changed your application.
 
@@ -66,8 +67,8 @@ into your bin and save. You can now leave messages on your number.
       <Record/>
     </Response>
 
-After you're done recording your message, hang up. Twilio begins processing the
-recording right after your done. Head to your `recording log
+After you're done recording your message hang up. Twilio begins processing the
+recording right after your done. Head to your `recordings log
 <https://www.twilio.com/user/account/log/recordings>`_ to listen to your
 message.
 
@@ -93,7 +94,7 @@ Head over to your `transcription log
 Private Conference Line
 -----------------------
 
-Many times during project assignments, you just need to get everyone on the
+Many times during project assignments you just need to get everyone on the
 same page. You can now have your own private conference line using the
 `Conference`_ noun and `Dial`_ verb. Put the following TwiML into your bin and save.
 Give your Twilio number to a few people around you. Have everyone call in and
@@ -112,7 +113,7 @@ start up a conversation.
 One Song Music Hotline
 -----------------------
 
-To play an audio file back to the caller, use the `Play`_ verb. We can build a simple music hotline that just plays just one song to the caller.
+To play an audio file back to the caller use the `Play`_ verb. We can build a simple music hotline that just plays just one song to the caller.
 
 .. code-block:: xml
 
@@ -126,7 +127,7 @@ To play an audio file back to the caller, use the `Play`_ verb. We can build a s
 SMS Follow-Up
 --------------
 
-Using the `Sms`_ verb, you can send SMS messages right after your call has ended. 
+Using the `Sms`_ verb you can send SMS messages right after your call has ended. 
 
 .. code-block:: xml
 
@@ -141,13 +142,13 @@ That was easy!
 Swiss-Army Phone Number
 -----------------------
 
-Equipped with the knowledge of TwiML, you can now bend your Twilio phone number
+Equipped with the knowledge of TwiML you can now bend your Twilio phone number
 to your will. You've forwarded a call, recorded a message, and started a
 private conference line. Your phone is now your's to control.
 
-But with this many applications, we definitely want more than one Twilio phone number. Let's purchase another number.
+But with this many applications we definitely want more than one Twilio phone number. Let's purchase another number.
 
-To purchase a Twilio phone number, you will want to navigate to the `Numbers <https://www.twilio.com/user/account/phone-numbers/incoming>`_ tab. Click on the blue button titled `Buy a number <https://www.twilio.com/user/account/phone-numbers/available/local>`_.
+To purchase a Twilio phone number you will want to navigate to the `Numbers <https://www.twilio.com/user/account/phone-numbers/incoming>`_ tab. Click on the blue button titled `Buy a number <https://www.twilio.com/user/account/phone-numbers/available/local>`_.
 
 .. image:: _static/buy_number.png
 

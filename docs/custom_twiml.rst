@@ -123,7 +123,7 @@ the 'Dev Tools' tab.*
 
 Click on the error to see more detail. 
 
-The Debugger lets you know where in your application, Twilio ran into an error.
+The Debugger lets you know where in your application Twilio ran into an error.
 This page is broken down into two sections.
 
 - The `Request <http://www.twilio.com/docs/api/twiml/twilio_request>`_ section
