@@ -13,15 +13,14 @@ When you log into your Twilio Account, the first page you will come across is
 your Account Dashboard. This is where your Account Sid and Auth Token are
 displayed.
 
-Twilio uses your Account Sid and Auth Toekn to authenticate the API requests
-your Twilio application sends, these are your account credentials. The Account
-SID acts as a username and the Auth Token acts as a password.
+These are your account credentials. The Account SID acts as a username and the 
+Auth Token acts as a password. Twilio uses your Account Sid and Auth Token to 
+authenticate the API requests your Twilio application sends. 
 
 Analytics about your Voice and SMS application are also shown here, we'll go
 over these after we've made some calls and sent some SMS messages.
 
 At the bottom of your Account Dashboard is the API Explorer and the Debugger. 
-
 
 Hello World - SMS
 -----------------
