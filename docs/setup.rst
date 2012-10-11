@@ -72,7 +72,7 @@ you aren't sure how to launch your command prompt, ask a TA or a neighbor for he
 If the output contains ``Python 2.7.x``, your Python installation is ready to
 go.
 
-Find and download the installation for your operating system.
+Download the installer for your operating system:
 
 - `Python 2.7.3 Windows Installer <http://www.python.org/ftp/python/2.7.3/python-2.7.3.msi>`_
 - `Python 2.7.3 Windows X86-64 Installer <http://www.python.org/ftp/python/2.7.3/python-2.7.3.amd64.msi>`_
@@ -95,8 +95,7 @@ Install the App Engine SDK
 
 We'll be deploying our Twilio applications to `Google App Engine` during the
 workshop. `Google App Engine` provides an easy and free way to host your code.
-Download the SDK for your operating system below. After downloading the
-installer, double click it and follow the on screen instructions.
+Download and install the SDK for your operating system below.
 
 - `App Engine SDK Windows Installer <http://googleappengine.googlecode.com/files/GoogleAppEngine-1.7.2.msi>`_
 - `App Engine SDK OS X Installer <http://googleappengine.googlecode.com/files/GoogleAppEngineLauncher-1.7.2.dmg>`_
@@ -125,25 +124,25 @@ Basic Application Setup
 The workshop directory you downloaded earlier contains a basic web application
 that we'll be extending during the workshop. We'll use this location to perform
 local testing and the code we edit here we'll later deploy to `Google App
-Engine`. To do this We need to tell the `Google App Engine Launcher` where to
+Engine`. To do this we need to tell the `Google App Engine Launcher` where to
 find our files.
 
-Open the `Google App Engine Launcher` and from the file menu select `Add 
-Existing Application…` In the next dialog click the `Browse` button and 
+Open the `Google App Engine Launcher` and from the file menu select "Add 
+Existing Application…". In the next dialog click the "Browse" button and 
 locate the workshop folder. 
 
-Click `Add` to finish setting up the application.
+Click "Add" to finish setting up the application.
 
 Run the Web Application
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 To run your application, open the `Google App Engine Launcher`. Select your
-application from the list and click the `Run` button. Your app is now running
+application from the list and click the "Run" button. Your app is now running
 and ready to use.
 
 .. image:: _static/startapp.png
 
-To use your application, click the `Browse` button. Your app will launch in a
+To use your application, click the "Browse" button. Your app will launch in a
 browser window.
 
 .. image:: _static/browseapp.png
@@ -161,7 +160,7 @@ exposing helpful log information when running the local development
 environment.
 
 Open the `Google App Engine Launcher`. Select your application from the list
-and click the `Logs` button. This will launch a console that outputs activity
+and click the "Logs" button. This will launch a console that outputs activity
 from your local development environment.
 
 .. image:: _static/logsapp.png
@@ -178,18 +177,13 @@ directives in this file but at this time we only need to be concerned with the
 Application Name. Replace the ``helloworld`` portion of ``application:
 helloworld`` with the application name you registered and save the file.
 
-Open the `Google App Engine Launcher`, highlight your application if it is not
-already highlighted and then click the `Deploy` button. The Launcher app will
-upload your code and deploy it.
-
 .. literalinclude:: ../app.yaml
    :language: yaml
    :emphasize-lines: 1
 
-
 Open the `Google App Engine Launcher`, highlight your application if it is not
-already highlighted and then click the `Deploy` button. The Launcher app will
-upload your code and deploy it. 
+already highlighted and then click the "Deploy" button. The Launcher app will
+upload your code and deploy it.
 
 .. image:: _static/deployapp.png
 
