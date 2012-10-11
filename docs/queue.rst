@@ -63,11 +63,11 @@ of TwiML should try to dial into the premium customer's queue:
     </Response>
 
 The ``timeout`` parameter in the ``<Dial>`` verb tells Twilio to only wait
-for 1 second for a call in the queue to become available.  If that fails,
+for 1 second for a call in the queue to become available.  If that fails
 Twilio will request the ``/rep-call-complete`` URL from your webserver
 almost immediately.  From there, we can see if the call failed (that is,
-the timeout was reached).  If the call failed, then we try the regular
-``customers`` queue.  If the call succeeded, then we know that the rep just
+the timeout was reached).  If the call failed we then try the regular
+``customers`` queue.  If the call succeeded we know that the rep just
 finished talking to a customer, and since our rule is that premium
 customers get handled first, we have that rep go back to the premium
 queue.  Here's what it might look like in the Python code powering our
@@ -107,7 +107,7 @@ sub-queues.  We always try to fetch a customer from the
 queue.
 
 You might also note that we don't even need the separate TwiML file for
-customer support reps when the initially call in.  If we set the
+customer support reps when they initially call in.  If we set the
 VoiceUrl for the support reps' call-in number to our
 ``rep-call-complete`` script, we note that the default behavior for when
 the ``DequeueResult`` and ``QueueSid`` fields are absent is to connect the

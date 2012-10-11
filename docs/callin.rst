@@ -3,7 +3,7 @@
 Radio Call In
 =============
 
-In this workshop, we'll be designing a radio call in application 
+In this workshop we'll be designing a radio call in application 
 using Twilio's new <Queue> functionality.
 
 Using the Twilio Helper Libraries
@@ -88,7 +88,7 @@ create dynamic TwiML through a web application.
 We'll start by working on our hold music. Wouldn't it be cool if we could
 tell users where they were in the queue, how long they've been there, or
 even the average wait time for their queue? Twilio exposes `all these
-parameters`_ when invoking your application's waiting logic via HTTP, so
+parameters`_ when invoking your application's waiting logic via HTTP so that
 you can pass it along in your dynamic TwiML!
 
 .. code-block:: python
@@ -102,7 +102,7 @@ you can pass it along in your dynamic TwiML!
             response.play("http://com.twilio.music.rock.s3.amazonaws.com/nickleus_-_original_guitar_song_200907251723.mp3")
             self.response.out.write(str(response))
 
-You can also take advantage of similar information when a call is dequeued,
+You can also take advantage of similar information when a call is dequeued
 through the ``action`` parameter when enqueuing.
 
 .. code-block:: xml

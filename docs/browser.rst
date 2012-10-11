@@ -29,8 +29,8 @@ Generating a Token
 Since Twilio Client applications are being run on the browser, we need a
 technique to grant the end user temporary privileges on our Twilio Account.
 This is the job of `Capability Tokens <https://www.twilio.com/docs/client/capability-tokens>`_.
-Capability Tokens allow us to lock down access what we want the end
-user's session to be able to do. For our needs, we only need to add access to
+Capability Tokens allow us to lock down access to what we want the end
+user's session to be able to do. For our needs we only need to add access to
 making an outgoing connection to our new Application.
 
 Here is the function we'll use for generating the Capability Token.
@@ -49,7 +49,7 @@ Here is the function we'll use for generating the Capability Token.
 Answering Queues in the Browser
 -------------------------------
 The first thing we'll need to build is a web interface. Let's start by adding a
-new AppEngine RequestHandler into `main.py`.
+new AppEngine RequestHandler into ``main.py``.
 
 .. code-block:: python
 
