@@ -16,6 +16,17 @@ personal phone when answering queues.
 Creating an Application
 -----------------------
 The first thing we'll need to do is create an `Application <http://www.twilio.com/docs/api/rest/applications>`_ for the browser to call into.
+You can think of an Application kind of like a phone number; it's an entry point
+for incoming calls. Every outgoing Twilio Client call starts by executing the TwiML
+of an Application, similar to how every incoming call to a phone number stars
+by executing the TwiML that phone number is configured to.
+
+    Applications have one more feature not related to Client: you can point a phone
+    number to an Application instead of a URL directly. This is helpful if you have
+    a large number of phone numbers all doing the same thing. If they all point to
+    one application and you want to change the URL, you can change it in just one
+    place.
+
 Go to the `Create App page <https://www.twilio.com/user/account/apps/add>`_
 (For reference, if you didn't have a link, you can find it from your Account Portal,
 click on "Dev Tools" > "TwiML Apps" and click the button for "Add.")
@@ -54,17 +65,93 @@ new AppEngine RequestHandler into ``main.py``.
 .. code-block:: python
 
     import os
-    from google.appengine.ext.webapp import template
 
-    class HelloWorld(webapp2.RequestHandler):
+
+    class IndexPage(webapp2.RequestHandler):
 
         def get(self):
-            self.response.write('Hello World!')
+            params = {
+                "token": gen_token("ACXXX", "XXX", "APXXX")
+            }
+            self.response.out.write(render_template("index.html", params))
 
 
-Dequeuing Calls From One Queue To Another
+We're rending the ``token`` variable to this ``index.py`` file, and there are
+two important lines in the Javascript that make this work:
+
+.. code-block:: javascript
+    Twilio.Device.setup("{{ token }}");
+
+The above line of code calls ``Twilio.Device.setup`` and uses our templating
+engine to pass in a valid Capability Token. When ``setup`` finishes, the
+callback passed into ``Twilio.Device.ready`` will be called to let us know that
+we've initialized our access to the microphone, speakers, and we've started
+listening for incoming calls (if applicable).
+
+.. code-block:: javascript
+    function call() {
+      Twilio.Device.connect();
+    }
+
+This code defines a new function called ``call`` that just wraps
+``Twilio.Device.connect`` which initiates an outgoing call to our Application
+we created earlier. In this case, calling ``call()`` will execute the TwiML
+
+.. code-block:: xml
+    <?xml version="1.0" encoding="UTF-8"?>
+    <Response>
+        <Dial>
+            <Queue>radio-callin-queue</Queue>
+        </Dial>
+    </Response>
+
+assuming that we correctly configured the Application to the URL that returns
+this TwiML
+
+Getting the Next Caller From the <Queue>
 -----------------------------------------
+With <Queue>s, we can hangup on the current caller and move to the next one by
+pressing the "#" key on the phone. Luckily, Twilio Client has a feature for
+sending DTMF tones programmatically.
+
+First, we need to hold on to the response of ``Twilio.Device.connect()`` so
+let's add a global variable called ``connection`` and have every ``call()``
+command set it. Replace the existing ``call`` function with something like this:
+
+.. code-block:: javascript
+    var connection = null;
+    function call() {
+        connection = Twilio.Device.connect();
+    }
+
+Now, we can add a new function, called ``next()``:
+
+.. code-block:: javascript
+    function next() {
+        if(connection) {
+            connection.sendDTMF("#");
+        }
+    }
+
+Now we just need to add another button that let's us bring in the next caller.
+
+.. code-block:: html
+    <button class="next" onclick="next();">
+        Next Caller
+    </button>
+
+Adding UI To Display the Queue
+------------------------------
+
+Let's add a feature where we can see a visualization of the queue
+
+.. code-block:: python
+    some python code that queries the queue
 
 
+Now we need some Javascript to poll the state of the queue and update the UI.
 
-
+.. code-block:: javascript
+    $.get("/queue-status", function() {
+        
+    });
