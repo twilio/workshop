@@ -5,8 +5,9 @@ Into the Browser
 
 Using Twilio Client
 -------------------
-Using Twilio Client, we can be hooked into the full power of the Twilio
-API from your Web Browser. This includes the ability to make and receive phone
+
+Using Twilio Client, we can be hooked into the full power of the Twilio API
+from your Web Browser. This includes the ability to make and receive phone
 calls, opening up the world of telephony to your dynamic web applications.
 
 Let's try writing a web app that is capable of answering phone calls in a
@@ -15,11 +16,13 @@ personal phone when answering queues.
 
 Creating an Application
 -----------------------
-The first thing we'll need to do is create an `Application <http://www.twilio.com/docs/api/rest/applications>`_ for the browser to call into.
-You can think of an Application kind of like a phone number; it's an entry point
-for incoming calls. Every outgoing Twilio Client call starts by executing the TwiML
-of an Application, similar to how every incoming call to a phone number stars
-by executing the TwiML that phone number is configured to.
+
+The first thing we'll need to do is create an `Application
+<http://www.twilio.com/docs/api/rest/applications>`_ for the browser to call
+into.  You can think of an Application kind of like a phone number; it's an
+entry point for incoming calls. Every outgoing Twilio Client call starts by
+executing the TwiML of an Application, similar to how every incoming call to a
+phone number stars by executing the TwiML that phone number is configured to.
 
     Applications have one more feature not related to Client: you can point a phone
     number to an Application instead of a URL directly. This is helpful if you have
@@ -28,8 +31,8 @@ by executing the TwiML that phone number is configured to.
     place.
 
 Go to the `Create App page <https://www.twilio.com/user/account/apps/add>`_
-(For reference, if you didn't have a link, you can find it from your Account Portal,
-click on "Dev Tools" > "TwiML Apps" and click the button for "Add.")
+(For reference, if you didn't have a link, you can find it from your Account
+Portal, click on "Dev Tools" > "TwiML Apps" and click the button for "Add.")
 
 We'll name our new application "Client DJ Call-In" and set the Voice Request
 URL to a new endpoint for the TwiML we want to be executed when the DJ's
@@ -37,12 +40,14 @@ browser connects (this should be the same URL as the DJ's dial-in number).
 
 Generating a Token
 ------------------
+
 Since Twilio Client applications are being run on the browser, we need a
 technique to grant the end user temporary privileges on our Twilio Account.
-This is the job of `Capability Tokens <https://www.twilio.com/docs/client/capability-tokens>`_.
-Capability Tokens allow us to lock down access to what we want the end
-user's session to be able to do. For our needs we only need to add access to
-making an outgoing connection to our new Application.
+This is the job of `Capability Tokens
+<https://www.twilio.com/docs/client/capability-tokens>`_.  Capability Tokens
+allow us to lock down access to what we want the end user's session to be able
+to do. For our needs we only need to add access to making an outgoing
+connection to our new Application.
 
 Here is the function we'll use for generating the Capability Token.
 
@@ -80,6 +85,7 @@ We're rending the ``token`` variable to this ``index.py`` file, and there are
 two important lines in the Javascript that make this work:
 
 .. code-block:: javascript
+
     Twilio.Device.setup("{{ token }}");
 
 The above line of code calls ``Twilio.Device.setup`` and uses our templating
@@ -89,6 +95,7 @@ we've initialized our access to the microphone, speakers, and we've started
 listening for incoming calls (if applicable).
 
 .. code-block:: javascript
+
     function call() {
       Twilio.Device.connect();
     }
@@ -98,6 +105,7 @@ This code defines a new function called ``call`` that just wraps
 we created earlier. In this case, calling ``call()`` will execute the TwiML
 
 .. code-block:: xml
+
     <?xml version="1.0" encoding="UTF-8"?>
     <Response>
         <Dial>
@@ -119,6 +127,7 @@ let's add a global variable called ``connection`` and have every ``call()``
 command set it. Replace the existing ``call`` function with something like this:
 
 .. code-block:: javascript
+
     var connection = null;
     function call() {
         connection = Twilio.Device.connect();
@@ -127,6 +136,7 @@ command set it. Replace the existing ``call`` function with something like this:
 Now, we can add a new function, called ``next()``:
 
 .. code-block:: javascript
+
     function next() {
         if(connection) {
             connection.sendDTMF("#");
@@ -136,6 +146,7 @@ Now, we can add a new function, called ``next()``:
 Now we just need to add another button that let's us bring in the next caller.
 
 .. code-block:: html
+
     <button class="next" onclick="next();">
         Next Caller
     </button>
@@ -146,12 +157,14 @@ Adding UI To Display the Queue
 Let's add a feature where we can see a visualization of the queue
 
 .. code-block:: python
+
     some python code that queries the queue
 
 
 Now we need some Javascript to poll the state of the queue and update the UI.
 
 .. code-block:: javascript
+
     $.get("/queue-status", function() {
         
     });

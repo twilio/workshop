@@ -29,7 +29,7 @@ And one basic verb for SMS messaging.
 To see how these verbs work, let's first take a look at the last section. When we
 called your phone, a robot answered with a "Hello World" message. We now know
 that TwiML powered that call, so let's take a look. Open
-http://twimlets.com/message?Message[1]=Hello+World in your browser.
+http://twimlets.com/message?Message[0]=Hello+World in your browser.
 
 .. code-block:: xml
 
@@ -84,7 +84,7 @@ Now give your Twilio number a call! You should hear a "Hello World" greeting.
 Call Logs & SMS Logs
 ---------------------
 
-Now your probably thinking:
+Now you're probably thinking:
 
 * How long did that call last?
 * How much did that call cost?
@@ -113,13 +113,17 @@ Request URL.
 
     http://twimlets.com/echo?Twiml=%3CResponse%3E%3CSay%3EHello+World.%3C%2FSay%3E%3CResponse%3E
 
-What did you hear this time?
+Call your phone number. You should hear a recorded message that says "We're
+sorry, an application error has occurred".
 
 Now let's find out why your application error has occured. The first place
 we'll want to look is the `debugger
 <https://www.twilio.com/user/account/debugger>`_. Navigate to your account
-dashboard and find your debugger. *Note: Your debugger can also be found under
-the 'Dev Tools' tab.*
+dashboard and find your debugger. 
+
+.. note:: 
+
+   Your debugger can also be found under the 'Dev Tools' tab.
 
 Click on the error to see more detail. 
 

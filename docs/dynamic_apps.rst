@@ -40,9 +40,10 @@ Whenever a user makes a request to our application a method on this class will
 be invoked. The method will usually write out a response for display in a
 browser. 
 
-Here we only define a single method on the class called ``get``. If you remember
-your HTTP verbs from the :ref:`http` section this method name corresponds to an HTTP GET. We'll show later how to handle different HTTP verbs, such as POST or
-DELETE.
+Here we only define a single method on the class called ``get``. If you
+remember your HTTP verbs from the :ref:`http` section this method name
+corresponds to an HTTP GET. We'll show later how to handle different HTTP
+verbs, such as POST or DELETE.
 
 .. literalinclude:: ../main.py
    :language: python
@@ -54,7 +55,8 @@ mapping says "Whenever someone visits the front page of my application, process
 that requests using the HelloWorld request handler class".
 
 Your first task will be to change the message displayed in your browser. Open
-up ``main.py`` in your text editor and change the "Hello World" message on line 6 to "Hello TwilioCon". Refresh the page to see your new message.
+up ``main.py`` in your text editor and change the "Hello World" message on line
+6 to "Hello TwilioCon". Refresh the page to see your new message.
 
 Congratulations! You've just created your first web application.
 
@@ -101,8 +103,8 @@ metadata via an HTTP header to tell the browser we're sending valid TwiML.
        ('/', HelloWorld),
    ], debug=True)
 
-When you refresh the page, you should now see the entire TwiML response (and
-maybe it's even highlighted and formatted).
+When you refresh the page, you should now see the entire TwiML response (and it
+may even be highlighted and formatted).
 
 
 Using the Twilio Helper Library
@@ -234,4 +236,3 @@ number for your Twilio phone number. Just like you've done in previous
 sections. 
 
 Now give it a call. You should hear your custom message. Hooray!
-

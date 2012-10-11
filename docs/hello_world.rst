@@ -13,6 +13,8 @@ When you log into your Twilio Account, the first page you will come across is
 your Account Dashboard. This is where your Account Sid and Auth Token are
 displayed.
 
+.. image:: _static/bar.png
+
 These are your account credentials. The Account SID acts as a username and the 
 Auth Token acts as a password. Twilio uses your Account Sid and Auth Token to 
 authenticate the API requests made by your application. 
@@ -38,7 +40,7 @@ On the next line, set `TO_NUMBER` to the number you used to sign up
 with Twilio. During your free trial, you're only allowed to make calls and send
 messages to phone numbers you have verified.
 
-set `FROM_NUMBER` to your new Twilio number. if you
+Set `FROM_NUMBER` to your new Twilio number. If you
 can't remember it, check the `Numbers
 <https://www.twilio.com/user/account/phone-numbers/incoming>`_ section of your
 account dashboard.

@@ -202,7 +202,6 @@ div.body p, div.body dd, div.body li {
 
 div.admonition {
     background: #fafafa;
-    margin: 20px -30px;
     padding: 10px 30px;
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;

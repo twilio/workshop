@@ -70,9 +70,7 @@ you aren't sure how to launch your command prompt, ask a TA or a neighbor for he
    $ python --version
 
 If the output contains ``Python 2.7.x``, your Python installation is ready to
-go.
-
-Download the installer for your operating system:
+go. If not, download the installer for your operating system:
 
 - `Python 2.7.3 Windows Installer <http://www.python.org/ftp/python/2.7.3/python-2.7.3.msi>`_
 - `Python 2.7.3 Windows X86-64 Installer <http://www.python.org/ftp/python/2.7.3/python-2.7.3.amd64.msi>`_
