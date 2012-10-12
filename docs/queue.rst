@@ -116,3 +116,27 @@ suffices as the initial entry point for our app.
 
 Testing Twilio Applications
 ---------------------------
+
+Installing and using local tunnel
+
+https://showoff.io/
+local tunnel
+pagekite
+
+Local tunnel sometimes doesn't work. Many of these services suffer from the
+same problems tthat networks can't be awesome.
+
+So, how do we test if we can't connect to Twilio
+
+Mocking out Twilio
+~~~~~~~~~~~~~~~~~~
+
+A simple example showing how, using cUrl, you can actually duplicate many of
+Twilio's behaviors
+
+
+Adding a Feedback Loop
+----------------------
+
+- SMS stuff
+- Increasing Engagement

@@ -64,6 +64,8 @@ Your final application should look like this.
 
 .. image:: _static/twimlbin.png
 
+.. _configure-number:
+
 Configuring your phone number
 ------------------------------
 

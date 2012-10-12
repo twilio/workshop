@@ -256,6 +256,6 @@ deployemnt. It should take less than a minute to deploy.
 
 Once it's deployed, take the url for your application and set it as the voice
 number for your Twilio phone number. Configuring Twilio numbers is covered in
-more detail in :ref:``
+more detail in :ref:`configure-number`
 
 Now give it a call. You should hear your custom message. Hooray!

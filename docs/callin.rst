@@ -3,8 +3,20 @@
 Radio Call In
 =============
 
-In this workshop we'll be designing a radio call in application 
-using Twilio's new <Queue> functionality.
+In this workshop we'll be designing a radio call in application using Twilio's
+<Queue> functionality. While we'll be using a radio show as our target, this
+style of queue managment can be used for any phone number where many people may
+call at the same time.
+
+Prerequisties
+-------------
+
+The next sections assume a working knowledge of Twilio. You should be familiar
+with TwiML, configuring Twilio phone numbers, and Twilio application model.
+
+Also, we're assuming you're comfortable writing web applications. For
+reference, we'll be developing the application along the way using Python
+and Google App Engine.
 
 Using the Twilio Helper Libraries
 ---------------------------------
@@ -20,13 +32,14 @@ Reference`_ helpful for this workshop.
 .. _here: http://www.twilio.com/docs/libraries
 .. _Queue API Reference: https://twilio-python.readthedocs.org/en/latest/api/rest/resources.html#queues
 
-Using Queue (TwiML)
--------------------
-We'll need two Twilio phone numbers to work with Queue - one for the DJ to
-dequeue calls from, and one for the queue that the listener will call into.
+Using <Queue>
+-------------
 
-First, we'll enqueue some calls via TwiML. In the example below, we enqueue
-to a queue named ``radio-callin-queue``. Note that queues are created on
+We'll need two Twilio phone numbers to work with Queue - one for the DJ to
+dequeue calls from, and one for the listener to call into.
+
+First, we'll enqueue calls via TwiML. In the example below, we enqueue calls
+into a queue named ``radio-callin-queue``. Note that queues are created on
 <Enqueue> if they do not already exist.
 
 .. code-block:: xml
@@ -48,8 +61,9 @@ We can spice it up by adding some wait music, using the ``waitUrl`` parameter.
         <Enqueue waitUrl="/wait-loop">radio-callin-queue</Enqueue>
     </Response>
 
-The ``/wait-loop`` endpoint goes to some TwiML that plays music. The ``waitUrl``
-TwiML document supports a `subset of TwiML verbs`_.
+Twilio will request the ``/wait-loop`` and process the TwiML that plays music.
+The ``waitUrl`` TwiML document only supports a `subset of TwiML verbs`_, which
+includes ``<Say>`` and ``<Play>``.
 
 .. code-block:: xml
 
@@ -60,10 +74,9 @@ TwiML document supports a `subset of TwiML verbs`_.
     </Response>
 
 
-
-For the DJ dequeuing number, we use some TwiML that bridges the current call
-to the queue. Note that <Dial>ing into a queue represents dequeuing a caller
-on the queue, while the only way to get onto a queue is to be <Enqueue>d.
+For the DJ dequeuing number, we use TwiML that bridges the current call to the
+queue. Note that <Dial>ing into a queue dequeues the front on the queue, while
+the only way to get onto a queue is by using the <Enqueue> verb.
 
 .. code-block:: xml
 
@@ -81,16 +94,29 @@ to the first member on the queue.
 
 Dynamic Queue Information
 -------------------------
+
 Twilio's Queue exposes dynamic inforrmation about the queue state that
 you can use to build rich applications. In this section, we'll move past
 static TwiML applications and start using the data Queue gives you to
 create dynamic TwiML through a web application.
 
-We'll start by working on our hold music. Wouldn't it be cool if we could
-tell users where they were in the queue, how long they've been there, or
-even the average wait time for their queue? Twilio exposes `all these
-parameters`_ when invoking your application's waiting logic via HTTP so that
-you can pass it along in your dynamic TwiML!
+We'll start by working on our hold music. Wouldn't it be cool if we could tell
+users where they were in the queue, how long they've been there, or even the
+average wait time for their queue? Twilio sends these parameters via POST data
+when invoking your application's waiting logic via HTTP.
+
+================ ===========
+Parameter 	 Description
+================ ===========
+QueuePosition 	 The current queue position for the enqueued call.
+QueueSid 	 The SID of the Queue that the caller is in.
+QueueTime 	 The time in seconds that the caller has been in the queue.
+AverageQueueTime An average of how long time the current enqueued callers has been in the queue.
+CurrentQueueSize The current number of enqueued calls in this queue.
+================ ===========
+
+Utilizing this information, we can inform our users what position they are in
+the queue and how long they can expect to wait before an answer.
 
 .. code-block:: python
 
@@ -123,10 +149,9 @@ through the ``action`` parameter when enqueuing.
                 # save to db, ping analytics, whatever you want!
 
 
-.. _all these parameters: http://www.twilio.com/docs/api/twiml/enqueue#attributes-waiturl-parameters
+Handling Long Queue Times
+-------------------------
 
-Queue Times Are Too Long! - A Call to Action
---------------------------------------------
 We can use the ``action`` parameter to collect all sorts of useful metrics
 on the backend, or even issue hasty apologies for long queue wait times.
 
@@ -135,11 +160,8 @@ let our users know we care. Using the `action URL parameters`_, we can
 send an SMS apology if the wait time exceeded 30 seconds, or if their
 call was rejected from a full queue.
 
-You may find the `helper library documentation`_ for your `language of choice`_
-helpful in sending SMS.
-
 Here is some stub code that may help, if you are taking the Python / Google
-App Engine route...
+App Engine route.
 
 .. code-block:: xml
 
@@ -165,17 +187,18 @@ App Engine route...
 .. _language of choice: http://www.twilio.com/docs/libraries
 
 
-See You Next Time - Closing Out the Queue
------------------------------------------
-Unfortunately, all good things must come to an end. It's time for our
-radio show to close down until next time - but what about the people
-still on the waiting queue?
+Closing Out the Queue
+---------------------
 
-We can use `Queue`_ and `Member`_ REST API resources to programmatically
-look at all of our account's queues and active members on those queues.
+Unfortunately, all good things must come to an end. It's time for our radio
+show to close down until next time - but what about the people still on the
+waiting queue?
 
-Let's write a quick script that will find our queue, loop through its
-members, and dequeue each of them with a thank you message. 
+We can use `Queue`_ and `Member`_ REST API resources to programmatically look
+at all of our account's queues and active members on those queues.
+
+Let's write a quick script that will find our queue, loop through its members,
+and dequeue each of them with a thank you message. 
 
 .. code-block:: python
 
@@ -193,12 +216,12 @@ First, we need to `find our queue`_.
             my_queue = queue
 
 
-Then, we can iterate over its members and dequeue with some static thank
-you TwiML. Try it yourself! Hint: issuing `an HTTP POST to a Member instance`_
-will dequeue that member.
+Then, we can iterate over its members and dequeue with some static thank you
+TwiML. Try it yourself! Hint: issuing `an HTTP POST to a Member instance`_ will
+dequeue that member.
     
-As a bonus, try allowing the callers being dequeued to record a message 
-for the DJs to listen to at the beginning of the next show.
+As a bonus, try allowing the callers being dequeued to record a message for the
+DJs to listen to at the beginning of the next show.
 
 Finally, we can delete the queue using a REST API call.
 

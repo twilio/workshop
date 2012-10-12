@@ -17,7 +17,6 @@ Idea Factory
    custom_twiml
    static_apps
    dynamic_apps
-   deploy
    voting
 
 Unlocking the Box
