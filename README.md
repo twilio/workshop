@@ -1,7 +1,3 @@
-# TwilioCon Workshop Day
+# Twilio Workshop
 
-A day to learn and stuff.
-
-## See the main site here
-
-## And here
+Check out the [html version](http://twilio-workshop-cal.readthedocs.org/en/latest) of the guide here.
