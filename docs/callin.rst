@@ -9,9 +9,10 @@ using Twilio's new <Queue> functionality.
 Using the Twilio Helper Libraries
 ---------------------------------
 
-Though this workshop will assume use of Python and the twilio-python
-helper library, Twilio offers helper libraries for a large set of
-languages. Check them out `here`_.
+Though this workshop will assume use of Python and the twilio-python helper
+library, Twilio offers helper libraries for a large set of languages. If you
+aren't using Python, download the `helper library`_ for your language of
+choice. You'll need the library in the next section.
 
 For the twilio-python helper library, you may find the `Queue API
 Reference`_ helpful for this workshop.

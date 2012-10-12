@@ -79,6 +79,8 @@ Go to `your Twilio numbers page
 your Twilio phone number. Change the "Voice URL" field to your Twimlbin URL and
 "Save Changes"
 
+.. image:: _static/voiceurl.png
+
 Now give your Twilio number a call! You should hear a "Hello World" greeting.
 
 Call Logs & SMS Logs

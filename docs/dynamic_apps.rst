@@ -181,7 +181,7 @@ dynamic application is so powerful. First, a simple example.
            self.response.headers['Content-Type'] = "application/xml"
 
            response = twiml.Response()
-           respone.say("Hello " + self.request.params('FromNumber'))
+           respone.say("Hello " + self.request.params('From'))
            self.response.write(str(response))
 
    app = webapp2.WSGIApplication([
@@ -189,26 +189,48 @@ dynamic application is so powerful. First, a simple example.
    ], debug=True)
 
 
-Now visit your page. You'll see the message "Hello " without a name. To add a
-name to your message add a parameter to your URL. 
+Now visit your page. You'll see the following message.
+
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <Response>
+      <Say>Hello </Say>
+    </Response>
+
+
+It seems that our message is missing a phone number. To test out the greeting,
+add the ``From`` parameter to your URL.
 
 .. code-block:: bash
 
-    http://localhost:8080/?From=+5005550000
+    http://localhost:8080/?From=+15005550000
+
+You should now see a the phone number show up in your TwiML response.
+
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <Response>
+      <Say>Hello +15005550000</Say>
+    </Response>
 
 Whenever an HTTP request is sent to your application it includes data in query
-string and body of the request. The code we added when constructing the Say verb pulls the named request parameter from either a POST or GET request parameter.
+string and body of the request. The code we added when constructing the Say
+verb pulls the named request parameter from either a POST or GET request
+parameter.
 
 .. code-block:: python
 
-   self.request.params('FromNumber')
+   self.request.params('From')
 
 Incoming Twilio Data
 ~~~~~~~~~~~~~~~~~~~~
 
 Adding this parameter to your URL mimics the request that Twilio will send to
 your server. All TwiML requests made by Twilio include additional information
-about the caller. Here is short list of some of the data that Twilio will send your way.
+about the caller. Here is short list of some of the data that Twilio will send
+your way.
 
 ============== ===========
 Parameter      Description
@@ -219,7 +241,8 @@ Parameter      Description
 ``Body``       The text body of the SMS message. Up to 160 characters long.
 ============== ===========
 
-Phone numbers are formatted in E164 format (with a '+' and country code, e.g. `+1617555121`).
+Phone numbers are formatted in E164 format (with a '+' and country code, e.g.
+`+1617555121`).
 
 Deploy your Twilio application
 ------------------------------
@@ -231,8 +254,8 @@ deployemnt. It should take less than a minute to deploy.
 
 .. image:: _static/deployapp.png
 
-Once it's deployed get the url for your application and set it as the voice
-number for your Twilio phone number. Just like you've done in previous
-sections. 
+Once it's deployed, take the url for your application and set it as the voice
+number for your Twilio phone number. Configuring Twilio numbers is covered in
+more detail in :ref:``
 
 Now give it a call. You should hear your custom message. Hooray!
