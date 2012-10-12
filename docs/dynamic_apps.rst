@@ -52,7 +52,7 @@ verbs, such as POST or DELETE.
 Here we actually create our application. In the `webapp2` framework web
 applications are a mapping of URLs to request handler classes. The above
 mapping says "Whenever someone visits the front page of my application, process
-that requests using the HelloWorld request handler class".
+that request using the HelloWorld request handler class".
 
 Your first task will be to change the message displayed in your browser. Open
 up ``main.py`` in your text editor and change the "Hello World" message on line
@@ -152,7 +152,7 @@ string.
    response.say("Hello TwilioCon")
 
 This methods adds a Say verb to the response. There are similar methods on the
-resonse object for Play, Gather, Record, and Dial. We've already covered these
+response object for Play, Gather, Record, and Dial. We've already covered these
 verbs in the previous sections.
 
 .. code-block:: python
@@ -181,7 +181,7 @@ dynamic application is so powerful. First, a simple example.
            self.response.headers['Content-Type'] = "application/xml"
 
            response = twiml.Response()
-           respone.say("Hello " + self.request.params('From'))
+           response.say("Hello " + self.request.get('From'))
            self.response.write(str(response))
 
    app = webapp2.WSGIApplication([
@@ -204,15 +204,15 @@ add the ``From`` parameter to your URL.
 
 .. code-block:: bash
 
-    http://localhost:8080/?From=+15005550000
+    http://localhost:8080/?From=15005550000
 
-You should now see a the phone number show up in your TwiML response.
+You should now see the phone number show up in your TwiML response.
 
 .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
     <Response>
-      <Say>Hello +15005550000</Say>
+      <Say>Hello 15005550000</Say>
     </Response>
 
 Whenever an HTTP request is sent to your application it includes data in query
@@ -222,7 +222,7 @@ parameter.
 
 .. code-block:: python
 
-   self.request.params('From')
+   self.request.get('From')
 
 Incoming Twilio Data
 ~~~~~~~~~~~~~~~~~~~~
@@ -250,7 +250,7 @@ Deploy your Twilio application
 We're now ready to hook up your brand new application to a Twilio number. Open
 the Google App Engine Launcher application, highlight your application, and hit
 the "Deploy" button. A window will pop up and show you the status of your
-deployemnt. It should take less than a minute to deploy. 
+deployment. It should take less than a minute to deploy.
 
 .. image:: _static/deployapp.png
 
