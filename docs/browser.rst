@@ -69,14 +69,11 @@ new AppEngine RequestHandler into ``main.py``.
 
 .. code-block:: python
 
-    import os
-
-
     class IndexPage(webapp2.RequestHandler):
 
         def get(self):
             params = {
-                "token": gen_token("ACXXX", "XXX", "APXXX")
+                "token": gen_token(ACCOUNT_SID, AUTH_TOKEN, APP_SID)
             }
             self.response.out.write(render_template("index.html", params))
 
@@ -158,13 +155,22 @@ Let's add a feature where we can see a visualization of the queue
 
 .. code-block:: python
 
-    some python code that queries the queue
+    import json
+    from twilio import TwilioRestClient
+
+    class QueueStatusPage(webapp2.RequestHandler):
+
+        def get(self):
+            client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
+            q_data = {"queues": client.queues.get(QUEUE_SID)}
+            self.response.out.write(json.dumps(q_data))
 
 
+Add this QueueStatusPage into the WSIApplication's routing map as ``/queue-status``.
 Now we need some Javascript to poll the state of the queue and update the UI.
 
 .. code-block:: javascript
 
-    $.get("/queue-status", function() {
-        
+    $.get("/queue-status", function(result) {
+        // update your UI here
     });

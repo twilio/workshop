@@ -1,9 +1,15 @@
-import webapp2
-from google.appengine.ext.webapp import template
 import os
 
+from google.appengine.ext.webapp import template
+import twilio
+import webapp2
 
+
+ACCOUNT_SID = "ACXXX"
+AUTH_TOKEN = "XXX"
+APP_SID = "APXXX"
 # Utility functions
+
 
 def render_template(rel_path, parameters=None, folder="templates"):
     """
