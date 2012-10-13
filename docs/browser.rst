@@ -17,19 +17,7 @@ personal phone when answering queues.
 Creating an Application
 -----------------------
 
-The first thing we'll need to do is create an `Application
-<http://www.twilio.com/docs/api/rest/applications>`_ for the browser to call
-into.  You can think of an Application kind of like a phone number; it's an
-entry point for incoming calls. Every outgoing Twilio Client call starts by
-executing the TwiML of an Application, similar to how every incoming call to a
-phone number stars by executing the TwiML that phone number is configured to.
-
-    Applications have one more feature not related to Client: you can point a phone
-    number to an Application instead of a URL directly. This is helpful if you have
-    a large number of phone numbers all doing the same thing. If they all point to
-    one application and you want to change the URL, you can change it in just one
-    place.
-
+The first thing 
 Go to the `Create App page <https://www.twilio.com/user/account/apps/add>`_
 (For reference, if you didn't have a link, you can find it from your Account
 Portal, click on "Dev Tools" > "TwiML Apps" and click the button for "Add.")

@@ -5,29 +5,30 @@ Radio Call In
 
 In this workshop we'll be designing a radio call in application using Twilio's
 <Queue> functionality. While we'll be using a radio show as our target, this
-style of queue managment can be used for any phone number where many people may
-call at the same time.
+style of queue management can be used for any phone number where many people
+may call at the same time.
 
-Prerequisties
+Prerequisites
 -------------
 
 The next sections assume a working knowledge of Twilio. You should be familiar
-with TwiML, configuring Twilio phone numbers, and Twilio application model.
+with TwiML, configuring Twilio phone numbers, and the Twilio application model.
 
-Also, we're assuming you're comfortable writing web applications. For
+Also, we assume you are comfortable writing web applications. For
 reference, we'll be developing the application along the way using Python
 and Google App Engine.
 
 Using the Twilio Helper Libraries
 ---------------------------------
 
-Though this workshop will assume use of Python and the twilio-python helper
-library, Twilio offers helper libraries for a large set of languages. If you
-aren't using Python, download the `helper library`_ for your language of
-choice. You'll need the library in the next section.
+Though this workshop will assume use of Python and the twilio-python
+helper library, Twilio offers helper libraries for a large set of
+languages. If you aren't using Python, download the `helper library
+<http://www.twilio.com/docs/libraries>`_ for your language of choice. You'll
+need the library in the next section.
 
-For the twilio-python helper library, you may find the `Queue API
-Reference`_ helpful for this workshop.
+For the twilio-python helper library, you may find the `Queue API Reference`_
+helpful for this workshop.
 
 .. _here: http://www.twilio.com/docs/libraries
 .. _Queue API Reference: https://twilio-python.readthedocs.org/en/latest/api/rest/resources.html#queues
@@ -50,9 +51,26 @@ into a queue named ``radio-callin-queue``. Note that queues are created on
         <Enqueue>radio-callin-queue</Enqueue>
     </Response>
 
-Bind this TwiML to your listener queue number.
+We are going to use a TwiML Application to connect this TwiML with
+your listener queue number. We'll need to create an `Application
+<http://www.twilio.com/docs/api/rest/applications>`_ for the browser to call
+into. You can think of an Application kind of like a phone number; it's an
+entry point for incoming calls. Configure the Voice URL of your new Application
+to point to the TwiML above.
 
-We can spice it up by adding some wait music, using the ``waitUrl`` parameter.
+You want to connect your listener queue function to your Application. From the
+`Numbers <https://www.twilio.com/user/account/phone-numbers/incoming`_ tab of
+your Dashboard, select the number you are going to use for your Listener Queue.
+Then from the dropdown select "Application", then point to your new
+Application.
+
+.. image:: _static/application.png
+
+Go ahead and try calling your number now to make sure everything is configured
+correctly.
+
+We can spice up our TwiML endpoint by adding some wait music, using the
+``waitUrl`` parameter.
 
 .. code-block:: xml
 
@@ -61,9 +79,9 @@ We can spice it up by adding some wait music, using the ``waitUrl`` parameter.
         <Enqueue waitUrl="/wait-loop">radio-callin-queue</Enqueue>
     </Response>
 
-Twilio will request the ``/wait-loop`` and process the TwiML that plays music.
-The ``waitUrl`` TwiML document only supports a `subset of TwiML verbs`_, which
-includes ``<Say>`` and ``<Play>``.
+Twilio will request the ``/wait-loop`` and process the TwiML there, which plays
+music. The ``waitUrl`` TwiML document only supports a `subset of TwiML verbs`_,
+including ``<Say>`` and ``<Play>``.
 
 .. code-block:: xml
 
@@ -73,10 +91,23 @@ includes ``<Say>`` and ``<Play>``.
         <Play>http://com.twilio.sounds.music.s3.amazonaws.com/MARKOVICHAMP-Borghestral.mp3</Play>
     </Response>
 
+You can use this Python snippet with AppEngine to render the XML above.
+
+.. code-block:: python
+
+    import webapp2
+    class WaitLoopPage(webapp2.RequestHandler):
+
+        def get(self):
+            self.response.out.write(render_template("waitLoop.xml", params))
+
+Now your listener queue number should play hold music while callers are in the
+queue.
 
 For the DJ dequeuing number, we use TwiML that bridges the current call to the
-queue. Note that <Dial>ing into a queue dequeues the front on the queue, while
-the only way to get onto a queue is by using the <Enqueue> verb.
+queue. Note that <Dial>ing into a queue dequeues the front of the queue (the
+person who has been waiting longest), while the only way to get into a queue is
+by using the <Enqueue> verb.
 
 .. code-block:: xml
 
@@ -87,15 +118,18 @@ the only way to get onto a queue is by using the <Enqueue> verb.
         </Dial>
     </Response>
 
-Now, the DJ can call the DJ dequeuing number, and will automatically be routed
-to the first member on the queue.
+You will want to create a second Twilio Application for your DJ number, and
+configure that application's Voice URL to point to the TwiML above.
+
+Now, the DJ can call the DJ dequeuing number, and will automatically be
+connected to the first member on the queue.
 
 .. _subset of TwiML verbs: http://www.twilio.com/docs/api/twiml/enqueue#attributes-waitUrl
 
 Dynamic Queue Information
 -------------------------
 
-Twilio's Queue exposes dynamic inforrmation about the queue state that
+Twilio's Queue exposes dynamic information about the queue state that
 you can use to build rich applications. In this section, we'll move past
 static TwiML applications and start using the data Queue gives you to
 create dynamic TwiML through a web application.
@@ -119,6 +153,9 @@ Utilizing this information, we can inform our users what position they are in
 the queue and how long they can expect to wait before an answer.
 
 .. code-block:: python
+
+    import webapp2
+    from twilio import twiml
 
     class WaitLoop(webapp2.RequestHandler):
         def post(self):
