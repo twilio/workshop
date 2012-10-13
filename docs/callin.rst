@@ -29,7 +29,7 @@ choice. You'll need the library in the next section.
 For the twilio-python helper library, you may find the `Queue API
 Reference`_ helpful for this workshop.
 
-.. _here: http://www.twilio.com/docs/libraries
+.. _helper library: http://www.twilio.com/docs/libraries
 .. _Queue API Reference: https://twilio-python.readthedocs.org/en/latest/api/rest/resources.html#queues
 
 Using <Queue>
