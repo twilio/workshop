@@ -20,11 +20,12 @@ refer back to :ref:`setup`
 
 
 Before we can write our web application we need to understand the Hello World
-example. Let's go through the example line-by-line and how it works.
+example. Let's go through the example line-by-line and how it works. Inside our
+``main.py`` file:
 
 .. literalinclude:: ../main.py
    :language: python
-   :lines: 1 
+   :lines: 1
 
 
 This line is the first part of our application. We use the `webapp2
@@ -35,10 +36,9 @@ so we must do an import before we can use it in our code.
    :language: python
    :lines: 3-6
 
-This class handles incoming requests to our application at a specific URL.
-Whenever a user makes a request to our application a method on this class will
-be invoked. The method will usually write out a response for display in a
-browser. 
+This code handles incoming requests to our application at the specified URL.
+Whenever a user makes a request to our application, this is the code that
+will be run. The output of the code gets displayed to the web browser.
 
 Here we only define a single method on the class called ``get``. If you
 remember your HTTP verbs from the :ref:`http` section this method name
@@ -174,6 +174,7 @@ dynamic application is so powerful. First, a simple example.
 
    import webapp2
    from twilio import twiml
+   from util import weather_for_zip
     
    class HelloWorld(webapp2.RequestHandler):
     
@@ -181,7 +182,8 @@ dynamic application is so powerful. First, a simple example.
            self.response.headers['Content-Type'] = "application/xml"
 
            response = twiml.Response()
-           response.say("Hello " + self.request.get('From'))
+           weather = weather_for_zip(self.request.get("FromZip"))
+           response.say("Hello " + weather)
            self.response.write(str(response))
 
    app = webapp2.WSGIApplication([

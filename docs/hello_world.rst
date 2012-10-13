@@ -45,7 +45,7 @@ can't remember it, check the `Numbers
 <https://www.twilio.com/user/account/phone-numbers/incoming>`_ section of your
 account dashboard.
 
-Pick any message less than 140 characters to serve as the body.
+Pick any message less than 160 characters to serve as the body.
 
 .. literalinclude:: ../send_sms.py
    :lines: 6-8
