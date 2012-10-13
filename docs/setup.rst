@@ -172,8 +172,9 @@ Deploy your Application
 App Engine sites require a configuration file to run. Inside your workshop
 directory there is a file named ``app.yaml``. There are a few configuration
 directives in this file but at this time we only need to be concerned with the
-Application Name. Replace the ``helloworld`` portion of ``application:
-helloworld`` with the application name you registered and save the file.
+Application Name. Replace the ``ahoy-twilio-workshop`` portion of 
+``application: ahoy-twilio-workshop`` with the application name you registered
+and save the file.
 
 .. literalinclude:: ../app.yaml
    :language: yaml
