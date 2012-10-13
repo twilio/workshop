@@ -234,17 +234,24 @@ your server. All TwiML requests made by Twilio include additional information
 about the caller. Here is short list of some of the data that Twilio will send
 your way.
 
-============== ===========
-Parameter      Description
-============== ===========
-``From``       The phone number or client identifier of the party that initiated the call. 
-``To``         The phone number or client identifier of the called party.
-``CallStatus`` A descriptive status for the call. The value is one of queued, ringing, in-progress, completed, busy, failed or no-answer
-``Body``       The text body of the SMS message. Up to 160 characters long.
-============== ===========
+=============== ===========
+Parameter       Description
+=============== ===========
+``From``        The phone number or client identifier of the party that initiated the call. 
+``To``          The phone number or client identifier of the called party.
+``CallStatus``  A descriptive status for the call. The value is one of queued, ringing, in-progress, completed, busy, failed or no-answer
+``FromCity``    The city of the caller.
+``FromState``   The state or province of the caller.
+``FromZip``     The postal code of the caller.
+``FromCountry`` The country of the caller.
+=============== ===========
 
 Phone numbers are formatted in E164 format (with a '+' and country code, e.g.
 `+1617555121`).
+
+For a complete list check out `Twilio request parameters  
+<http://www.twilio.com/docs/api/twiml/twilio_request#synchronous-request-parameters>`_ 
+on the Twilio Docs
 
 Deploy your Twilio application
 ------------------------------
@@ -256,8 +263,10 @@ deployment. It should take less than a minute to deploy.
 
 .. image:: _static/deployapp.png
 
-Once it's deployed, take the url for your application and set it as the voice
+Once it's deployed, take the url for your application, ``http://<your-application-name>.appspot.com`` and set it as the voice
 number for your Twilio phone number. Configuring Twilio numbers is covered in
 more detail in :ref:`configure-number`
+
+*Note: Since we have only implemented the GET endpoint, be sure to configure your number to use the GET method instead of the default POST*
 
 Now give it a call. You should hear your custom message. Hooray!
