@@ -253,6 +253,20 @@ For a complete list check out `Twilio request parameters
 <http://www.twilio.com/docs/api/twiml/twilio_request#synchronous-request-parameters>`_ 
 on the Twilio Docs
 
+Uh-ho application error what should I do??
+--------------------------------------------
+
+.. image:: _static/app_error.png
+
+Don't panic if you see this, the program usually give you hints as to what gone wrong. Try reading the stacktrace it 
+will tell you what error the application has run into and where it occurred. 
+
+Some errors may also appear on the AppEngine logs. If the errors on the browser aren't too informative, try clicking on
+the Logs button on the AppEngine Launcher.
+
+.. TODO: maybe we should include a screen capture of where the Logs button is on the AppEngine launcher. I wanna make the 
+.. red circles but I probably can't make it the same as what we have on the Initial Setup guide
+
 Deploy your Twilio application
 ------------------------------
 
