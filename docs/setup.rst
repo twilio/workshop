@@ -128,9 +128,17 @@ browser window.
 
 .. image:: _static/browseapp.png
 
+Your browser will open and you'll see "Hello World!" on screen. Let's take a moment and look at the URL that is loaded in your browser. The URL says ``http://localhost:8080/``. `localhost` is a special url that tells the browser to make a request to your local computer instead of out to the internet. The ``:8080`` portion tells the browser to make the request to port 8080. This url is not visible from the internet and, in general, is only visible to you.
+
+.. note::
+	
+	While ``localhost`` urls will always address a user's local computer, its not entirely private. The application will also respond to your computer's IP address, so when developing applications be aware of your surroundings and of who else can possibly run your application on the network that you are connected to.
+
 In your text editor let's open up the file ``main.py`` at the root level of the
 workshop directory. Change the word "World" on line 6 to your name and save the
 file. Return to the web browser and refresh the window to see your change.
+
+Great! We've successfully run and modified a small python application running on your computer.
 
 Debugging your Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -152,9 +160,7 @@ window as you access your application.
 Deploy your Application
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-It's now time to share your application with the world. To deploy your
-application on App Engine, you'll need to create a application via your App
-Engine dashboard (which requires a Google account).
+It's now time to share your application with the world. To deploy your application on App Engine, you'll need to create a application via your App Engine dashboard (which requires a Google account).
 
 Open the `App Engine dashboard  <http://appengine.google.com>`_ in a new tab and
 click "Create Application".
@@ -228,6 +234,6 @@ The Launcher app will also output progress information in to the Log:
 	*** appcfg.py has finished with exit code 0 ***
 	
 Once you see ``*** appcfg.py has finished with exit code 0 ***`` your
-application is ready to view. Open a browser window and go to
+application is live and ready to view. Open a browser window and go to
 ``http://{your-application-name}.appspot.com`` to view your application in
 action.
