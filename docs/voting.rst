@@ -59,7 +59,7 @@ With the client created, we can now query the Twilio REST API for SMS messages.
 
        def get(self):
            for msg in client.sms.messages.iter():
-                self.response.write(msg.body + "\n")
+                self.response.write(msg.body + "<br>")
 
    class HelloWorld(webapp2.RequestHandler):
 
@@ -77,7 +77,7 @@ reload.
 
 This page will fail if you have multiple Twilio phone numbers. To fix this
 problem, we'll filter messages based on the **To** phone number. Replace
-``TWILIO_PHONE_NUMBER`` with one of your Twilio phone numbers. If you can't
+``NUMBER`` with one of your Twilio phone numbers. If you can't
 remember your number, you'll find them listed in the `Twilio account portal
 <https://www.twilio.com/user/account/phone-numbers/incoming>`_.
 
@@ -92,8 +92,8 @@ remember your number, you'll find them listed in the `Twilio account portal
    class SmsVoting(webapp2.RequestHandler):
 
        def get(self):
-           for msg in client.sms.messages.iter(to="TWILIO_PHONE_NUMBER"):
-                self.response.write(msg.body + "\n")
+           for msg in client.sms.messages.iter(to="NUMBER"):
+                self.response.write(msg.body + "<br>")
 
    class HelloWorld(webapp2.RequestHandler):
 
@@ -130,11 +130,11 @@ number of votes it received.
        def get(self):
            votes = defaultdict(int)
 
-           for msg in client.sms.messages.iter(to="TWILIO PHONE NUMBER"):
+           for msg in client.sms.messages.iter(to="NUMBER"):
                votes[msg.body] += 1
 
            for vote, total in votes.items():
-                self.response.write("{} {}\n".format(vote, total))
+               self.response.write("{} {}<br>".format(total, vote))
 
    class HelloWorld(webapp2.RequestHandler):
 
@@ -164,11 +164,11 @@ so that similar votes count for the same option.
        def get(self):
            votes = defaultdict(int)
 
-           for msg in client.sms.messages.iter(to="TWILIO PHONE NUMBER"):
+           for msg in client.sms.messages.iter(to="NUMBER"):
                votes[msg.body.upper().strip()] += 1
 
            for vote, total in votes.items():
-                self.response.write("{} {}\n".format(vote, total))
+               self.response.write("{} {}<br>".format(total, vote))
 
    class HelloWorld(webapp2.RequestHandler):
 
@@ -204,7 +204,7 @@ set and checked before each vote is tallied.
            votes = defaultdict(int)
            voted = set()
 
-           for msg in client.sms.messages.iter(to="TWILIO PHONE NUMBER"):
+           for msg in client.sms.messages.iter(to="NUMBER"):
                if msg.from_ in voted:
                    continue
 
@@ -212,7 +212,7 @@ set and checked before each vote is tallied.
                voted.add(msg.from_)
 
            for vote, total in votes.items():
-                self.response.write("{} {}\n".format(vote, total))
+               self.response.write("{} {}\n".format(total, vote))
 
    class HelloWorld(webapp2.RequestHandler):
 
@@ -248,7 +248,7 @@ simplicity and price (free).
            votes = defaultdict(int)
            voted = set()
 
-           for msg in client.sms.messages.iter(to="TWILIO PHONE NUMBER"):
+           for msg in client.sms.messages.iter(to="NUMBER"):
                if msg.from_ in voted:
                    continue
 
@@ -259,12 +259,12 @@ simplicity and price (free).
 
            options = {
                "cht": "pc",
-               "chs": "500x500",
+               "chs": "500x200",
                "chd": "t:" + ",".join(map(str, votes.values())),
                "chl": "|".join(votes.keys()),
            }
 
-           image = '<img src="{}?{}">'.format(self.url, urllib.urlencode(options))
+           image = '<img src="{}?{}">'.format(url, urllib.urlencode(options))
            self.response.write(image)
 
    class HelloWorld(webapp2.RequestHandler):
