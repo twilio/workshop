@@ -3,12 +3,8 @@
 Hello World
 ===========
 
-<<<<<<< HEAD
-The first thing we'll do today is get to know the `Twilio API`.
-=======
 The first thing we'll do today is explore Twilio's REST API calls. Soon, you'll
 see how SMS and phone calls can be originated from your web browser with Twilio.
->>>>>>> 4f63d15c586295e365ced8c1c978a78ebb99726a
 
 Twilio Account Portal
 ---------------------
@@ -39,7 +35,6 @@ Let's use the `API Explorer`_ to get to know the Twilio API.
 Getting Account Information
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-<<<<<<< HEAD
 Let's start of with a basic request for your account information. Go to your Twilio Account Portal, click on `Dev Tools`, then click on `Accounts` (on the right near the bottom), then click on `View Account`.
 
 Go ahead and click on the `Make Request` button. A response with your Account information should appear at the end of the page. 
@@ -64,10 +59,7 @@ Now lets look at the response. The server responded with an XML formatted repres
 Sending an SMS
 ^^^^^^^^^^^^^^
 
-Let's send a text message using the `API Explorer`_. Go to your Twilio Account Portal, click on `Dev Tools`, then click on `SMS Messages`, then on `Send SMS`.
-=======
 Let's send a text message using the `API Explorer`_. Go to your Twilio `Account Portal`_, click on `Dev Tools`, then click on `SMS Messages`, then on `Send SMS`.
->>>>>>> 4f63d15c586295e365ced8c1c978a78ebb99726a
 
 Here we can try out the Twilio API for sending SMS Messages. All the fields required to send an SMS are visible.
 
@@ -134,7 +126,4 @@ Additional Information
 .. _E.164: http://en.wikipedia.org/wiki/E.164
 .. _TwiML: http://www.twilio.com/docs/api/twiml
 .. _Twimlet: https://www.twilio.com/labs/twimlets
-<<<<<<< HEAD
 .. _Url Encoding: http://en.wikipedia.org/wiki/Percent-encoding
-=======
->>>>>>> 4f63d15c586295e365ced8c1c978a78ebb99726a
