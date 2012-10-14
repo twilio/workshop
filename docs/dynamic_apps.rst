@@ -202,25 +202,26 @@ Now visit your page. You'll see the following message.
     <?xml version="1.0" encoding="UTF-8"?>
     <Response>
       <Say>Hello from San Francisco</Say>
-      <Say>The current weather is Partly Cloudy, 65 F</Say>
+      <Say>The current weather is Partly Cloudy, 65 degrees</Say>
     </Response>
 
 
-It seems that our message is missing a phone number. To test out the greeting,
-add the ``From`` parameter to your URL.
+Our city defaults to San Francisco. To test out the greeting, add the
+``FromZip`` and ``FromCity`` parameter to your URL.
 
 .. code-block:: bash
 
-    http://localhost:8080/?From=15005550000
+    http://localhost:8080/?FromZip=15601&FromCity=Greensburg
 
 You should now see the phone number show up in your TwiML response.
 
 .. code-block:: xml
 
-    <?xml version="1.0" encoding="UTF-8"?>
-    <Response>
-      <Say>Hello 15005550000</Say>
-    </Response>
+   <?xml version="1.0" encoding="UTF-8"?>
+   <Response>
+     <Say>Hello from Greensburg</Say>
+     <Say>The current weather is Cloudy, 59 degrees</Say>
+   </Response>
 
 Whenever an HTTP request is sent to your application it includes data in query
 string and body of the request. The code we added when constructing the Say
@@ -229,7 +230,7 @@ parameter.
 
 .. code-block:: python
 
-   self.request.get('From')
+   self.request.get('FromZip')
 
 Incoming Twilio Data
 ~~~~~~~~~~~~~~~~~~~~
