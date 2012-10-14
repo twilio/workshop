@@ -195,9 +195,9 @@ Change your application's Voice URL so it serves this TwiML when dialed.
 Getting the Next Caller From the <Queue>
 -----------------------------------------
 
-With <Queue>s, we can hangup on the current caller and move to the next one by
-pressing the "#" key on the phone. Luckily, Twilio Client has a feature for
-sending DTMF tones programmatically.
+We want to make it easy to hangup the current call and move to the next one by
+pressing the "#" key on the phone. Twilio Client has a feature for sending DTMF
+tones (the tone when you press "#" on your phone) programmatically.
 
 First, we need to hold on to the response of ``Twilio.Device.connect()`` so
 let's add a global variable called ``connection`` and have every ``call()``
@@ -287,4 +287,17 @@ into the page.
     $(function() {
       getQueueStatistics();
     });
+
+Advanced Features
+------------------
+
+That is the end of the content for this tutorial. If you still have some time,
+try implementing some of these advanced features:
+
+- Add a chart showing the wait time of each queue participant.
+- Allow users to call in to the DJ hotline using their browser.
+- Add `a "whisper" URL`_ to play instructions to the DJ before her call
+  connects.
+
+.. _a "whisper" URL: http://www.twilio.com/docs/api/twiml/client#attributes
 
