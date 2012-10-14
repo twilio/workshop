@@ -265,9 +265,6 @@ pre, tt {
     font-size: 0.9em;
 }
 
-img.screenshot {
-}
-
 tt.descname, tt.descclassname {
     font-size: 0.95em;
 }
@@ -277,9 +274,9 @@ tt.descname {
 }
 
 img.screenshot {
-    -moz-box-shadow: 2px 2px 4px #eee;
-    -webkit-box-shadow: 2px 2px 4px #eee;
-    box-shadow: 2px 2px 4px #eee;
+    -moz-box-shadow: 1px 1px 6px #ddd;
+    -webkit-box-shadow: 1px 1px 6px #ddd;
+    box-shadow: 1px 1px 6px #ddd;
 }
 
 table.docutils {

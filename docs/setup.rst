@@ -160,12 +160,14 @@ Open the `App Engine dashboard  <http://appengine.google.com>`_ in a new tab and
 click "Create Application".
 
 .. image:: _static/appenginedashboard.png
+	:class: screenshot
 
 You'll need to pick a name and title for your application. Names in `Google App
 Engine` need to be lowercase and unique so I'd suggest a workshop specific name
 like ``{lastname}-twilio-workshop``.
 
 .. image:: _static/createapp.png
+	:class: screenshot
 
 Accept the terms and conditions and click "Create Application"
 
