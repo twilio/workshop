@@ -234,28 +234,30 @@ waiting queue?
 We can use `Queue`_ and `Member`_ REST API resources to programmatically look
 at all of our account's queues and active members on those queues.
 
-Let's write a quick script that will find our queue, loop through its members,
-and dequeue each of them with a thank you message. 
-
-.. code-block:: python
-
-    from twilio.rest import TwilioRestClient
-    client = TwilioRestClient("ACCOUNT_SID", "AUTH_TOKEN")
-    my_queue_name = "radio-callin-queue"
-
-First, we need to `find our queue`_.
-
-.. code-block:: python
-
-    my_queue = None
-    for queue in client.queues.list():
-        if queue.friendly_name == my_queue_name:
-            my_queue = queue
-
+Let's write a quick HTTP endpoint that will loop through our queue members, and
+dequeue each of them with a thank you message.
 
 Then, we can iterate over its members and dequeue with some static thank you
 TwiML. Try it yourself! Hint: issuing `an HTTP POST to a Member instance`_ will
 dequeue that member.
+
+.. code-block:: python
+
+    import urllib
+    import webapp2
+
+    from twilio import TwilioRestClient
+
+    message_url = ('http://twimlets.com/message?' + 
+                   urllib.quote_plus('Sorry, the queue is now closed.'))
+
+    class DequeueEveryone(webapp2.RequestHandler):
+        def get(self):
+            client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
+            # Should only have one queue, but let's make sure.
+            for queue in client.queues.list():
+                for member in queue.queue_members.list():
+                    queue_members.dequeue(message_url, member.sid)
     
 As a bonus, try allowing the callers being dequeued to record a message for the
 DJs to listen to at the beginning of the next show.
