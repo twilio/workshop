@@ -254,13 +254,37 @@ JSON.
             self.response.out.write(json.dumps(q_data))
 
 
-Add this QueueStatusPage into the WSIApplication's routing map as
-``/queue-status``. Now we need some Javascript to poll the state of the queue
-and update the UI.
+Add this QueueStatusPage into the WSGIApplication's routing map as
+``/queue-status``. Now we need some HTML for the status, and Javascript to poll
+the state of the queue and update the UI.
+
+Add this HTML:
+
+.. code-block:: html
+
+  <div style="width: 500px; font-family: sans-serif; text-align: left; margin: 0 auto;">
+    <h2>Queue Status</h2>
+    <ul>
+      <li>Current size: <span id="current-size">0</span>
+      <li>Average wait time: <span id="average-wait-time">0</span>
+    </ul>
+    <a href="javascript:void(0)" onclick="getQueueStatistics();">Refresh</a>
+  </div>
+
+And this Javascript function to fetch the latest queue status and insert it
+into the page.
 
 .. code-block:: javascript
 
-    $.get("/queue-status", function(result) {
-        // update your UI here
+    function getQueueStatistics() {
+      $.getJSON("/queue-status", function(result) {
+        $("#current-size").text(result.current_size);
+        $("#average-wait-time").text(result.average_wait_time);
+      });
+    }
+
+    // run the queue fetcher once on page load
+    $(function() {
+      getQueueStatistics();
     });
 
