@@ -15,7 +15,7 @@ responding to them with `TwiML`_.
 * Use a `helper library`_ to generate your TwiML and avoid simple typo errors.
 * Make use of `Fallback URLs`_ for phone numbers and TwiML apps to prevent your
   users from hearing the dreaded "We're sorry - an application error has
-  occured."
+  occurred."
 * If you're looking to maintain any state around calls, be sure to leverage 
   `Status Callback URLs`_ to get asynchronous notifications of completed calls.
 
@@ -53,7 +53,7 @@ Using Twilio Client
 touch with your users.
 
 * Be sure to include a visual cue for first time users to click "Allow" in the
-  popup permissions dialog.
+  pop-up permissions dialog.
 * Set your `token expiration`_ to a value that makes sense for your use case.  By
   default, this is an hour.
 * Use the `parameters`_ property to surface important details to your users like
@@ -75,7 +75,7 @@ Twilio safely.
   if it is compiled.
 * Always generate Twilio Client capability tokens server-side.
 * Use `Digest Authentication`_ and SSL in concert for your TwiML URLs to make
-  Twilio authenticate with your webserver.
+  Twilio authenticate with your web server.
 * Use `Request Validation`_ to further confirm that requests are legitimately
   coming from Twilio.
 
