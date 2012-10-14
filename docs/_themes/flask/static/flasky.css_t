@@ -182,7 +182,8 @@ div.body h5 { font-size: 100%; }
 div.body h6 { font-size: 100%; }
 
 div.section img {
-    width: 100%;
+    width: auto;
+	max-width: 662px;
 }
  
 a.headerlink {
@@ -460,8 +461,9 @@ a:hover tt {
         display: none;
     }
 
-
-
+	div.section img {
+	    width: 100%;
+	}
 }
 
 
@@ -547,6 +549,10 @@ a:hover tt {
     .github {
         display: none;
     }
+	
+	div.section img {
+	    width: 100%;
+	}
 }
 
 
