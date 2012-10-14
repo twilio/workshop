@@ -62,7 +62,7 @@ Now let's make a phone call using the `API Explorer`_. Go to your Twilio `Accoun
 Parameter    Definition
 ============ ==========
 `Format`     The `Format` field tells the API in what format we want the API to respond with. For our purposes right now this doesn't matter, but you can request the response in either `XML`_ or `JSON`_ format.
-`AccountSid` The `AccountSid` field tells the API which Account we want to use to make the call. This is pre-populated with your account.
+`AccountSid` The `AccountSid` field tells the API which Account we want to use to make the call. This is prepopulated with your account.
 `From`       The `From` field tells the API which phone number to use to make the call. This can be a number that you've purchased from Twilio or any phone number that you've validated on your account.
 `To`         The `To` field tells the API where to send the call. The phone number should be in `E.164`_ format or be a valid Twilio Client ID. Phone numbers that do not include a "+" with country code will be assumed to be from the same country as the `From` phone number.
 `Url`        The `Url` field tells the API where to load TwiML instructions for handling the call. `TwiML`_ is a set of instructions that tells Twilio what to do. Don't worry, we'll get more into TwiML later. 
