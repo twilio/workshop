@@ -31,29 +31,27 @@ called your phone, a robot answered with a "Hello World" message. We now know
 that TwiML powered that call, so let's take a look. Open
 http://twimlets.com/message?Message[0]=Hello+World in your browser.
 
-.. code-block:: xml
-
-    <?xml version="1.0" encoding="UTF-8"?>
-    <Response><Say>Hello World</Say></Response>
-
-This TwiML uses the `Say`_ verb and says "Hello World" with a text-to-speech
-engine. For outgoing calls, we choose the TwiML URL at the time of the call.
-For incoming calls, we set a TwiML URL that is fetched each time someone calls
-into your Twilio number.
+Notice the TwiML used for this application. This application uses the `Say`_ verb 
+and says "Hello World" with a text-to-speech engine. For outgoing calls, we choose 
+the TwiML URL at the time of the call. For incoming calls, we set a TwiML URL that 
+is fetched each time someone calls into your Twilio number.
 
 Twimlbin
 ----------
 
 TwiML can be hosted anywhere. It can be a static XML document or created
 dynamically by a web application. To make developing Twilio applications
-easier, you can host your TwiML on `Twimlbin`_.
+easier, you can host your TwiML on `Twimlbin`_. Applications with Twimlbin 
+will autosave and let you know when there might be potential errors with
+your TwiML. While we love Twimlbin, we recommend that you host your Twilio
+production application on your own se   rver. 
 
 Let's rebuild the "Hello World" greeting in `Twimlbin`_.
 
 To create a new bin, go to the Twimlbin homepage and click "Create a new
 Twimlbin". 
 
-Now let's write our "Hello World" application. 
+Now let's write our "Hello World" application with the following code.
 
 .. code-block:: xml
 
