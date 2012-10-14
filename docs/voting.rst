@@ -3,9 +3,9 @@
 SMS Polling and Voting
 ======================
 
-Whether at a hackathon or a student group meeting you'll often need to vote on
-items. Elections, food, or nominations, all these situations can be handled via
-SMS voting. 
+One great use of SMS is to get large groups to vote on something easily. Nearly
+everyone in the audience will have a cell phone in their pocket - why not let
+them send in their votes over SMS?
 
 We'll create a simple Twilio application to record and report votes via SMS. 
 
