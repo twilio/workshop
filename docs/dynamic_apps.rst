@@ -253,16 +253,20 @@ For a complete list check out `Twilio request parameters
 <http://www.twilio.com/docs/api/twiml/twilio_request#synchronous-request-parameters>`_ 
 on the Twilio Docs
 
-Uh-ho application error what should I do??
+Handling Server Errors
 --------------------------------------------
+
+Oh no, application error what should I do??
 
 .. image:: _static/app_error.png
 
-Don't panic if you see this, the program usually give you hints as to what gone wrong. Try reading the stacktrace it 
-will tell you what error the application has run into and where it occurred. 
+Don't panic if you see this, the program usually give you hints as to what gone
+wrong. Try reading the stack trace it will tell you what error the application
+has run into and where it occurred. 
 
-Some errors may also appear on the AppEngine logs. If the errors on the browser aren't too informative, try clicking on
-the Logs button on the AppEngine Launcher.
+Some errors may also appear on the AppEngine logs. If the errors on the browser
+aren't too informative, try clicking on the Logs button on the AppEngine
+Launcher.
 
 .. TODO: maybe we should include a screen capture of where the Logs button is on the AppEngine launcher. I wanna make the 
 .. red circles but I probably can't make it the same as what we have on the Initial Setup guide
@@ -277,10 +281,12 @@ deployment. It should take less than a minute to deploy.
 
 .. image:: _static/deployapp.png
 
-Once it's deployed, take the url for your application, ``http://<your-application-name>.appspot.com`` and set it as the voice
-number for your Twilio phone number. Configuring Twilio numbers is covered in
-more detail in :ref:`configure-number`
+Once it's deployed, take the URL for your application,
+``http://<your-application-name>.appspot.com`` and set it as the voice number
+for your Twilio phone number. Configuring Twilio numbers is covered in more
+detail in :ref:`configure-number`
 
-*Note: Since we have only implemented the GET endpoint, be sure to configure your number to use the GET method instead of the default POST*
+*Note: Since we have only implemented the GET endpoint, be sure to configure
+your number to use the GET method instead of the default POST*
 
 Now give it a call. You should hear your custom message. Hooray!

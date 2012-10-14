@@ -5,10 +5,10 @@ Radio Call In
 
 In this workshop we'll be designing a radio call in application using Twilio's
 <Queue> functionality. While we'll be using a radio show as our target, this
-style of queue managment can be used for any phone number where many people may
+style of queue management can be used for any phone number where many people may
 call at the same time.
 
-Prerequisties
+Prerequisites
 -------------
 
 The next sections assume a working knowledge of Twilio. You should be familiar
@@ -21,12 +21,12 @@ and Google App Engine.
 Using the Twilio Helper Libraries
 ---------------------------------
 
-Though this workshop will assume use of Python and the twilio-python helper
+Though this workshop will assume use of Python and the ``twilio-python`` helper
 library, Twilio offers helper libraries for a large set of languages. If you
 aren't using Python, download the `helper library`_ for your language of
 choice. You'll need the library in the next section.
 
-For the twilio-python helper library, you may find the `Queue API
+For the ``twilio-python`` helper library, you may find the `Queue API
 Reference`_ helpful for this workshop.
 
 .. _helper library: http://www.twilio.com/docs/libraries
@@ -74,9 +74,9 @@ includes ``<Say>`` and ``<Play>``.
     </Response>
 
 
-For the DJ dequeuing number, we use TwiML that bridges the current call to the
-queue. Note that <Dial>ing into a queue dequeues the front on the queue, while
-the only way to get onto a queue is by using the <Enqueue> verb.
+For the DJ number, we use TwiML that bridges the current call to the queue.
+Note that when you <Dial> a queue, the front caller on the queue is popped off,
+while the only way to get onto a queue is by using the <Enqueue> verb.
 
 .. code-block:: xml
 
@@ -95,10 +95,10 @@ to the first member on the queue.
 Dynamic Queue Information
 -------------------------
 
-Twilio's Queue exposes dynamic inforrmation about the queue state that
-you can use to build rich applications. In this section, we'll move past
-static TwiML applications and start using the data Queue gives you to
-create dynamic TwiML through a web application.
+Twilio's Queue exposes dynamic information about the queue state that you can
+use to build rich applications. In this section, we'll move past static TwiML
+applications and start using the data Queue gives you to create dynamic TwiML
+through a web application.
 
 We'll start by working on our hold music. Wouldn't it be cool if we could tell
 users where they were in the queue, how long they've been there, or even the
@@ -153,7 +153,7 @@ Handling Long Queue Times
 -------------------------
 
 We can use the ``action`` parameter to collect all sorts of useful metrics
-on the backend, or even issue hasty apologies for long queue wait times.
+on the back end, or even issue hasty apologies for long queue wait times.
 
 Let's try to implement some small features on our dequeue action call to
 let our users know we care. Using the `action URL parameters`_, we can

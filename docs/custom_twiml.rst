@@ -99,10 +99,10 @@ All this information and more can be found in your `Call Logs`_.
 Let's head over to your `Call Logs`_ by clicking on the Logs tab from your
 Account Dashboard.
 
-You'll notice that the call duration is listed as 1. Call durations with Twilio
-are rounded up to the nearest minute. 
+You'll notice that the call duration is listed as 1. Call duration is rounded
+up to the nearest minute. 
 
-You SMS Messages logs can also be found under the subheader `SMS Messages
+You SMS Messages logs can also be found under the header `SMS Messages
 <https://www.twilio.com/user/account/log/sms>`_
 
 Have any questions about your Logs? Ask your TA!
@@ -124,7 +124,7 @@ This TwiML is invalid. We open the Response and never close it.
 Call your phone number. You should hear a recorded message that says "We're
 sorry, an application error has occurred".
 
-Now let's find out why your application error has occured. The first place
+Now let's find out why your application error has occurred. The first place
 we'll want to look is the `debugger
 <https://www.twilio.com/user/account/debugger>`_. Navigate to your account
 dashboard and find your debugger. 
@@ -141,8 +141,8 @@ provides information on the data Twilio sent to your server.
 
 The `Response <http://www.twilio.com/docs/api/twiml/your_response>`_ section
 lets you know how your server responded to Twilio. Twilio will always expect
-correctly formated TwiML as a response. If your application tries to respond to
-Twilio with anything else, you will likely run into an error.
+correctly formatted TwiML as a response. If your application tries to respond
+to Twilio with anything else, you will likely run into an error.
 
 The Body section shows the content your application returned to Twilio. Here
 you'll see the invalid TwiML from your Twimlbin.
