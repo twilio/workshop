@@ -266,12 +266,54 @@ For a complete list, check out `Twilio request parameters
 <http://www.twilio.com/docs/api/twiml/twilio_request#synchronous-request-parameters>`_ 
 on the Twilio Docs.
 
+Handling Server Errors
+--------------------------------------------
+
+Sometimes, errors happen on the web application side of the code.
+
+.. image:: _static/app_error.png
+
+Don't panic if you see this. The stack trace will usually give you
+hints as to what error the application encountered, and where it occurred.
+
+Some errors may also appear on the AppEngine logs. If the errors on the browser
+aren't too informative, try clicking on the "Logs" button on the AppEngine
+Launcher.
+
+.. TODO: maybe we should include a screen capture of where the Logs button is on the AppEngine launcher. I wanna make the 
+.. red circles but I probably can't make it the same as what we have on the Initial Setup guide
+
+Deploy your Twilio application
+------------------------------
+
+We're now ready to hook up your brand new application to a Twilio number. To do this,
+we'll need to host your application live on the Internet, so that Twilio can find it!
+
+Open the Google App Engine Launcher application, highlight your application, and hit
+the "Deploy" button. A window will pop up and show you the status of your
+deployment. It should take less than a minute to deploy.
+
+.. image:: _static/deployapp.png
+
+Once it's deployed, take the URL for your application,
+``http://<your-application-name>.appspot.com`` and set it as the voice number
+for your Twilio phone number. Configuring Twilio numbers is covered in more
+detail in :ref:`configure-number`.
+
+.. note:: 
+
+   Since we have only implemented the GET endpoint, be sure to configure your
+   number to use the GET method instead of the default POST*
+
+Now give it a call. You should hear your custom message. Hooray!
+
 Gathering Digits From the Caller
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------
 
 Since not everyone's phone number is from the location they currently live,
 it may be helpful to add a feature to our app for checking the weather of
-any zipcode. To achieve this, we're going to use a TwiML verb called ``<Gather>``.
+any zipcode. To achieve this, we're going to use a TwiML verb called `<Gather>
+<http://www.twilio.com/docs/api/twiml/gather>`_.
 
 Let's begin by adding a ``<Gather>`` menu:
 
@@ -432,44 +474,4 @@ When the caller has entered 5 digits, Twilio will do a ``POST`` request to
 We use these digits to lookup the weather, just as we did for the original
 app with the ``FromZipCode`` passed in by Twilio.
 
-
-Handling Server Errors
---------------------------------------------
-
-Sometimes, errors happen on the web application side of the code.
-
-.. image:: _static/app_error.png
-
-Don't panic if you see this. The stack trace will usually give you
-hints as to what error the application encountered, and where it occurred.
-
-Some errors may also appear on the AppEngine logs. If the errors on the browser
-aren't too informative, try clicking on the "Logs" button on the AppEngine
-Launcher.
-
-.. TODO: maybe we should include a screen capture of where the Logs button is on the AppEngine launcher. I wanna make the 
-.. red circles but I probably can't make it the same as what we have on the Initial Setup guide
-
-Deploy your Twilio application
-------------------------------
-
-We're now ready to hook up your brand new application to a Twilio number. To do this,
-we'll need to host your application live on the Internet, so that Twilio can find it!
-
-Open the Google App Engine Launcher application, highlight your application, and hit
-the "Deploy" button. A window will pop up and show you the status of your
-deployment. It should take less than a minute to deploy.
-
-.. image:: _static/deployapp.png
-
-Once it's deployed, take the URL for your application,
-``http://<your-application-name>.appspot.com`` and set it as the voice number
-for your Twilio phone number. Configuring Twilio numbers is covered in more
-detail in :ref:`configure-number`.
-
-.. note:: 
-
-   Since we have only implemented the GET endpoint, be sure to configure your
-   number to use the GET method instead of the default POST*
-
-Now give it a call. You should hear your custom message. Hooray!
+Now, deploy your application again, and try it out!
