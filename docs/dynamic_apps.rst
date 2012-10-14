@@ -360,7 +360,7 @@ Another new addition is the ``post`` function on the original ``HelloWorld`` han
 This code is triggered when an HTTP client sends a ``POST`` to the ``/`` URL instead of a
 ``GET``. Because our first ``<Gather>`` specifies a ``POST`` method and no ``action``, the default
 ``action`` is the current URL (In this case, "/"). So, this code is what will get run
-after the first ``<Gather>`` is ``POST``ed.
+after the first ``<Gather>`` is ``POST``-ed.
 
 
 Handling Server Errors
@@ -375,7 +375,7 @@ wrong. Try reading the stack trace it will tell you what error the application
 has run into and where it occurred. 
 
 Some errors may also appear on the AppEngine logs. If the errors on the browser
-aren't too informative, try clicking on the Logs button on the AppEngine
+aren't too informative, try clicking on the "Logs" button on the AppEngine
 Launcher.
 
 .. TODO: maybe we should include a screen capture of where the Logs button is on the AppEngine launcher. I wanna make the 
