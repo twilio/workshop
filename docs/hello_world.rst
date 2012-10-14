@@ -14,6 +14,7 @@ your Account Dashboard. This is where your Account Sid and Auth Token are
 displayed.
 
 .. image:: _static/bar.png
+	:class: screenshot
 
 These are your account credentials. The Account SID acts as a username and the 
 Auth Token acts as a password. Twilio uses your Account Sid and Auth Token to 

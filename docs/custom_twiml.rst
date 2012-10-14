@@ -63,6 +63,7 @@ Now let's write our "Hello World" application.
 Your final application should look like this.
 
 .. image:: _static/twimlbin.png
+	:class: screenshot
 
 .. _configure-number:
 
@@ -82,6 +83,7 @@ your Twilio phone number. Change the "Voice URL" field to your Twimlbin URL and
 "Save Changes"
 
 .. image:: _static/voiceurl.png
+	:class: screenshot
 
 Now give your Twilio number a call! You should hear a "Hello World" greeting.
 
@@ -130,6 +132,7 @@ we'll want to look is the `debugger
 dashboard and find your debugger. 
 
 .. image:: _static/debugger.png
+	:class: screenshot
 
 Click on the error to see more detail. 
 
