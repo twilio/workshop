@@ -3,13 +3,13 @@
 Initial Setup
 =============
 
-Before we start the workshop we're going to need to make sure we have a few
+Before we start the workshop, we're going to need to make sure we have a few
 things. This guide assumes you have nothing currently set up on your computer.
 Feel free to skip any sections you've already completed.
 
 This guide will also setup your computer to build web applications using Google
 App Engine. If you're planning on using a different development stack during
-the workshop please make sure you can easily deploy new code to it during the
+the workshop, please make sure you can easily deploy new code to it during the
 day.
 
 Create a Twilio Account
@@ -59,7 +59,7 @@ code. **If you already have a text-editor or IDE of choice, skip this section**.
 Install Python
 --------------
 
-Open up Terminal or command prompt window and type the following command. If
+Open up Terminal, or a command prompt window. and type the following command. If
 you aren't sure how to launch your command prompt, ask a TA or a neighbor for
 help.
 
@@ -89,8 +89,8 @@ verify the output is now the same
 Install the App Engine SDK
 --------------------------
 
-We'll be deploying our Twilio applications to `Google App Engine` during the
-workshop. `Google App Engine` provides an easy and free way to host your code.
+We'll be deploying our Twilio applications to **Google App Engine** during the
+workshop. **Google App Engine** provides an easy and free way to host your code.
 Download and install the SDK for your operating system below.
 
 - `App Engine SDK Windows Installer <http://googleappengine.googlecode.com/files/GoogleAppEngine-1.7.2.msi>`_
@@ -102,12 +102,12 @@ Basic Application Setup
 
 The workshop directory you downloaded earlier contains a basic web application
 that we'll be extending during the workshop. We'll use this location to perform
-local testing and the code we edit here we'll later deploy to **Google App
-Engine**. To do this we need to tell the **Google App Engine Launcher** where
+local testing, and the code we edit here we'll later deploy to **Google App
+Engine**. To do this, we need to tell the **Google App Engine Launcher** where
 to find our files.
 
-Open the **Google App Engine Launcher** and from the file menu select "Add
-Existing Application…". In the next dialog click the "Browse" button and locate
+Open the **Google App Engine Launcher**, and from the file menu select "Add
+Existing Application…". In the next dialog, click the "Browse" button and locate
 the workshop folder. 
 
 .. image:: _static/addapp.png
@@ -117,9 +117,8 @@ Click "Add" to finish setting up the application.
 Run the Web Application
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-To run your application, open the `Google App Engine Launcher`. Select your
-application from the list and click the "Run" button. Your app is now running
-and ready to use.
+To run your application, select your application from the list and click the 
+"Run" button. Your app is now running and ready to use.
 
 .. image:: _static/startapp.png
 
@@ -130,29 +129,29 @@ browser window.
 
 Your browser will open and you'll see "Hello World!" on screen. Let's take a
 moment and look at the URL that is loaded in your browser. The URL says
-``http://localhost:8080/``. `localhost` is a special url that tells the browser
+``http://localhost:8080/``. `localhost` is a special URL that tells the browser
 to make a request to your local computer instead of out to the internet. The
-``:8080`` portion tells the browser to make the request to port 8080. This url
+``:8080`` portion tells the browser to make the request to port 8080. This URL
 is not visible from the internet and, in general, is only visible to you.
 
 .. note::
 	
-        While ``localhost`` urls will always address a user's local computer,
+        While ``localhost`` URLs will always address a user's local computer,
         its not entirely private. The application will also respond to your
         computer's IP address, so when developing applications be aware of your
         surroundings and of who else can possibly run your application on the
         network that you are connected to.
 
-In your text editor let's open up the file ``main.py`` at the root level of the
-workshop directory. Change the word "World" on line 6 to your name and save the
+In your text editor, let's open up the file ``main.py`` at the root level of the
+workshop directory. Change the word ``"World"`` on line 6 to your name and save the
 file. Return to the web browser and refresh the window to see your change.
 
-Great! We've successfully run and modified a small python application running on your computer.
+Great! We've successfully run and modified a small Python application running on your computer.
 
 Debugging your Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Quite often while developing applications you will encounter errors in your
+Quite often while developing applications, you will encounter errors in your
 code. The **Google App Engine Launcher** helps you deal with these errors by
 exposing helpful log information when running the local development
 environment.
@@ -169,7 +168,9 @@ window as you access your application.
 Deploy your Application
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-It's now time to share your application with the world. To deploy your application on App Engine, you'll need to create a application via your App Engine dashboard (which requires a Google account).
+It's now time to share your application with the world. To deploy your application on
+App Engine, you'll need to create an application via your App Engine dashboard 
+(which requires a Google account).
 
 Open the `App Engine dashboard  <http://appengine.google.com>`_ in a new tab and
 click "Create Application".
@@ -177,8 +178,8 @@ click "Create Application".
 .. image:: _static/appenginedashboard.png
 	:class: screenshot
 
-You'll need to pick a name and title for your application. Names in `Google App
-Engine` need to be lowercase and unique so I'd suggest a workshop specific name
+You'll need to pick a name and title for your application. Names in **Google App
+Engine** need to be lowercase and unique so I'd suggest a workshop specific name
 like ``{lastname}-twilio-workshop``.
 
 .. image:: _static/createapp.png
@@ -201,8 +202,8 @@ the application name you registered and save the file.
    :language: yaml
    :emphasize-lines: 1
 
-Open the `Google App Engine Launcher`, highlight your application if it is not
-already highlighted and then click the "Deploy" button. The Launcher app will
+Open the **Google App Engine Launcher**, highlight your application if it is not
+already highlighted, and then click the "Deploy" button. The Launcher app will
 upload your code and deploy it.
 
 .. image:: _static/deployapp.png
@@ -242,7 +243,7 @@ The Launcher app will also output progress information in to the Log:
 	The "Make Symlinks..." menu option can help with command-line work.
 	*** appcfg.py has finished with exit code 0 ***
 	
-Once you see ``*** appcfg.py has finished with exit code 0 ***`` your
+Once you see ``*** appcfg.py has finished with exit code 0 ***``. your
 application is live and ready to view. Open a browser window and go to
 ``http://{your-application-name}.appspot.com`` to view your application in
 action.
