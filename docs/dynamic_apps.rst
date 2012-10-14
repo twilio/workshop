@@ -273,10 +273,108 @@ Since not everyone's phone number is from the location they currently live,
 it may be helpful to add a feature to our app for checking the weather of
 any zipcode. To achieve this, we're going to use a TwiML verb called ``<Gather>``.
 
-Let's update our file to look like this:
+Let's begin by adding a ``<Gather>`` menu:
 
 .. code-block:: python
-    :emphasize-lines: 12,13,14,17-43,46
+    :emphasize-lines: 11-14
+
+    import webapp2
+    from util import current_weather
+    from twilio import twiml
+    
+    class HelloWorld(webapp2.RequestHandler):
+    
+        def get(self):
+            self.response.headers['Content-Type'] = "application/xml"
+            city = self.request.get("FromCity", "San Francisco")
+
+            response = twiml.Response()
+            gather = response.gather(numDigits=1)
+            gather.say("Press one for the weather in " + city)
+            gather.say("Press two to get the weather for another zip code.")
+            self.response.write(str(response))
+
+The TwiML we've generated so far for the menu looks like this:
+
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <Response>
+        <Gather numDigits="1">
+            <Say>Press one for the weather</Say>
+            <Say>Press two to get the weather for another zip code.</Say>
+        </Gather>
+    </Response>
+
+We now have a ``<Gather>`` verb which will allow the caller to type in exactly 1 digit
+(because of the attribute ``maxDigits``). Next, we need to hook it up to something that
+can process the input based on which digits were pressed. When we use ``<Gather>``, these
+digits are passed to us in the next callback using the parameter ``Digits``.
+
+Lets add some additional code to be able to handle this callback.
+
+.. code-block:: python
+    :emphasize-lines: 12,17-29
+
+    import webapp2
+    from util import current_weather
+    from twilio import twiml
+    
+    class HelloWorld(webapp2.RequestHandler):
+    
+        def get(self):
+            self.response.headers['Content-Type'] = "application/xml"
+            city = self.request.get("FromCity", "San Francisco")
+
+            response = twiml.Response()
+            gather = response.gather(method="POST", numDigits=1)
+            gather.say("Press one for the weather in " + city)
+            gather.say("Press two to get the weather for another zip code.")
+            self.response.write(str(response))
+
+        def post(self):
+            response = twiml.Response()
+
+            weather = current_weather(self.request.get("FromZip", "94117"))
+
+            digit_pressed = self.request.get("Digits")
+            if digit_pressed == "1":
+                response.say("The current weather is " + weather)
+                response.redirect("/", method="GET")
+            else:
+                gather = response.gather(numDigits=5)
+                gather.say("Please enter a 5 digit zip code.")
+            self.response.write(str(response))
+
+    app = webapp2.WSGIApplication([
+        ('/', HelloWorld),
+    ], debug=True)
+
+
+First, we've specified that the action of the ``<Gather>`` should be an HTTP ``POST``. Next, we
+added some code to our ``webapp2.RequestHandler`` to respond to a ``POST`` request.
+Because our first ``<Gather>`` specifies a ``POST`` method and no ``action``, the default
+``action`` is the current URL (In this case, "/"). So, this code is what will get run
+after the first ``<Gather>``.
+
+We pull the value ``digit_pressed`` from ``self.request.get("Digits")`` which corresponds to what
+the caller pressed. In the case that the ``digit_pressed`` was ``"1"``, the behavior looks quite
+similar to our earlier example. We then redirect the user back to the beginning to the menu, so they
+can try again.
+
+If the caller presses 2, we ask them for 5 more digits. However, we don't yet have the logic to process
+what to do with these 5 more digits, so nothing interesting will happen when they finish entering.
+
+.. note::
+
+    In this example, we use the ``numDigits`` attribute to know when the is done pressing digits.
+    This works because we know we're looking for exactly one digit. If we didn't know this, we could
+    use another attribute called ``finishOnKey``.
+
+Let's find out how to read the zipcode.
+
+.. code-block:: python
+    :emphasize-lines: 27,30-42,46
 
     import webapp2
     from util import current_weather
@@ -326,42 +424,13 @@ Let's update our file to look like this:
         ('/weather_for_zip', GetWeather),
     ], debug=True)
 
-
-A few things of note in this example. The code
-
-.. code-block:: python
-
-    response.gather(action="/weather_for_zip", method="POST", numDigits=5)
-
-generates the TwiML for
-
-.. code-block:: xml
-
-    <?xml version="1.0" encoding="UTF-8"?>
-    <Response>
-        <Gather method="POST" action="/weather_for_zip" numDigits="5" />
-    </Response>
-
-The ``method`` and ``action`` of the ``<Gather>`` verb tell Twilio what to do when the caller
-finishes entering digits. In this example, we use the ``numDigits`` attribute to
-know when the caller is done pressing digits. This works because we know how many
-digits are in a valid zipcode. If we didn't know this, we could use another attribute called
-``finishOnKey``.
+We've added a second ``webapp2.RequestHandler`` class. We also configure this handler
+to respond to the URL ``/weather_for_zip`` and changed the ``<Gather>`` to point to it.
 
 When the caller has entered 5 digits, Twilio will do a ``POST`` request to
-``/weather_for_zip`` with the digits pressed passed as the ``Digits`` argument
-through HTTP. We use these digits to lookup the weather, just as we did for the original
-app with the zipcode passed in by Twilio.
-
-We've added a second ``webapp2.RequestHandler`` class. We also configure this handler
-to respond to the URL ``/weather_for_zip`` which is what we're POSTing the second
-gather to.
-
-Another new addition is the ``post`` function on the original ``HelloWorld`` handler.
-This code is triggered when an HTTP client sends a ``POST`` to the ``/`` URL instead of a
-``GET``. Because our first ``<Gather>`` specifies a ``POST`` method and no ``action``, the default
-``action`` is the current URL (In this case, "/"). So, this code is what will get run
-after the first ``<Gather>`` is ``POST``-ed.
+``/weather_for_zip`` with the digits pressed passed as the ``Digits`` argument.
+We use these digits to lookup the weather, just as we did for the original
+app with the ``FromZipCode`` passed in by Twilio.
 
 
 Handling Server Errors
