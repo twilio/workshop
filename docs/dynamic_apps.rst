@@ -162,28 +162,32 @@ verbs in the previous sections.
 Here we turn our response object into a string using Python's built in string
 function. We then write this string to the response object.
 
-Personalized Greetings
-----------------------
+The Weather Channel
+-------------------
 
-So far all our responses look the same. We're just returning static TwiML as
-we did that the last two sessions. Now we're about to show you why building a
-dynamic application is so powerful. First, a simple example.
+So far all our responses look the same. We're just returning static TwiML as we
+did that the last two sessions. Now we're about to show you why building a
+dynamic application is so powerful. Instead of saying read a message, we'll
+inform the caller of the current weather in his or her zipcode.
 
 .. code-block:: python
-   :emphasize-lines: 10
+   :emphasize-lines: 2,10,11,14,15
 
    import webapp2
+   from util import current_weather
    from twilio import twiml
-   from util import weather_for_zip
     
    class HelloWorld(webapp2.RequestHandler):
     
        def get(self):
            self.response.headers['Content-Type'] = "application/xml"
 
+           weather = current_weather(self.request.get("FromZip", "94117"))
+           city = self.request.get("FromCity", "San Francisco")
+
            response = twiml.Response()
-           weather = weather_for_zip(self.request.get("FromZip"))
-           response.say("Hello " + weather)
+           response.say("Hello from " + city)
+           response.say("The current weather is " + weather)
            self.response.write(str(response))
 
    app = webapp2.WSGIApplication([
@@ -197,25 +201,27 @@ Now visit your page. You'll see the following message.
 
     <?xml version="1.0" encoding="UTF-8"?>
     <Response>
-      <Say>Hello </Say>
+      <Say>Hello from San Francisco</Say>
+      <Say>The current weather is Partly Cloudy, 65 degrees</Say>
     </Response>
 
 
-It seems that our message is missing a phone number. To test out the greeting,
-add the ``From`` parameter to your URL.
+Our city defaults to San Francisco. To test out the greeting, add the
+``FromZip`` and ``FromCity`` parameter to your URL.
 
 .. code-block:: bash
 
-    http://localhost:8080/?From=15005550000
+    http://localhost:8080/?FromZip=15601&FromCity=Greensburg
 
 You should now see the phone number show up in your TwiML response.
 
 .. code-block:: xml
 
-    <?xml version="1.0" encoding="UTF-8"?>
-    <Response>
-      <Say>Hello 15005550000</Say>
-    </Response>
+   <?xml version="1.0" encoding="UTF-8"?>
+   <Response>
+     <Say>Hello from Greensburg</Say>
+     <Say>The current weather is Cloudy, 59 degrees</Say>
+   </Response>
 
 Whenever an HTTP request is sent to your application it includes data in query
 string and body of the request. The code we added when constructing the Say
@@ -224,7 +230,7 @@ parameter.
 
 .. code-block:: python
 
-   self.request.get('From')
+   self.request.get('FromZip')
 
 Incoming Twilio Data
 ~~~~~~~~~~~~~~~~~~~~
@@ -286,7 +292,9 @@ Once it's deployed, take the URL for your application,
 for your Twilio phone number. Configuring Twilio numbers is covered in more
 detail in :ref:`configure-number`
 
-*Note: Since we have only implemented the GET endpoint, be sure to configure
-your number to use the GET method instead of the default POST*
+.. note:: 
+
+   Since we have only implemented the GET endpoint, be sure to configure your
+   number to use the GET method instead of the default POST*
 
 Now give it a call. You should hear your custom message. Hooray!
