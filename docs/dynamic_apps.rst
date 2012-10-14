@@ -14,12 +14,12 @@ Your first web application
 --------------------------
 
 The first part of the guide walked you through running a sample application.
-Before continuing make sure that example is running and you have "Hello World"
+Before continuing, make sure that app is running and you have "Hello World"
 displayed in your browser. If you can't remember how to run the sample app,
-refer back to :ref:`setup`
+refer back to :ref:`setup`.
 
 
-Before we can write our web application we need to understand the Hello World
+Before we can write our web application, we need to understand the Hello World
 example. Let's go through the example line-by-line and how it works. Inside our
 ``main.py`` file:
 
@@ -29,7 +29,7 @@ example. Let's go through the example line-by-line and how it works. Inside our
 
 
 This line is the first part of our application. We use the `webapp2
-<http://webapp-improved.appspot.com/>`_ module to create our web application
+<http://webapp-improved.appspot.com/>`_ Python module to create our web application,
 so we must do an import before we can use it in our code.
 
 .. literalinclude:: ../main.py
@@ -41,7 +41,7 @@ Whenever a user makes a request to our application, this is the code that
 will be run. The output of the code gets displayed to the web browser.
 
 Here we only define a single method on the class called ``get``. If you
-remember your HTTP verbs from the :ref:`http` section this method name
+remember your HTTP verbs from the :ref:`http` section, this method name
 corresponds to an HTTP GET. We'll show later how to handle different HTTP
 verbs, such as POST or DELETE.
 
@@ -51,8 +51,8 @@ verbs, such as POST or DELETE.
 
 Here we actually create our application. In the `webapp2` framework web
 applications are a mapping of URLs to request handler classes. The above
-mapping says "Whenever someone visits the front page of my application, process
-that request using the HelloWorld request handler class".
+mapping says "Whenever someone visits the front page of my application
+(the ``/`` url), process that request using the HelloWorld request handler class".
 
 Your first task will be to change the message displayed in your browser. Open
 up ``main.py`` in your text editor and change the "Hello World" message on line
@@ -63,8 +63,8 @@ Congratulations! You've just created your first web application.
 Responding with TwiML
 ---------------------
 
-A simple message is great but we want to use our application to serve TwiML.
-How do we respond with TwiML instead of plain text?  First let's change the
+A simple message is great, but we want to use our application to serve TwiML.
+How do we respond with TwiML instead of plain text?  First, let's change the
 message we respond with to valid TwiML.
 
 .. code-block:: python
@@ -84,7 +84,9 @@ message we respond with to valid TwiML.
 
 When someone requests the front page of our application, they will now get TwiML
 instead of HTML. However, if you refresh your page, nothing seems to have
-changed. The problem is that while we're sending back TwiML the browser still
+changed. 
+
+The problem is that while we're sending back TwiML, the browser still
 thinks we're sending it HTML. To fix this problem we'll include additional
 metadata via an HTTP header to tell the browser we're sending valid TwiML.
 
@@ -111,7 +113,7 @@ Using the Twilio Helper Library
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Manually writing TwiML soon becomes very tiresome. If you miss a single ending
-tag your entire application can break. Instead we'll use the ``twilio-python``
+tag, your entire application can break. Instead, we'll use the ``twilio-python``
 helper library to generate TwiML for us. This way we won't have to worry about
 messing up the syntax.
 
@@ -166,7 +168,7 @@ The Weather Channel
 -------------------
 
 So far all our responses look the same. We're just returning static TwiML as we
-did that the last two sessions. Now we're about to show you why building a
+did that the last two sessions. Now, we're about to show you why building a
 dynamic application is so powerful. Instead of saying read a message, we'll
 inform the caller of the current weather in his or her zipcode.
 
@@ -206,14 +208,14 @@ Now visit your page. You'll see the following message.
     </Response>
 
 
-Our city defaults to San Francisco. To test out the greeting, add the
-``FromZip`` and ``FromCity`` parameter to your URL.
+Our city defaults to San Francisco in case we can't find your zipcode or city.
+To test out the greeting, add the ``FromZip`` and ``FromCity`` parameter to your URL.
 
 .. code-block:: bash
 
     http://localhost:8080/?FromZip=15601&FromCity=Greensburg
 
-You should now see the phone number show up in your TwiML response.
+You should now see the weather for Greensburg, PA show up in your TwiML response.
 
 .. code-block:: xml
 
@@ -223,10 +225,9 @@ You should now see the phone number show up in your TwiML response.
      <Say>The current weather is Cloudy, 59 degrees</Say>
    </Response>
 
-Whenever an HTTP request is sent to your application it includes data in query
-string and body of the request. The code we added when constructing the Say
-verb pulls the named request parameter from either a POST or GET request
-parameter.
+Whenever an HTTP request is sent to your application from Twilio, it includes
+data in query string and body of the request. The code we added when
+constructing the Say verb pulls that data from the HTTP request parameter.
 
 .. code-block:: python
 
@@ -255,20 +256,19 @@ Parameter       Description
 Phone numbers are formatted in E164 format (with a '+' and country code, e.g.
 `+1617555121`).
 
-For a complete list check out `Twilio request parameters  
+For a complete list, check out `Twilio request parameters  
 <http://www.twilio.com/docs/api/twiml/twilio_request#synchronous-request-parameters>`_ 
-on the Twilio Docs
+on the Twilio Docs.
 
 Handling Server Errors
 --------------------------------------------
 
-Oh no, application error what should I do??
+Sometimes, errors happen on the web application side of the code.
 
 .. image:: _static/app_error.png
 
-Don't panic if you see this, the program usually give you hints as to what gone
-wrong. Try reading the stack trace it will tell you what error the application
-has run into and where it occurred. 
+Don't panic if you see this. The stack trace will usually give you
+hints as to what error the application encountered, and where it occurred.
 
 Some errors may also appear on the AppEngine logs. If the errors on the browser
 aren't too informative, try clicking on the Logs button on the AppEngine
@@ -280,8 +280,10 @@ Launcher.
 Deploy your Twilio application
 ------------------------------
 
-We're now ready to hook up your brand new application to a Twilio number. Open
-the Google App Engine Launcher application, highlight your application, and hit
+We're now ready to hook up your brand new application to a Twilio number. To do this,
+we'll need to host your application live on the Internet, so that Twilio can find it!
+
+Open the Google App Engine Launcher application, highlight your application, and hit
 the "Deploy" button. A window will pop up and show you the status of your
 deployment. It should take less than a minute to deploy.
 
@@ -290,7 +292,7 @@ deployment. It should take less than a minute to deploy.
 Once it's deployed, take the URL for your application,
 ``http://<your-application-name>.appspot.com`` and set it as the voice number
 for your Twilio phone number. Configuring Twilio numbers is covered in more
-detail in :ref:`configure-number`
+detail in :ref:`configure-number`.
 
 .. note:: 
 

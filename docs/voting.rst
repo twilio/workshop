@@ -12,14 +12,14 @@ We'll create a simple Twilio application to record and report votes via SMS.
 Ballot Format
 -------------
 
-For this poll ballots don't need a format. To vote text your choice to your
+For this poll ballots don't need a format. Voters will simply text their choice to your
 Twilio number.
 
-For example, to vote for Cal, text the following::
+For example, to vote for owls, a user would text the following::
 
-    cal
+    owls
 
-To see all the votes we'll use a simple Python script and the `twilio-python
+To see all the votes, we'll use a simple Python script and the `twilio-python
 <https://github.com/twilio/twilio-python>`_ helper library.
 
 .. code-block:: python
@@ -32,7 +32,7 @@ To see all the votes we'll use a simple Python script and the `twilio-python
        print msg.body
 
 However, this script will fail if you have multiple Twilio phone numbers. To
-fix this we'll filter messages based on the phone number they were sent to.
+fix this, we'll filter messages based on the phone number they were sent to.
 
 .. code-block:: python
    :emphasize-lines: 5
@@ -74,7 +74,7 @@ it contains.
     >>> s['hey']
     0
 
-Instead of just printing the message body we now use the message body as a key
+Instead of just printing the message body, we now use the message body as a key
 for the vote dictionary.
 
 .. code-block:: python
@@ -93,9 +93,9 @@ for the vote dictionary.
    for vote, total in votes.items():
        print "{} {}".format(vote, total)
 
-We can now see tallies. However, this code is very brittle. Votes for ``foo``
-and ``Foo``. Let's normalize the message bodies so that similar votes count for
-the same option.
+We can now see tallies. However, this code is very brittle. 
+Let's normalize the message bodies so that votes for ``owls`` and
+``Owls`` count for the same option.
 
 .. code-block:: python
    :emphasize-lines: 9
@@ -117,10 +117,9 @@ the same option.
 Preventing Cheaters
 -------------------
 
-Cheaters never prosper. And currently they don't get caught either. Any person
-can vote any number of times. We'll keep track of every number that's voted,
-only allowing them a single vote. To do this phone numbers will be added to a
-set and checked before each vote is tallied.
+Right now, any person can vote any number of times. To make sure each
+person can only vote once, we'll keep track of who has voted already.
+To do this, phone numbers will be added to a set and checked before each vote is tallied.
 
 
 .. code-block:: python
