@@ -102,13 +102,13 @@ Basic Application Setup
 
 The workshop directory you downloaded earlier contains a basic web application
 that we'll be extending during the workshop. We'll use this location to perform
-local testing and the code we edit here we'll later deploy to `Google App
-Engine`. To do this we need to tell the `Google App Engine Launcher` where to
-find our files.
+local testing and the code we edit here we'll later deploy to **Google App
+Engine**. To do this we need to tell the **Google App Engine Launcher** where
+to find our files.
 
-Open the `Google App Engine Launcher` and from the file menu select "Add 
-Existing Application…". In the next dialog click the "Browse" button and 
-locate the workshop folder. 
+Open the **Google App Engine Launcher** and from the file menu select "Add
+Existing Application…". In the next dialog click the "Browse" button and locate
+the workshop folder. 
 
 .. image:: _static/addapp.png
 

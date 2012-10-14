@@ -107,15 +107,19 @@ You SMS Messages logs can also be found under the subheader `SMS Messages
 
 Have any questions about your Logs? Ask your TA!
 
-Debugger
----------
+Debugging Errors
+----------------
 
-Let's rebuild your application. This time, use the following link as your Voice
-Request URL.
+Nobody's perfect. Eventually, something will break and your application won't
+work. Instead of hoping this doesn't happen, let's make an error occur. Copy
+and paste the following TwiML into your Twimlbin.
 
-.. code-block:: bash
+.. code-block:: xml
 
-    http://twimlets.com/echo?Twiml=%3CResponse%3E%3CSay%3EHello+World.%3C%2FSay%3E%3CResponse%3E
+    <?xml version="1.0" encoding="UTF-8"?>
+    <Response>
+
+This TwiML is invalid. We open the Response and never close it. 
 
 Call your phone number. You should hear a recorded message that says "We're
 sorry, an application error has occurred".
@@ -125,28 +129,28 @@ we'll want to look is the `debugger
 <https://www.twilio.com/user/account/debugger>`_. Navigate to your account
 dashboard and find your debugger. 
 
-.. note:: 
-
-   Your debugger can also be found under the 'Dev Tools' tab.
+.. image:: _static/debugger.png
 
 Click on the error to see more detail. 
 
 The Debugger lets you know where in your application Twilio ran into an error.
-This page is broken down into two sections.
+This page is broken down into three sections.
 
-- The `Request <http://www.twilio.com/docs/api/twiml/twilio_request>`_ section
-  provides information on the data Twilio sent to your server.
-- The `Response
-  <http://www.twilio.com/docs/api/twiml/your_response>`_ section lets you know
-  how your server responded to Twilio. Twilio will always expect correctly
-  formated TwiML as a response. If your application tries to respond to Twilio
-  with anything else, you will likely run into an error.
+The `Request <http://www.twilio.com/docs/api/twiml/twilio_request>`_ section
+provides information on the data Twilio sent to your server.
+
+The `Response <http://www.twilio.com/docs/api/twiml/your_response>`_ section
+lets you know how your server responded to Twilio. Twilio will always expect
+correctly formated TwiML as a response. If your application tries to respond to
+Twilio with anything else, you will likely run into an error.
+
+The Body section shows the content your application returned to Twilio. Here
+you'll see the invalid TwiML from your Twimlbin.
 
 Find the error within the response your application sent to Twilio. What should
 it look like?
 
 *Hint: You may also click on the more information link at the top of the page.*
-
 
 Additional Information
 -----------------------
