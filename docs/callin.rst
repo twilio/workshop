@@ -5,8 +5,8 @@ Radio Call In
 
 In this workshop we'll be designing a radio call in application using Twilio's
 <Queue> functionality. While we'll be using a radio show as our target, this
-style of queue management can be used for any phone number where many people
-may call at the same time.
+style of queue management can be used for any phone number where many people may
+call at the same time.
 
 Prerequisites
 -------------
@@ -21,16 +21,15 @@ and Google App Engine.
 Using the Twilio Helper Libraries
 ---------------------------------
 
-Though this workshop will assume use of Python and the twilio-python
-helper library, Twilio offers helper libraries for a large set of
-languages. If you aren't using Python, download the `helper library
-<http://www.twilio.com/docs/libraries>`_ for your language of choice. You'll
-need the library in the next section.
+Though this workshop will assume use of Python and the ``twilio-python`` helper
+library, Twilio offers helper libraries for a large set of languages. If you
+aren't using Python, download the `helper library`_ for your language of
+choice. You'll need the library in the next section.
 
-For the twilio-python helper library, you may find the `Queue API Reference`_
-helpful for this workshop.
+For the ``twilio-python`` helper library, you may find the `Queue API
+Reference`_ helpful for this workshop.
 
-.. _here: http://www.twilio.com/docs/libraries
+.. _helper library: http://www.twilio.com/docs/libraries
 .. _Queue API Reference: https://twilio-python.readthedocs.org/en/latest/api/rest/resources.html#queues
 
 Using <Queue>
@@ -190,7 +189,7 @@ Handling Long Queue Times
 -------------------------
 
 We can use the ``action`` parameter to collect all sorts of useful metrics
-on the backend, or even issue hasty apologies for long queue wait times.
+on the back end, or even issue hasty apologies for long queue wait times.
 
 Let's try to implement some small features on our dequeue action call to
 let our users know we care. Using the `action URL parameters`_, we can

@@ -20,11 +20,12 @@ refer back to :ref:`setup`
 
 
 Before we can write our web application we need to understand the Hello World
-example. Let's go through the example line-by-line and how it works.
+example. Let's go through the example line-by-line and how it works. Inside our
+``main.py`` file:
 
 .. literalinclude:: ../main.py
    :language: python
-   :lines: 1 
+   :lines: 1
 
 
 This line is the first part of our application. We use the `webapp2
@@ -35,10 +36,9 @@ so we must do an import before we can use it in our code.
    :language: python
    :lines: 3-6
 
-This class handles incoming requests to our application at a specific URL.
-Whenever a user makes a request to our application a method on this class will
-be invoked. The method will usually write out a response for display in a
-browser. 
+This code handles incoming requests to our application at the specified URL.
+Whenever a user makes a request to our application, this is the code that
+will be run. The output of the code gets displayed to the web browser.
 
 Here we only define a single method on the class called ``get``. If you
 remember your HTTP verbs from the :ref:`http` section this method name
@@ -52,7 +52,7 @@ verbs, such as POST or DELETE.
 Here we actually create our application. In the `webapp2` framework web
 applications are a mapping of URLs to request handler classes. The above
 mapping says "Whenever someone visits the front page of my application, process
-that requests using the HelloWorld request handler class".
+that request using the HelloWorld request handler class".
 
 Your first task will be to change the message displayed in your browser. Open
 up ``main.py`` in your text editor and change the "Hello World" message on line
@@ -152,7 +152,7 @@ string.
    response.say("Hello TwilioCon")
 
 This methods adds a Say verb to the response. There are similar methods on the
-resonse object for Play, Gather, Record, and Dial. We've already covered these
+response object for Play, Gather, Record, and Dial. We've already covered these
 verbs in the previous sections.
 
 .. code-block:: python
@@ -174,6 +174,7 @@ dynamic application is so powerful. First, a simple example.
 
    import webapp2
    from twilio import twiml
+   from util import weather_for_zip
     
    class HelloWorld(webapp2.RequestHandler):
     
@@ -181,7 +182,8 @@ dynamic application is so powerful. First, a simple example.
            self.response.headers['Content-Type'] = "application/xml"
 
            response = twiml.Response()
-           respone.say("Hello " + self.request.params('From'))
+           weather = weather_for_zip(self.request.get("FromZip"))
+           response.say("Hello " + weather)
            self.response.write(str(response))
 
    app = webapp2.WSGIApplication([
@@ -204,15 +206,15 @@ add the ``From`` parameter to your URL.
 
 .. code-block:: bash
 
-    http://localhost:8080/?From=+15005550000
+    http://localhost:8080/?From=15005550000
 
-You should now see a the phone number show up in your TwiML response.
+You should now see the phone number show up in your TwiML response.
 
 .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
     <Response>
-      <Say>Hello +15005550000</Say>
+      <Say>Hello 15005550000</Say>
     </Response>
 
 Whenever an HTTP request is sent to your application it includes data in query
@@ -222,7 +224,7 @@ parameter.
 
 .. code-block:: python
 
-   self.request.params('From')
+   self.request.get('From')
 
 Incoming Twilio Data
 ~~~~~~~~~~~~~~~~~~~~
@@ -232,17 +234,42 @@ your server. All TwiML requests made by Twilio include additional information
 about the caller. Here is short list of some of the data that Twilio will send
 your way.
 
-============== ===========
-Parameter      Description
-============== ===========
-``From``       The phone number or client identifier of the party that initiated the call. 
-``To``         The phone number or client identifier of the called party.
-``CallStatus`` A descriptive status for the call. The value is one of queued, ringing, in-progress, completed, busy, failed or no-answer
-``Body``       The text body of the SMS message. Up to 160 characters long.
-============== ===========
+=============== ===========
+Parameter       Description
+=============== ===========
+``From``        The phone number or client identifier of the party that initiated the call. 
+``To``          The phone number or client identifier of the called party.
+``CallStatus``  A descriptive status for the call. The value is one of queued, ringing, in-progress, completed, busy, failed or no-answer
+``FromCity``    The city of the caller.
+``FromState``   The state or province of the caller.
+``FromZip``     The postal code of the caller.
+``FromCountry`` The country of the caller.
+=============== ===========
 
 Phone numbers are formatted in E164 format (with a '+' and country code, e.g.
 `+1617555121`).
+
+For a complete list check out `Twilio request parameters  
+<http://www.twilio.com/docs/api/twiml/twilio_request#synchronous-request-parameters>`_ 
+on the Twilio Docs
+
+Handling Server Errors
+--------------------------------------------
+
+Oh no, application error what should I do??
+
+.. image:: _static/app_error.png
+
+Don't panic if you see this, the program usually give you hints as to what gone
+wrong. Try reading the stack trace it will tell you what error the application
+has run into and where it occurred. 
+
+Some errors may also appear on the AppEngine logs. If the errors on the browser
+aren't too informative, try clicking on the Logs button on the AppEngine
+Launcher.
+
+.. TODO: maybe we should include a screen capture of where the Logs button is on the AppEngine launcher. I wanna make the 
+.. red circles but I probably can't make it the same as what we have on the Initial Setup guide
 
 Deploy your Twilio application
 ------------------------------
@@ -250,12 +277,16 @@ Deploy your Twilio application
 We're now ready to hook up your brand new application to a Twilio number. Open
 the Google App Engine Launcher application, highlight your application, and hit
 the "Deploy" button. A window will pop up and show you the status of your
-deployemnt. It should take less than a minute to deploy. 
+deployment. It should take less than a minute to deploy.
 
 .. image:: _static/deployapp.png
 
-Once it's deployed, take the url for your application and set it as the voice
-number for your Twilio phone number. Configuring Twilio numbers is covered in
-more detail in :ref:`configure-number`
+Once it's deployed, take the URL for your application,
+``http://<your-application-name>.appspot.com`` and set it as the voice number
+for your Twilio phone number. Configuring Twilio numbers is covered in more
+detail in :ref:`configure-number`
+
+*Note: Since we have only implemented the GET endpoint, be sure to configure
+your number to use the GET method instead of the default POST*
 
 Now give it a call. You should hear your custom message. Hooray!

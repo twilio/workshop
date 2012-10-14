@@ -13,7 +13,6 @@ Idea Factory
    :maxdepth: 2
 
    hello_world
-   http
    custom_twiml
    static_apps
    dynamic_apps
@@ -29,3 +28,4 @@ Unlocking the Box
    browser
    queue
    callcenter
+   bestpractices

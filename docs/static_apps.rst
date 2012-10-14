@@ -198,6 +198,7 @@ the blue button titled `Buy a number
 <https://www.twilio.com/user/account/phone-numbers/available/local>`_.
 
 .. image:: _static/buy_number.png
+	:class: screenshot
 
 You may search for the Twilio phone number you would like to purchase by the
 area code, digits, and phrases as well as by the location.
