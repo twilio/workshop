@@ -177,18 +177,20 @@ started listening for incoming calls (if applicable).
 This code defines a new function called ``call`` that just wraps
 ``Twilio.Device.connect``, which initiates an outgoing call to the Application
 we created earlier. In this case, calling ``call()`` should execute the TwiML
+below. We've made a small change so that the DJ can press "#" to end the
+current call, and dial the next person in the queue.
 
 .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
     <Response>
-        <Dial>
+        <Dial finishOnKey="#">
             <Queue>radio-callin-queue</Queue>
         </Dial>
+        <Redirect></Redirect>
     </Response>
 
-assuming that we correctly configured the Application to fetch the URL that
-returns this TwiML.
+Change your application's Voice URL so it serves this TwiML when dialed.
 
 Getting the Next Caller From the <Queue>
 -----------------------------------------
@@ -199,7 +201,8 @@ sending DTMF tones programmatically.
 
 First, we need to hold on to the response of ``Twilio.Device.connect()`` so
 let's add a global variable called ``connection`` and have every ``call()``
-command set it. Replace the existing ``call`` function with something like this:
+command set it. Replace the existing ``call`` function with something like
+this:
 
 .. code-block:: javascript
 
@@ -213,12 +216,16 @@ Now, we can add a new function, called ``next()``:
 .. code-block:: javascript
 
     function next() {
-        if(connection) {
+        if (connection) {
             connection.sendDTMF("#");
         }
     }
 
-Now we just need to add another button that let's us bring in the next caller.
+Because we added a `finishOnKey` attribute to our TwiML, sending a "#" symbol
+via DTMF tone will hang up on the current caller, and connect the browser to
+the next caller. 
+
+Now we just need to add another button to trigger the hangup.
 
 .. code-block:: html
 
@@ -229,7 +236,9 @@ Now we just need to add another button that let's us bring in the next caller.
 Adding UI To Display the Queue
 ------------------------------
 
-Let's add a feature where we can see a visualization of the queue
+Let's add a feature where we can see a visualization of the queue. We'll add
+a new queue status endpoint, which will return the current queue status as
+JSON.
 
 .. code-block:: python
 
@@ -238,17 +247,20 @@ Let's add a feature where we can see a visualization of the queue
 
     class QueueStatusPage(webapp2.RequestHandler):
 
+        queue_sid = "QQ123"
         def get(self):
             client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
-            q_data = {"queues": client.queues.get(QUEUE_SID)}
+            q_data = {"queues": client.queues.get(queue_sid)}
             self.response.out.write(json.dumps(q_data))
 
 
-Add this QueueStatusPage into the WSIApplication's routing map as ``/queue-status``.
-Now we need some Javascript to poll the state of the queue and update the UI.
+Add this QueueStatusPage into the WSIApplication's routing map as
+``/queue-status``. Now we need some Javascript to poll the state of the queue
+and update the UI.
 
 .. code-block:: javascript
 
     $.get("/queue-status", function(result) {
         // update your UI here
     });
+
