@@ -25,10 +25,17 @@ over these after we've made some calls and sent some SMS messages.
 
 At the bottom of your Account Dashboard is the API Explorer and the Debugger. 
 
-Hello World: Sending an SMS
----------------------------
+Twilio API Explorer
+-------------------
 
-Let's send a text message using the `Twilio API Explorer`_. Go to your Twilio Account Portal, click on `Dev Tools`, then click on `SMS Messages`, then on `Send SMS`.
+The `API Explorer`_ is a helpful application built in to the Account Portal that allows you to easily try out the API without getting in to the details of scripting and :ref:`HTTP <http>` calls.
+
+Let's use the `API Explorer` to get to know the `Twilio API`.
+
+Hello World: Sending an SMS
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Let's send a text message using the `API Explorer`_. Go to your Twilio Account Portal, click on `Dev Tools`, then click on `SMS Messages`, then on `Send SMS`.
 
 Here we can try out the Twilio API for sending SMS Messages. All the fields required to send an SMS are visible.
 
@@ -47,9 +54,9 @@ Enter your cell phone number in the `To` field and a `Body` and click the `Make 
 Your phone should receive a text message shortly.
 
 Hello World: Making a Phone Call
----------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Now let's make a phone call using the `Twilio API Explorer`_. Go to your Twilio Account Portal, click on `Dev Tools`, then click on `Phone Calls`, then on `Make call`.
+Now let's make a phone call using the `API Explorer`_. Go to your Twilio Account Portal, click on `Dev Tools`, then click on `Phone Calls`, then on `Make call`.
 
 ============ ==========
 Parameter    Definition
@@ -66,10 +73,6 @@ Enter your cell phone number in the `To` field. To make things easy up we're gon
 .. code-block:: bash
 
 	http://twimlets.com/message?Message=Hello+World
-	
-	or 
-	
-	http://bit.ly/QYjYrc
 
 Click on the `Make Request` button at the bottom of the page. Your phone should start ringing momentarily.
 
@@ -79,7 +82,7 @@ Additional Information
 - `Twilio REST API - Calls Resource <http://www.twilio.com/docs/api/rest/call>`_
 - `Twilio REST API - SMS/Messages Resource <http://www.twilio.com/docs/api/rest/sms>`_
 
-.. _Twilio API Explorer: https://www.twilio.com/user/account/developer-tools/api-explorer
+.. _API Explorer: https://www.twilio.com/user/account/developer-tools/api-explorer
 .. _XML: http://en.wikipedia.org/wiki/XML
 .. _JSON: http://en.wikipedia.org/wiki/JSON
 .. _E.164: http://en.wikipedia.org/wiki/E.164
