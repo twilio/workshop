@@ -12,14 +12,14 @@ We'll create a simple Twilio application to record and report votes via SMS.
 Ballot Format
 -------------
 
-For this poll ballots don't need a format. To vote text your choice to your
+For this poll ballots don't need a format. Voters will simply text their choice to your
 Twilio number.
 
 For example, to vote for Twilio, you'd text the following::
 
     twilio
 
-To see all the votes we'll use the `twilio-python
+To see all the votes, we'll use the `twilio-python
 <https://github.com/twilio/twilio-python>`_ helper library to fetch data from
 the Twilio REST API. Open ``main.py`` and add the following lines.
 
@@ -32,7 +32,6 @@ the Twilio REST API. Open ``main.py`` and add the following lines.
    client = TwilioRestClient("ACCOUNT_SID", "AUTH_TOKEN")
 
    class HelloWorld(webapp2.RequestHandler):
-
        def get(self):
            self.response.write('Hello World!')
 
@@ -186,7 +185,7 @@ Preventing Cheaters
 
 Cheaters never prosper. And currently they don't get caught either. Any person
 can vote any number of times. We'll keep track of every number that's already voted,
-only allowing them a single vote. To do this phone numbers will be added to a
+only allowing them a single vote. To do this, phone numbers will be added to a
 set and checked before each vote is tallied.
 
 .. code-block:: python

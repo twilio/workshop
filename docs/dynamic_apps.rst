@@ -14,12 +14,12 @@ Your first web application
 --------------------------
 
 The first part of the guide walked you through running a sample application.
-Before continuing make sure that example is running and you have "Hello World"
+Before continuing, make sure that app is running and you have "Hello World"
 displayed in your browser. If you can't remember how to run the sample app,
-refer back to :ref:`setup`
+refer back to :ref:`setup`.
 
 
-Before we can write our web application we need to understand the Hello World
+Before we can write our web application, we need to understand the Hello World
 example. Let's go through the example line-by-line and how it works. Inside our
 ``main.py`` file:
 
@@ -29,7 +29,7 @@ example. Let's go through the example line-by-line and how it works. Inside our
 
 
 This line is the first part of our application. We use the `webapp2
-<http://webapp-improved.appspot.com/>`_ module to create our web application
+<http://webapp-improved.appspot.com/>`_ Python module to create our web application,
 so we must do an import before we can use it in our code.
 
 .. literalinclude:: ../main.py
@@ -41,7 +41,7 @@ Whenever a user makes a request to our application, this is the code that
 will be run. The output of the code gets displayed to the web browser.
 
 Here we only define a single method on the class called ``get``. If you
-remember your HTTP verbs from the :ref:`http` section this method name
+remember your HTTP verbs from the :ref:`http` section, this method name
 corresponds to an HTTP GET. We'll show later how to handle different HTTP
 verbs, such as POST or DELETE.
 
@@ -51,8 +51,8 @@ verbs, such as POST or DELETE.
 
 Here we actually create our application. In the `webapp2` framework web
 applications are a mapping of URLs to request handler classes. The above
-mapping says "Whenever someone visits the front page of my application, process
-that request using the HelloWorld request handler class".
+mapping says "Whenever someone visits the front page of my application
+(the ``/`` url), process that request using the HelloWorld request handler class".
 
 Your first task will be to change the message displayed in your browser. Open
 up ``main.py`` in your text editor and change the "Hello World" message on line
@@ -63,8 +63,8 @@ Congratulations! You've just created your first web application.
 Responding with TwiML
 ---------------------
 
-A simple message is great but we want to use our application to serve TwiML.
-How do we respond with TwiML instead of plain text?  First let's change the
+A simple message is great, but we want to use our application to serve TwiML.
+How do we respond with TwiML instead of plain text?  First, let's change the
 message we respond with to valid TwiML.
 
 .. code-block:: python
@@ -84,7 +84,9 @@ message we respond with to valid TwiML.
 
 When someone requests the front page of our application, they will now get TwiML
 instead of HTML. However, if you refresh your page, nothing seems to have
-changed. The problem is that while we're sending back TwiML the browser still
+changed. 
+
+The problem is that while we're sending back TwiML, the browser still
 thinks we're sending it HTML. To fix this problem we'll include additional
 metadata via an HTTP header to tell the browser we're sending valid TwiML.
 
@@ -111,7 +113,7 @@ Using the Twilio Helper Library
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Manually writing TwiML soon becomes very tiresome. If you miss a single ending
-tag your entire application can break. Instead we'll use the ``twilio-python``
+tag, your entire application can break. Instead, we'll use the ``twilio-python``
 helper library to generate TwiML for us. This way we won't have to worry about
 messing up the syntax.
 
@@ -212,14 +214,14 @@ Now visit your page. You'll see the following message.
     </Response>
 
 
-Our city defaults to San Francisco. To test out the greeting, add the
-``FromZip`` and ``FromCity`` parameter to your URL.
+Our city defaults to San Francisco in case we can't find your zipcode or city.
+To test out the greeting, add the ``FromZip`` and ``FromCity`` parameter to your URL.
 
 .. code-block:: bash
 
     http://localhost:8080/?FromZip=15601&FromCity=Greensburg
 
-You should now see the phone number show up in your TwiML response.
+You should now see the weather for Greensburg, PA show up in your TwiML response.
 
 .. code-block:: xml
 
@@ -229,10 +231,9 @@ You should now see the phone number show up in your TwiML response.
      <Say>The current weather is Cloudy, 59 degrees</Say>
    </Response>
 
-Whenever an HTTP request is sent to your application it includes data in query
-string and body of the request. The code we added when constructing the Say
-verb pulls the named request parameter from either a POST or GET request
-parameter.
+Whenever an HTTP request is sent to your application from Twilio, it includes
+data in query string and body of the request. The code we added when
+constructing the Say verb pulls that data from the HTTP request parameter.
 
 .. code-block:: python
 
@@ -261,9 +262,9 @@ Parameter       Description
 Phone numbers are formatted in E164 format (with a '+' and country code, e.g.
 `+1617555121`).
 
-For a complete list check out `Twilio request parameters  
+For a complete list, check out `Twilio request parameters  
 <http://www.twilio.com/docs/api/twiml/twilio_request#synchronous-request-parameters>`_ 
-on the Twilio Docs
+on the Twilio Docs.
 
 Gathering Digits From the Caller
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -272,10 +273,108 @@ Since not everyone's phone number is from the location they currently live,
 it may be helpful to add a feature to our app for checking the weather of
 any zipcode. To achieve this, we're going to use a TwiML verb called ``<Gather>``.
 
-Let's update our file to look like this:
+Let's begin by adding a ``<Gather>`` menu:
 
 .. code-block:: python
-    :emphasize-lines: 12,13,14,17-43,46
+    :emphasize-lines: 11-14
+
+    import webapp2
+    from util import current_weather
+    from twilio import twiml
+    
+    class HelloWorld(webapp2.RequestHandler):
+    
+        def get(self):
+            self.response.headers['Content-Type'] = "application/xml"
+            city = self.request.get("FromCity", "San Francisco")
+
+            response = twiml.Response()
+            gather = response.gather(numDigits=1)
+            gather.say("Press one for the weather in " + city)
+            gather.say("Press two to get the weather for another zip code.")
+            self.response.write(str(response))
+
+The TwiML we've generated so far for the menu looks like this:
+
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <Response>
+        <Gather numDigits="1">
+            <Say>Press one for the weather</Say>
+            <Say>Press two to get the weather for another zip code.</Say>
+        </Gather>
+    </Response>
+
+We now have a ``<Gather>`` verb which will allow the caller to type in exactly 1 digit
+(because of the attribute ``maxDigits``). Next, we need to hook it up to something that
+can process the input based on which digits were pressed. When we use ``<Gather>``, these
+digits are passed to us in the next callback using the parameter ``Digits``.
+
+Lets add some additional code to be able to handle this callback.
+
+.. code-block:: python
+    :emphasize-lines: 12,17-29
+
+    import webapp2
+    from util import current_weather
+    from twilio import twiml
+    
+    class HelloWorld(webapp2.RequestHandler):
+    
+        def get(self):
+            self.response.headers['Content-Type'] = "application/xml"
+            city = self.request.get("FromCity", "San Francisco")
+
+            response = twiml.Response()
+            gather = response.gather(method="POST", numDigits=1)
+            gather.say("Press one for the weather in " + city)
+            gather.say("Press two to get the weather for another zip code.")
+            self.response.write(str(response))
+
+        def post(self):
+            response = twiml.Response()
+
+            weather = current_weather(self.request.get("FromZip", "94117"))
+
+            digit_pressed = self.request.get("Digits")
+            if digit_pressed == "1":
+                response.say("The current weather is " + weather)
+                response.redirect("/", method="GET")
+            else:
+                gather = response.gather(numDigits=5)
+                gather.say("Please enter a 5 digit zip code.")
+            self.response.write(str(response))
+
+    app = webapp2.WSGIApplication([
+        ('/', HelloWorld),
+    ], debug=True)
+
+
+First, we've specified that the action of the ``<Gather>`` should be an HTTP ``POST``. Next, we
+added some code to our ``webapp2.RequestHandler`` to respond to a ``POST`` request.
+Because our first ``<Gather>`` specifies a ``POST`` method and no ``action``, the default
+``action`` is the current URL (In this case, "/"). So, this code is what will get run
+after the first ``<Gather>``.
+
+We pull the value ``digit_pressed`` from ``self.request.get("Digits")`` which corresponds to what
+the caller pressed. In the case that the ``digit_pressed`` was ``"1"``, the behavior looks quite
+similar to our earlier example. We then redirect the user back to the beginning to the menu, so they
+can try again.
+
+If the caller presses 2, we ask them for 5 more digits. However, we don't yet have the logic to process
+what to do with these 5 more digits, so nothing interesting will happen when they finish entering.
+
+.. note::
+
+    In this example, we use the ``numDigits`` attribute to know when the is done pressing digits.
+    This works because we know we're looking for exactly one digit. If we didn't know this, we could
+    use another attribute called ``finishOnKey``.
+
+Let's find out how to read the zipcode.
+
+.. code-block:: python
+    :emphasize-lines: 27,30-42,46
 
     import webapp2
     from util import current_weather
@@ -325,57 +424,27 @@ Let's update our file to look like this:
         ('/weather_for_zip', GetWeather),
     ], debug=True)
 
-
-A few things of note in this example. The code
-
-.. code-block:: python
-
-    response.gather(action="/weather_for_zip", method="POST", numDigits=5)
-
-generates the TwiML for
-
-.. code-block:: xml
-
-    <?xml version="1.0" encoding="UTF-8"?>
-    <Response>
-        <Gather method="POST" action="/weather_for_zip" numDigits="5" />
-    </Response>
-
-The ``method`` and ``action`` of the ``<Gather>`` verb tell Twilio what to do when the caller
-finishes entering digits. In this example, we use the ``numDigits`` attribute to
-know when the caller is done pressing digits. This works because we know how many
-digits are in a valid zipcode. If we didn't know this, we could use another attribute called
-``finishOnKey``.
+We've added a second ``webapp2.RequestHandler`` class. We also configure this handler
+to respond to the URL ``/weather_for_zip`` and changed the ``<Gather>`` to point to it.
 
 When the caller has entered 5 digits, Twilio will do a ``POST`` request to
-``/weather_for_zip`` with the digits pressed passed as the ``Digits`` argument
-through HTTP. We use these digits to lookup the weather, just as we did for the original
-app with the zipcode passed in by Twilio.
-
-We've added a second ``webapp2.RequestHandler`` class. We also configure this handler
-to respond to the URL ``/weather_for_zip`` which is what we're POSTing the second
-gather to.
-
-Another new addition is the ``post`` function on the original ``HelloWorld`` handler.
-This code is triggered when an HTTP client sends a ``POST`` to the ``/`` URL instead of a
-``GET``. Because our first ``<Gather>`` specifies a ``POST`` method and no ``action``, the default
-``action`` is the current URL (In this case, "/"). So, this code is what will get run
-after the first ``<Gather>`` is ``POST``ed.
+``/weather_for_zip`` with the digits pressed passed as the ``Digits`` argument.
+We use these digits to lookup the weather, just as we did for the original
+app with the ``FromZipCode`` passed in by Twilio.
 
 
 Handling Server Errors
 --------------------------------------------
 
-Oh no, application error what should I do??
+Sometimes, errors happen on the web application side of the code.
 
 .. image:: _static/app_error.png
 
-Don't panic if you see this, the program usually give you hints as to what gone
-wrong. Try reading the stack trace it will tell you what error the application
-has run into and where it occurred. 
+Don't panic if you see this. The stack trace will usually give you
+hints as to what error the application encountered, and where it occurred.
 
 Some errors may also appear on the AppEngine logs. If the errors on the browser
-aren't too informative, try clicking on the Logs button on the AppEngine
+aren't too informative, try clicking on the "Logs" button on the AppEngine
 Launcher.
 
 .. TODO: maybe we should include a screen capture of where the Logs button is on the AppEngine launcher. I wanna make the 
@@ -384,8 +453,10 @@ Launcher.
 Deploy your Twilio application
 ------------------------------
 
-We're now ready to hook up your brand new application to a Twilio number. Open
-the Google App Engine Launcher application, highlight your application, and hit
+We're now ready to hook up your brand new application to a Twilio number. To do this,
+we'll need to host your application live on the Internet, so that Twilio can find it!
+
+Open the Google App Engine Launcher application, highlight your application, and hit
 the "Deploy" button. A window will pop up and show you the status of your
 deployment. It should take less than a minute to deploy.
 
@@ -394,7 +465,7 @@ deployment. It should take less than a minute to deploy.
 Once it's deployed, take the URL for your application,
 ``http://<your-application-name>.appspot.com`` and set it as the voice number
 for your Twilio phone number. Configuring Twilio numbers is covered in more
-detail in :ref:`configure-number`
+detail in :ref:`configure-number`.
 
 .. note:: 
 
