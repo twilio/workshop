@@ -58,7 +58,7 @@ entry point for incoming calls. Configure the Voice URL of your new Application
 to point to the TwiML above.
 
 You want to connect your listener queue function to your Application. From the
-`Numbers <https://www.twilio.com/user/account/phone-numbers/incoming`_ tab of
+`Numbers <https://www.twilio.com/user/account/phone-numbers/incoming>`_ tab of
 your Dashboard, select the number you are going to use for your Listener Queue.
 Then from the dropdown select "Application", then point to your new
 Application.
@@ -257,15 +257,22 @@ dequeue that member.
             for queue in client.queues.list():
                 for member in queue.queue_members.list():
                     queue_members.dequeue(message_url, member.sid)
-    
-As a bonus, try allowing the callers being dequeued to record a message for the
-DJs to listen to at the beginning of the next show.
+
 
 Finally, we can delete the queue using a REST API call.
 
 .. code-block:: python
 
     my_queue.delete()
+
+Advanced Features
+------------------
+
+That is the end of the content for this tutorial. If you still have some time,
+try implementing some of these advanced features:
+
+- Allowing the callers being dequeued to record a message for the DJs to listen to at the beginning of the next show.
+- other features
 
 .. _Queue: http://www.twilio.com/docs/api/rest/queue
 .. _Member: http://www.twilio.com/docs/api/rest/member
