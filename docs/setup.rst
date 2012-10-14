@@ -130,14 +130,14 @@ browser window.
 
 Your browser will open and you'll see "Hello World!" on screen. Let's take a
 moment and look at the URL that is loaded in your browser. The URL says
-``http://localhost:8080/``. `localhost` is a special url that tells the browser
+``http://localhost:8080/``. `localhost` is a special URL that tells the browser
 to make a request to your local computer instead of out to the internet. The
-``:8080`` portion tells the browser to make the request to port 8080. This url
+``:8080`` portion tells the browser to make the request to port 8080. This URL
 is not visible from the internet and, in general, is only visible to you.
 
 .. note::
 	
-        While ``localhost`` urls will always address a user's local computer,
+        While ``localhost`` URLs will always address a user's local computer,
         its not entirely private. The application will also respond to your
         computer's IP address, so when developing applications be aware of your
         surroundings and of who else can possibly run your application on the
