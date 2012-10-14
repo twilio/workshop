@@ -6,7 +6,7 @@ threadsafe: true
 
 handlers:
 - url: /.*
-  script: main.app
+  script: main_other.app
 
 - url: /favicon\.ico
   static_files: favicon.ico

@@ -1,6 +1,8 @@
 import os
 from twilio.util import TwilioCapability
+from google.appengine.api import urlfetch
 from google.appengine.ext.webapp import template
+import xml.etree.ElementTree as ET
 
 
 def render_template(rel_path, parameters=None, folder="templates"):
@@ -22,3 +24,20 @@ def generate_token(account_sid, auth_token, application_sid):
     # Allow access to the Call-in ApplicationSid we created
     capability.allow_client_outgoing(application_sid)
     return capability.generate()
+
+
+def current_weather(zipcode):
+    """
+    Return the current weather for a zip code
+    """
+    url = "http://xml.weather.yahoo.com/forecastrss?p=" + str(zipcode)
+    resp = urlfetch.fetch(url)
+    feed = ET.fromstring(resp.content)
+
+    description = feed.find(".//{http://xml.weather.yahoo.com/ns/rss/1.0}condition")
+
+    if description is None:
+        return "unknown"
+
+    return "{}, {} degrees".format(description.attrib.get('text', 'Sunny'),
+                                   description.attrib.get('temp', '85'))
