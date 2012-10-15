@@ -184,7 +184,7 @@ current call, and dial the next person in the queue.
 
     <?xml version="1.0" encoding="UTF-8"?>
     <Response>
-        <Dial finishOnKey="#">
+        <Dial hangupOnStar="true">
             <Queue>radio-callin-queue</Queue>
         </Dial>
         <Redirect></Redirect>
@@ -217,13 +217,13 @@ Now, we can add a new function, called ``next()``:
 
     function next() {
         if (connection) {
-            connection.sendDTMF("#");
+            connection.sendDTMF("*");
         }
     }
 
-Because we added a `finishOnKey` attribute to our TwiML, sending a "#" symbol
+Because we added a `hangupOnStar` attribute to our TwiML, sending a "*" symbol
 via DTMF tone will hang up on the current caller, and connect the browser to
-the next caller. 
+the next caller.
 
 Now we just need to add another button to trigger the hangup.
 
