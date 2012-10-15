@@ -193,7 +193,7 @@ current call, and dial the next person in the queue.
         <Dial hangupOnStar="true">
             <Queue>radio-callin-queue</Queue>
         </Dial>
-        <Redirect></Redirect>
+        <Redirect method="GET"></Redirect>
     </Response>
 
 Change your application's Voice URL so it serves this TwiML when dialed.
@@ -202,8 +202,8 @@ Getting the Next Caller From the <Queue>
 -----------------------------------------
 
 We want to make it easy to hangup the current call and move to the next one by
-pressing the "#" key on the phone. Twilio Client has a feature for sending DTMF
-tones (the tone when you press "#" on your phone) programmatically.
+pressing the "*" key on the phone. Twilio Client has a feature for sending DTMF
+tones (the tone when you press "*" on your phone) programmatically.
 
 First, we need to hold on to the response of ``Twilio.Device.connect()`` so
 let's add a global variable called ``connection`` and have every ``call()``
@@ -223,7 +223,7 @@ Now, we can add a new function, called ``next()``:
 
     function next() {
         if (connection) {
-            connection.sendDTMF("*");
+            connection.sendDigits("*");
         }
     }
 
