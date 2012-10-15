@@ -5,8 +5,12 @@ Radio Call In
 
 In this workshop we'll be designing a radio call in application using Twilio's
 <Queue> functionality. While we'll be using a radio show as our target, this
-style of queue management can be used for any phone number where many people may
-call at the same time.
+style of queue management can be used for any phone number where many people
+may call at the same time.
+
+There will be two numbers, one for calls coming in and one for the DJ. The DJ
+will call in to connect to the waiting callers one at a time. Once the DJ is
+finished with a caller, he or she will press # to move onto the next caller.
 
 Prerequisites
 -------------
@@ -17,6 +21,8 @@ with TwiML, configuring Twilio phone numbers, and the Twilio application model.
 Also, we assume you are comfortable writing web applications. For
 reference, we'll be developing the application along the way using Python
 and Google App Engine.
+
+Make sure you have a second Twilio number.
 
 Using the Twilio Helper Libraries
 ---------------------------------
@@ -50,6 +56,27 @@ into a queue named ``radio-callin-queue``. Note that queues are created on
         <Enqueue>radio-callin-queue</Enqueue>
     </Response>
 
+Here is an example App Engine application that serves the above TwiML.
+
+.. code-block:: python
+
+   import webapp2
+   from twilio import twiml
+
+   class EnqueueHandler(webapp2.RequestHandler):
+
+       def get(self):
+           self.response.headers['Content-Type'] = 'application/xml'
+
+           resp = twiml.Response()
+           resp.say("You are being enqueued now.")
+           resp.enqueue("radio-callin-queue")
+           self.response.write(str(resp))
+
+   app = webapp2.WSGIApplication([
+       ('/twiml/enqueue', EnqueueHandler),
+   ], debug=True)
+
 We are going to use a TwiML Application to connect this TwiML with
 your listener queue number. We'll need to create an `Application
 <http://www.twilio.com/docs/api/rest/applications>`_ for the browser to call
@@ -58,15 +85,14 @@ entry point for incoming calls. Configure the Voice URL of your new Application
 to point to the TwiML above.
 
 You want to connect your listener queue function to your Application. From the
-`Numbers <https://www.twilio.com/user/account/phone-numbers/incoming`_ tab of
+`Numbers <https://www.twilio.com/user/account/phone-numbers/incoming>`_ tab of
 your Dashboard, select the number you are going to use for your Listener Queue.
 Then from the dropdown select "Application", then point to your new
 Application.
 
 .. image:: _static/application.png
 
-Go ahead and try calling your number now to make sure everything is configured
-correctly.
+Go ahead and try calling your number now. You should hear wait music.
 
 We can spice up our TwiML endpoint by adding some wait music, using the
 ``waitUrl`` parameter.
@@ -75,12 +101,38 @@ We can spice up our TwiML endpoint by adding some wait music, using the
 
     <?xml version="1.0" encoding="UTF-8"?>
     <Response>
-        <Enqueue waitUrl="/wait-loop">radio-callin-queue</Enqueue>
+        <Say>You are being enqueued now.</Say>
+        <Enqueue waitUrl="/twiml/wait" waitMethod="GET">
+          radio-callin-queue
+        </Enqueue>
     </Response>
 
-Twilio will request the ``/wait-loop`` and process the TwiML there, which plays
+Twilio will request the ``/twiml/wait`` and process the TwiML there, which plays
 music. The ``waitUrl`` TwiML document only supports a `subset of TwiML verbs`_,
 including ``<Say>`` and ``<Play>``.
+
+.. code-block:: python
+   :emphasize-lines: 12
+
+   import webapp2
+   from twilio import twiml
+
+   class EnqueueHandler(webapp2.RequestHandler):
+
+       def get(self):
+           self.response.headers['Content-Type'] = 'application/xml'
+
+           resp = twiml.Response()
+           resp.say("You are being enqueued now.")
+           resp.enqueue("radio-callin-queue",
+               waitUrl="/twiml/wait", waitMethod="GET")
+           self.response.write(str(resp))
+
+   app = webapp2.WSGIApplication([
+       ('/twiml/enqueue', EnqueueHandler),
+   ], debug=True)
+
+The ``/twiml/wait`` endpoint will return TwiML that plays hold music for the queue
 
 .. code-block:: xml
 
@@ -88,17 +140,43 @@ including ``<Say>`` and ``<Play>``.
     <Response>
         <Say>Please hold.</Say>
         <Play>http://com.twilio.sounds.music.s3.amazonaws.com/MARKOVICHAMP-Borghestral.mp3</Play>
+        <Redirect/>
     </Response>
 
-You can use this Python snippet with AppEngine to render the XML above.
+We use redirect? Once the hold music has finished, Twilio will re-request the
+page and make sure the music doesn't stop.
+
+You can use this Python snippet with AppEngine to output the TwiML above.
 
 .. code-block:: python
+   :emphasize-lines: 9-20, 24
 
-    import webapp2
-    class WaitLoopPage(webapp2.RequestHandler):
+   import webapp2
+   from twilio import twiml
 
-        def get(self):
-            self.response.out.write(render_template("waitLoop.xml", params))
+   class EnqueueHandler(webapp2.RequestHandler):
+
+       def get(self):
+           # Same as above
+
+   class WaitHandler(webapp2.RequestHandler):
+   
+       def get(self):
+           self.response.headers['Content-Type'] = 'application/xml'
+           
+           resp = twiml.Response()
+           resp.say("Please hold.")
+           resp.play("http://com.twilio.music.rock.s3.amazonaws.com/nickleus_-_"
+                     "original_guitar_song_200907251723.mp3")
+           resp.redirect()
+
+           self.response.out.write(str(resp))
+
+   app = webapp2.WSGIApplication([
+       ('/twiml/enqueue', EnqueueHandler),
+       ('/twiml/wait', WaitHandler),
+   ], debug=True)
+
 
 Now your listener queue number should play hold music while callers are in the
 queue.
@@ -120,8 +198,49 @@ by using the <Enqueue> verb.
 You will want to create a second Twilio Application for your DJ number, and
 configure that application's Voice URL to point to the TwiML above.
 
+.. code-block:: python
+   :emphasize-lines: 14-24, 28
+
+   import webapp2
+   from twilio import twiml
+
+   class EnqueueHandler(webapp2.RequestHandler):
+
+       def get(self):
+           # Same as above
+
+   class WaitHandler(webapp2.RequestHandler):
+   
+       def get(self):
+           # Same as above
+
+   class DequeueHandler(webapp2.RequestHandler):
+   
+       def get(self):
+           self.response.headers['Content-Type'] = 'application/xml'
+           
+           resp = twiml.Response()
+           d = resp.dial()
+           d.queue("radio-callin-queue")
+
+           self.response.out.write(str(resp))
+
+
+   app = webapp2.WSGIApplication([
+       ('/twiml/dequeue', DequeueHandler),
+       ('/twiml/enqueue', EnqueueHandler),
+       ('/twiml/wait', WaitHandler),
+   ], debug=True)
+
+
 Now, the DJ can call the DJ dequeuing number, and will automatically be
 connected to the first member on the queue.
+
+By now, you may be wondering how to properly test this application. With two
+phone numbers, you need to fill up your queue with waiting callers. To help you
+fill your queue, we've created an application that will call a given number
+with fake callers, allowing you to easily simulate real users calling in. The
+application can be found at http://queuetester.herokuapp.com/.
 
 .. _subset of TwiML verbs: http://www.twilio.com/docs/api/twiml/enqueue#attributes-waitUrl
 
@@ -152,18 +271,35 @@ Utilizing this information, we can inform our users what position they are in
 the queue and how long they can expect to wait before an answer.
 
 .. code-block:: python
+   :emphasize-lines: 9-16
 
-    import webapp2
-    from twilio import twiml
+   import webapp2
+   from twilio import twiml
 
-    class WaitLoop(webapp2.RequestHandler):
-        def post(self):
-            response = twiml.Response()
-            response.say("You are number %s in line." % self.request.get('QueuePosition'))
-            response.say("You've been in line for %s seconds." % self.request.get('QueueTime'))
-            response.say("The average wait time is currently %s seconds." % self.request.get('AverageQueueTime'))
-            response.play("http://com.twilio.music.rock.s3.amazonaws.com/nickleus_-_original_guitar_song_200907251723.mp3")
-            self.response.out.write(str(response))
+   class EnqueueHandler(webapp2.RequestHandler):
+
+       def get(self):
+           # Same as above
+
+   class WaitHandler(webapp2.RequestHandler):
+       def post(self):
+           response = twiml.Response()
+           response.say("You are number %s in line." % self.request.get('QueuePosition'))
+           response.say("You've been in line for %s seconds." % self.request.get('QueueTime'))
+           response.say("The average wait time is currently %s seconds." % self.request.get('AverageQueueTime'))
+           response.play("http://com.twilio.music.rock.s3.amazonaws.com/nickleus_-_original_guitar_song_200907251723.mp3")
+           self.response.out.write(str(response))
+
+   class DequeueHandler(webapp2.RequestHandler):
+   
+       def get(self):
+           # Same as above
+
+   app = webapp2.WSGIApplication([
+       ('/twiml/dequeue', DequeueHandler),
+       ('/twiml/enqueue', EnqueueHandler),
+       ('/twiml/wait', WaitHandler),
+   ], debug=True)
 
 You can also take advantage of similar information when a call is dequeued
 through the ``action`` parameter when enqueuing.
@@ -176,13 +312,8 @@ through the ``action`` parameter when enqueuing.
         <Enqueue action="/dequeue-logic">radio-callin-queue</Enqueue>
     </Response>
 
-.. code-block:: python
-
-    class DequeueLogic(webapp2.RequestHandler):
-        def post(self):
-            res = self.request.get('QueueResult')
-            if res == 'bridged':
-                # save to db, ping analytics, whatever you want!
+Twilio will fetch the ``action`` url and execute the TwiML received on the
+caller's end before he or she is bridged to the other call.
 
 
 Handling Long Queue Times
@@ -257,15 +388,22 @@ dequeue that member.
             for queue in client.queues.list():
                 for member in queue.queue_members.list():
                     queue_members.dequeue(message_url, member.sid)
-    
-As a bonus, try allowing the callers being dequeued to record a message for the
-DJs to listen to at the beginning of the next show.
+
 
 Finally, we can delete the queue using a REST API call.
 
 .. code-block:: python
 
     my_queue.delete()
+
+Advanced Features
+------------------
+
+That is the end of the content for this tutorial. If you still have some time,
+try implementing some of these advanced features:
+
+- Allowing the callers being dequeued to record a message for the DJs to listen to at the beginning of the next show.
+- other features
 
 .. _Queue: http://www.twilio.com/docs/api/rest/queue
 .. _Member: http://www.twilio.com/docs/api/rest/member
