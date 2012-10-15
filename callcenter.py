@@ -56,9 +56,7 @@ class EnqueueHandler(webapp2.RequestHandler):
 
         resp = twiml.Response()
         resp.say("You are being enqueued now.")
-        resp.enqueue(self.request.params.get('queue', 'support'),
-                waitUrl='/twiml/wait', waitMethod='GET')
-        resp.sms("Thanks for calling into today. How was your call?")
+        resp.enqueue('radio-callin-queue')
         self.response.write(str(resp))
 
 

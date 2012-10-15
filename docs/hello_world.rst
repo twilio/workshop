@@ -32,8 +32,32 @@ The `API Explorer`_ is a helpful application built into the Account Portal that 
 
 Let's use the `API Explorer`_ to get to know the Twilio API.
 
-Hello World: Sending an SMS
+Getting Account Information
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Let's start of with a basic request for your account information. Go to your Twilio Account Portal, click on `Dev Tools`, then click on `Accounts` (on the right near the bottom), then click on `View Account`.
+
+Go ahead and click on the `Make Request` button. A response with your Account information should appear at the end of the page. 
+
+**Ok, so what did we just do?**
+
+Let's take a look at the key parts of the request we just made:
+
+.. code-block:: bash
+
+	GET /2010-04-01/Accounts/AC000.xml
+
+This command is specially formatted to function on the command line. Lets break that down a bit:
+
+- **GET**: this line tells curl to make a ``GET`` request, meaning that the intent of this call is to retrieve information from the server.
+- **/2010-04-01/Accounts/AC000.xml**: this is the endpoint for retrieving Account data from the Twilio API. Lets break it down further:
+	- **/2010-04-01/** is the version of the API that we want to request. The version of the API we want to talk to is important because we want to make sure that the way we talk to the API doesn't change. If Twilio makes a major change to how to talk to the API the version will change, but the old version will continue to work the same way so that your application doesn't break.
+	- **Accounts/AC000.xml** means that we want to retrieve an Account resource for the account "AC000" and that we want the response in XML format.
+	
+Now lets look at the response. The server responded with an XML formatted representation of your account information.
+
+Sending an SMS
+^^^^^^^^^^^^^^
 
 Let's send a text message using the `API Explorer`_. Go to your Twilio `Account Portal`_, click on `Dev Tools`, then click on `SMS Messages`, then on `Send SMS`.
 
@@ -53,8 +77,21 @@ Enter your cell phone number in the `To` field along with a text message `Body`,
 
 Your phone should receive a text message shortly.
 
-Hello World: Making a Phone Call
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**So how was that different from our Accounts information request?**
+
+Lets take a look at the key parts of this request:
+
+.. code-block:: bash
+
+	POST /2010-04-01/Accounts/AC000/SMS/Messages.xml
+	
+There are a few key differences to note:
+
+- **POST** tells curl to make a ``POST`` request, meaning that the purpose of this request is to pass data in to the API for the purposes of modifying the ``SMS Messages`` resource.
+- **Parameters**: if you **-d 'From=xxx'*** et al... tell curl what data to pass to the API. You can see each entry you modified in the form is represented here. You'll also notice that each entry contains special characters (ie: ``%2B`` instead of ``+``). This is called `Url Encoding`_ and is required to make sure that special characters are properly transmitted to the API.
+
+Making a Phone Call
+^^^^^^^^^^^^^^^^^^^
 
 Now let's make a phone call using the `API Explorer`_. Go to your Twilio `Account Portal`_, click on `Dev Tools`, then click on `Phone Calls`, then on `Make call`.
 
@@ -89,3 +126,4 @@ Additional Information
 .. _E.164: http://en.wikipedia.org/wiki/E.164
 .. _TwiML: http://www.twilio.com/docs/api/twiml
 .. _Twimlet: https://www.twilio.com/labs/twimlets
+.. _Url Encoding: http://en.wikipedia.org/wiki/Percent-encoding
