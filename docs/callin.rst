@@ -91,6 +91,7 @@ Then from the dropdown select "Application", then point to your new
 Application.
 
 .. image:: _static/application.png
+	:class: screenshot
 
 Go ahead and try calling your number now. You should hear wait music.
 
