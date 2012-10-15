@@ -3,7 +3,7 @@
 SMS Feedback
 ============
 
-We've set up a basic call in line. Let's say we want to keep the dialogue going
+We've set up a basic call-in line. Let's say we want to keep the dialogue going
 with our callers a little more. We are going to send an SMS to callers after
 they get off the line.
 
@@ -76,7 +76,7 @@ our SMS messages.
     }
 
     var getSMSMessages = function() {
-        $.getJSON('messages.json', function(result) {
+        $.getJSON('/inbound-sms', function(result) {
             var msgs = result.messages;
             for (var i = 0; i < msgs.length; i++) {
                 var msg = msgs[i];
