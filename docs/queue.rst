@@ -64,7 +64,7 @@ of TwiML should try to dial into the premium customer's queue:
 
 The ``timeout`` parameter in the ``<Dial>`` verb tells Twilio to only wait
 for 1 second for a call in the queue to become available.  If that fails
-Twilio will request the ``/rep-call-complete`` URL from your webserver
+Twilio will request the ``/rep-call-complete`` URL from your web server
 almost immediately.  From there, we can see if the call failed (that is,
 the timeout was reached).  If the call failed we then try the regular
 ``customers`` queue.  If the call succeeded we know that the rep just
@@ -119,19 +119,19 @@ Testing Twilio Applications
 
 Installing and using local tunnel
 
-https://showoff.io/
-local tunnel
-pagekite
+- https://showoff.io/
+- http://progrium.com/localtunnel/
+- http://pagekite.com
 
 Local tunnel sometimes doesn't work. Many of these services suffer from the
-same problems tthat networks can't be awesome.
+same problems that networks can't be awesome.
 
 So, how do we test if we can't connect to Twilio
 
 Mocking out Twilio
 ~~~~~~~~~~~~~~~~~~
 
-A simple example showing how, using cUrl, you can actually duplicate many of
+A simple example showing how, using cURL, you can actually duplicate many of
 Twilio's behaviors
 
 

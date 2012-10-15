@@ -46,7 +46,7 @@ Cost
 The cost of inbound and outbound calls are different. Inbound calls cost 1¢ per
 minute while outbound calls start at 2¢ per minute. The cost of outbound calls
 may also differ depending on the end destination of your outbound call. See the
-`Voice Pricing`_ Page for more pricing information.
+`Voice Pricing`_ page for more pricing information.
 
 To
 ``
@@ -68,10 +68,20 @@ as "true", ``<Dial record="true"``.
 For our last call, the caller ID displayed was the phone number where the call
 originated from. Let's change your caller ID using the `callerId attribute
 <http://www.twilio.com/docs/api/twiml/dial#attributes-caller-id>`_ so that it
+<<<<<<< HEAD
 displays your Twilio phone number instead, ``<Dial callerId="YOUR TWILIO PHONE NUMBER">``. 
 Earlier we verified your personal phone number so you may also use that as your 
 caller ID. To use other phone numbers as your caller ID you can verifying those 
 numbers in your Twilio Account.
+=======
+displays your Twilio phone number instead. 
+
+	
+Note: earlier, we verified your personal phone number, so you may also use that
+as your caller ID. You can 
+`verify other numbers <https://www.twilio.com/user/account/phone-numbers/verified>`_
+in your Twilio account to use them as caller IDs.
+>>>>>>> c249d6cdbe41da5ae812940dc2f80a54a7044c09
 
 Test out the following code and see how the attributes have changed your
 application.
@@ -115,17 +125,35 @@ message.
 To delete your recording through the User Interface, click on the date of the
 recording. There's a "Delete Recording" link at the bottom right hand corner.
 
+<<<<<<< HEAD
 .. image:: _static/recording.png
+=======
+Transcriptions of your recordings can also be made by Twilio with the
+`transcribe attribute
+<http://www.twilio.com/docs/api/twiml/record#attributes-transcribe>`_.
+
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <Response>
+      <Say>After the beep, record your message</Say>
+      <Record transcribe="true"/>
+    </Response>
+
+Rerecord your message. This time, record a longer message. 
+
+Head over to your `transcription log
+<https://www.twilio.com/user/account/log/transcriptions>`_ to see your
+transcription and listen to your message.
+>>>>>>> c249d6cdbe41da5ae812940dc2f80a54a7044c09
 
 
 Private Conference Line
 -----------------------
 
-Many times during project assignments you just need to get everyone on the same
+Many times during project collaboration, you just need to get everyone on the same
 page. You can now have your own private conference line using the `Conference`_
-noun and `Dial`_ verb. Put the following TwiML into your bin and save.  Give
-your Twilio number to a few people around you. Have everyone call in and start
-up a conversation.
+noun and `Dial`_ verb. Put the following TwiML into your bin and save.  
 
 .. code-block:: xml
 
@@ -136,11 +164,14 @@ up a conversation.
       </Dial>
     </Response>
 
+Now, you can give your Twilio number to a few people around you, have everyone call
+in, and start up a conversation.
+
 
 One Song Music Hotline
 -----------------------
 
-To play an audio file back to the caller use the `Play`_ verb. We can build a
+To play an audio file back to the caller, use the `Play`_ verb. We can build a
 simple music hotline that just plays just one song to the caller.
 
 .. code-block:: xml
@@ -170,11 +201,11 @@ That was easy!
 Swiss-Army Phone Number
 -----------------------
 
-Equipped with the knowledge of TwiML you can now bend your Twilio phone number
+Equipped with the knowledge of TwiML, you can now bend your Twilio phone number
 to your will. You've forwarded a call, recorded a message, and started a
-private conference line. Your phone is now your's to control.
+private conference line. Your phone is now yours to control.
 
-But with this many applications we definitely want more than one Twilio phone
+But with this many applications, we definitely want more than one Twilio phone
 number. Let's purchase another number.
 
 To purchase a Twilio phone number you will want to navigate to the `Numbers
@@ -183,8 +214,9 @@ the blue button titled `Buy a number
 <https://www.twilio.com/user/account/phone-numbers/available/local>`_.
 
 .. image:: _static/buy_number.png
+	:class: screenshot
 
-You may search for the Twilio phone number you would like to purchase by the
+You may search for the Twilio phone number you would like to purchase by
 area code, digits, and phrases as well as by the location.
 
 .. _Twimlbin: http://twimlbin.com

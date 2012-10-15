@@ -6,4 +6,8 @@ threadsafe: true
 
 handlers:
 - url: /.*
-  script: callcenter.app
+  script: main.app
+
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon.ico
