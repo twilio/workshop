@@ -93,9 +93,10 @@ Application.
 .. image:: _static/application.png
 	:class: screenshot
 
-Go ahead and try calling your number now. You should hear wait music.
+Go ahead and try calling your number now. You should hear the Twilio default
+wait music.
 
-We can spice up our TwiML endpoint by adding some wait music, using the
+We can spice up our TwiML endpoint by adding some custom wait music, using the
 ``waitUrl`` parameter.
 
 .. code-block:: xml
@@ -108,9 +109,9 @@ We can spice up our TwiML endpoint by adding some wait music, using the
         </Enqueue>
     </Response>
 
-Twilio will request the ``/twiml/wait`` and process the TwiML there, which plays
-music. The ``waitUrl`` TwiML document only supports a `subset of TwiML verbs`_,
-including ``<Say>`` and ``<Play>``.
+Twilio will request ``/twiml/wait`` endpoint and process the TwiML there,
+which plays music. The ``waitUrl`` TwiML document only supports a `subset of
+TwiML verbs`_, including ``<Say>`` and ``<Play>``.
 
 .. code-block:: python
    :emphasize-lines: 12
@@ -133,7 +134,8 @@ including ``<Say>`` and ``<Play>``.
        ('/twiml/enqueue', EnqueueHandler),
    ], debug=True)
 
-The ``/twiml/wait`` endpoint will return TwiML that plays hold music for the queue
+The ``/twiml/wait`` endpoint will return TwiML that plays hold music for the
+queue.
 
 .. code-block:: xml
 
@@ -144,8 +146,9 @@ The ``/twiml/wait`` endpoint will return TwiML that plays hold music for the que
         <Redirect/>
     </Response>
 
-We use redirect? Once the hold music has finished, Twilio will re-request the
-page and make sure the music doesn't stop.
+We use the redirect verb at the bottom of the page so once the hold music has
+finished, Twilio will re-request the same URL and make sure the music doesn't
+stop.
 
 You can use this Python snippet with AppEngine to output the TwiML above.
 
@@ -169,8 +172,6 @@ You can use this Python snippet with AppEngine to output the TwiML above.
            resp.say("Please hold.")
            resp.play("http://com.twilio.music.rock.s3.amazonaws.com/nickleus_-_"
                      "original_guitar_song_200907251723.mp3")
-           resp.redirect()
-
            self.response.out.write(str(resp))
 
    app = webapp2.WSGIApplication([
@@ -264,7 +265,7 @@ Parameter 	 Description
 QueuePosition 	 The current queue position for the enqueued call.
 QueueSid 	 The SID of the Queue that the caller is in.
 QueueTime 	 The time in seconds that the caller has been in the queue.
-AverageQueueTime An average of how long time the current enqueued callers has been in the queue.
+AvgQueueTime An average of how long time the current enqueued callers has been in the queue.
 CurrentQueueSize The current number of enqueued calls in this queue.
 ================ ===========
 
@@ -319,7 +320,7 @@ through the ``action`` parameter when enqueuing.
     <?xml version="1.0" encoding="UTF-8"?>
     <Response>
         <Say>You are being enqueued now.</Say>
-        <Enqueue action="/dequeue-logic">radio-callin-queue</Enqueue>
+        <Enqueue action="http://example.com/dequeue-logic">radio-callin-queue</Enqueue>
     </Response>
 
 Twilio will fetch the ``action`` URL and execute the TwiML received on the
@@ -345,7 +346,7 @@ App Engine route.
     <?xml version="1.0" encoding="UTF-8"?>
     <Response>
         <Say>You are being enqueued now.</Say>
-        <Enqueue action="/dequeue-logic">radio-callin-queue</Enqueue>
+        <Enqueue action="http://example.com/dequeue-logic">radio-callin-queue</Enqueue>
     </Response>
 
 .. code-block:: python
