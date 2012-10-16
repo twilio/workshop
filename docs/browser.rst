@@ -235,7 +235,7 @@ Now we just need to add another button to trigger the hangup.
 
 .. code-block:: html
 
-    <button class="next" onclick="next();">
+    <button class="hangup" onclick="next();">
         Next Caller
     </button>
 
@@ -253,11 +253,19 @@ JSON.
 
     class QueueStatusPage(webapp2.RequestHandler):
 
-        queue_sid = "QQ123"
         def get(self):
             client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
-            q_data = {"queues": client.queues.get(queue_sid)}
-            self.response.out.write(json.dumps(q_data))
+
+            queue = [x for x in client.queues.list() if x.friendly_name == 'radio-callin-queue']
+
+            if queue:
+                q_data = {
+                    "current_size": queue[0].current_size,
+                    'average_wait_time': queue[0].average_wait_time,
+                }
+                self.response.out.write(json.dumps(q_data))
+            else:
+                self.abort(404)
 
 
 Add this QueueStatusPage into the WSGIApplication's routing map as
