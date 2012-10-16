@@ -447,20 +447,21 @@ Let's add some additional code to handle this callback.
 
 First, we've specified that the action of the ``<Gather>`` should be an HTTP ``POST``. 
 
-Next, we added some code to our ``webapp2.RequestHandler`` to respond to a ``POST`` request.
-Because our first ``<Gather>`` specifies a ``POST`` method and no ``action``, the default
-``action`` is the current URL (In this case, "/"). So, this code is what will get run
-after the first ``<Gather>``.
+Next, we added some code to our ``webapp2.RequestHandler`` to respond to a
+``POST`` request.  Because our first ``<Gather>`` specifies a ``POST`` method
+and no ``action``, the default ``action`` is the current URL (In this case,
+"/"). So, this code is what will get run after the first ``<Gather>``.
 
-We pull the value ``digit_pressed`` from ``self.request.get("Digits")`` which corresponds to what
-the caller pressed. 
+We pull the value ``digit_pressed`` from ``self.request.get("Digits")`` which
+corresponds to what the caller pressed. 
 
 In the case that the ``digit_pressed`` was ``"1"``, the behavior looks quite
-similar to our earlier example. We then redirect the user back to the beginning to the menu, so they
-can try again.
+similar to our earlier example. We then redirect the user back to the beginning
+to the menu, so they can try again.
 
-If the caller presses 2, we ask them for 5 more digits. We don't yet have the logic to process
-what to do with these 5 more digits, so nothing interesting will happen when they finish entering these digits.
+If the caller presses 2, we ask them for 5 more digits. We don't yet have the
+logic to process what to do with these 5 more digits, so nothing interesting
+will happen when they finish entering these digits.
 
 .. note::
 
@@ -521,12 +522,13 @@ Let's find out how to read the ZIP code.
         ('/weather_for_zip', GetWeather),
     ], debug=True)
 
-We've added a second ``webapp2.RequestHandler`` class. We also configure this handler
-to respond to the URL ``/weather_for_zip`` and changed the ``<Gather>`` to point to it.
+We've added a second ``webapp2.RequestHandler`` class. We also configure this
+handler to respond to the URL ``/weather_for_zip`` and changed the ``<Gather>``
+to point to it.
 
 When the caller has entered 5 digits, Twilio will do a ``POST`` request to
 ``/weather_for_zip`` with the digits pressed passed as the ``Digits`` argument.
-We use these digits to look up the weather, just as we did for the original
-app with the ``FromZipCode`` passed in by Twilio.
+We use these digits to look up the weather, just as we did for the original app
+with the ``FromZipCode`` passed in by Twilio.
 
 Now, deploy your application again, and try it out!
