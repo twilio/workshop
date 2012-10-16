@@ -21,7 +21,7 @@ This is what an outbound Client call looks like:
 
 1. Your server creates a Capability Token with the Application Sid you would
    like to use to handle outbound calls. 
-2. User triggers a `connect()` action in the `twilio.js` Javascript library.
+2. User triggers a ``connect()`` action in the ``twilio.js`` Javascript library.
 3. Twilio looks up the Application Sid for the Client, and retrieves the Voice
    URL for that application.
 4. Twilio makes an HTTP request to the Voice URL and plays the TwiML it
@@ -76,9 +76,9 @@ Answering Queues in the Browser
 The first thing we'll need to build is a web interface. Let's start by adding a
 new AppEngine RequestHandler into ``main.py``. 
 
-We have included some helper functions
-for generating `Capability Tokens <https://www.twilio.com/docs/client/capability-tokens>`_ and 
-rendering templates on AppEngine. Those are imported from ``util.py``.
+We have included some helper functions for generating `Capability Tokens
+<https://www.twilio.com/docs/client/capability-tokens>`_ and rendering
+templates on AppEngine. Those are imported from ``util.py``.
 
 .. code-block:: python
 
@@ -95,72 +95,8 @@ rendering templates on AppEngine. Those are imported from ``util.py``.
 
 Here is the ``index.html`` file we are rendering.
 
-.. code-block:: html
-
-	<!DOCTYPE html>
-	<html>
-	  <head>
-		<title>Hello Client Monkey 4</title>
-		<script type="text/javascript"
-		  src="http://static.twilio.com/libs/twiliojs/1.0/twilio.min.js"></script>
-		<script type="text/javascript"
-		  src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
-		</script>
-		<link href="http://static0.twilio.com/packages/quickstart/client.css"
-		  type="text/css" rel="stylesheet" />
-		<script type="text/javascript">
-
-		  // Render the token we generated on the server side. 
-		  Twilio.Device.setup("{{ token }}");
-
-		  Twilio.Device.ready(function (device) {
-			$("#log").text("Ready");
-		  });
-
-		  Twilio.Device.error(function (error) {
-			$("#log").text("Error: " + error.message);
-		  });
-
-		  Twilio.Device.connect(function (conn) {
-			$("#log").text("Successfully established call");
-		  });
-
-		  Twilio.Device.disconnect(function (conn) {
-			$("#log").text("Call ended");
-		  });
-
-		  Twilio.Device.incoming(function (conn) {
-			$("#log").text("Incoming connection from " + conn.parameters.From);
-			// accept the incoming connection and start two-way audio
-			conn.accept();
-		  });
-
-		  function call() {
-			// get the phone number to connect the call to
-			params = {"PhoneNumber": $("#number").val()};
-			Twilio.Device.connect(params);
-		  }
-
-		  function hangup() {
-			Twilio.Device.disconnectAll();
-		  }
-		</script>
-	  </head>
-	  <body>
-		<button class="call" onclick="call();">
-		  Call
-		</button>
-
-		<button class="hangup" onclick="hangup();">
-		  Hangup
-		</button>
-
-		<input type="text" id="number" name="number"
-		  placeholder="Enter a phone number to call"/>
-
-		<div id="log">Loading pigeons...</div>
-	  </body>
-	</html>
+.. literalinclude:: ../templates/index.html
+   :language: html
 
 There are two important lines in the Javascript that make this work:
 
@@ -242,9 +178,8 @@ Now we just need to add another button to trigger the hangup.
 Adding UI To Display the Queue
 ------------------------------
 
-Let's add a feature where we can see a visualization of the queue. We'll add
-a new queue status endpoint, which will return the current queue status as
-JSON.
+Let's add a feature where we can see a visualization of the queue. We'll add a
+new queue status endpoint, which will return the current queue status as JSON.
 
 .. code-block:: python
 
@@ -256,16 +191,15 @@ JSON.
         def get(self):
             client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
 
-            queue = [x for x in client.queues.list() if x.friendly_name == 'radio-callin-queue']
-
-            if queue:
-                q_data = {
-                    "current_size": queue[0].current_size,
-                    'average_wait_time': queue[0].average_wait_time,
-                }
-                self.response.out.write(json.dumps(q_data))
-            else:
-                self.abort(404)
+            for queue in client.queues.list():
+                if queue.friendly_name == 'radio-callin-queue':
+                    self.response.out.write(json.dumps({
+                        'current_size': queue.current_size,
+                        'average_wait_time': queue.average_wait_time,
+                    }))
+                    return
+        
+            self.abort(404)
 
 
 Add this QueueStatusPage into the WSGIApplication's routing map as
@@ -314,4 +248,3 @@ try implementing some of these advanced features:
   connects.
 
 .. _a "whisper" URL: http://www.twilio.com/docs/api/twiml/client#attributes
-

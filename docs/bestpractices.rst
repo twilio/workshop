@@ -3,8 +3,8 @@
 Best Practices for Developing On Twilio
 =======================================
 
-Here's a summary of a number of best practices we've found that work well in the
-development of your Twilio applications.
+Here's a summary of a number of best practices we've found that work well in
+the development of your Twilio applications.
 
 Using TwiML
 -----------
@@ -86,9 +86,8 @@ Twilio safely.
 Testing
 -------
 
-Testing your apps before you go into production is always wise.  Be sure to
-avail yourself of our new `Testing Credentials`_.  Here are a few tips to make
-sure your tests work well.
+Testing your apps before you go into production is always wise. Here are a few
+tips to make sure your tests work well.
 
 * If mocking the Twilio REST Client, be sure mock the *resource* instead of the
   client itself for best effect.
@@ -96,5 +95,4 @@ sure your tests work well.
   `Twilio request`_.
 * Test early, test often.  It's good for you!
 
-.. _Testing Credentials: https://www.twilio.com/docs/howto
 .. _Twilio request: https://www.twilio.com/docs/api/twiml/twilio_request#synchronous-request-parameters

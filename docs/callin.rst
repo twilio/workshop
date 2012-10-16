@@ -322,7 +322,7 @@ through the ``action`` parameter when enqueuing.
         <Enqueue action="/dequeue-logic">radio-callin-queue</Enqueue>
     </Response>
 
-Twilio will fetch the ``action`` url and execute the TwiML received on the
+Twilio will fetch the ``action`` URL and execute the TwiML received on the
 caller's end before he or she is bridged to the other call.
 
 

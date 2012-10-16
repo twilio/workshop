@@ -27,5 +27,4 @@ Unlocking the Box
    callin
    browser
    sms_feedback
-   recording
    bestpractices
