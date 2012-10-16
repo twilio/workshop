@@ -127,12 +127,13 @@ browser window.
 
 .. image:: _static/browseapp.png
 
-Your browser will open and you'll see "Hello World!" on screen. Let's take a
-moment and look at the URL that is loaded in your browser. The URL says
-``http://localhost:8080/``. `localhost` is a special URL that tells the browser
-to make a request to your local computer instead of out to the internet. The
-``:8080`` portion tells the browser to make the request to port 8080. This URL
-is not visible from the internet and, in general, is only visible to you.
+Your browser will open with the text "Hello World!" on your screen. Let's take a
+moment and look at the URL that is loaded in your browser. 
+
+The URL says ``http://localhost:8080/``. `localhost` is a special URL that tells 
+the browser to make a request to your local computer instead of out to the internet. 
+The ``:8080`` portion tells the browser to make the request to port 8080. This URL
+is not visible and accessible from the internet and, in general, is only visible to you.
 
 .. note::
 	
@@ -169,7 +170,7 @@ Deploy your Application
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 It's now time to share your application with the world. To deploy your application on
-App Engine, you'll need to create an application via your App Engine dashboard 
+App Engine, we'll need to create an application via your App Engine dashboard 
 (which requires a Google account).
 
 Open the `App Engine dashboard  <http://appengine.google.com>`_ in a new tab and
@@ -204,7 +205,8 @@ the application name you registered and save the file.
 
 Open the **Google App Engine Launcher**, highlight your application if it is not
 already highlighted, and then click the "Deploy" button. The Launcher app will
-upload your code and deploy it.
+upload your code and deploy it. Your application t is now publicly accessible 
+through the internet.
 
 .. image:: _static/deployapp.png
 

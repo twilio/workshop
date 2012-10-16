@@ -9,15 +9,15 @@ see how SMS and phone calls can be originated from your web browser with Twilio.
 Twilio Account Portal
 ---------------------
 
-When you log into your Twilio Account, the first page you will come across is
-your Account Dashboard. This is where your Account SID and Auth Token are
+When you log into your Twilio Account, the first page you come across is
+your Account Dashboard. This is where your Account Sid and Auth Token are
 displayed.
 
 .. image:: _static/bar.png
 	:class: screenshot
 
-These are your account credentials. The Account SID acts as a username and the 
-Auth Token acts as a password. Twilio uses your Account SID and Auth Token to 
+These are your account credentials. The Account Sid acts as a username and the 
+Auth Token acts as a password. Twilio uses your Account Sid and Auth Token to 
 authenticate the API requests made by your application. 
 
 Analytics about your Voice and SMS application are also shown here. We'll go
@@ -28,9 +28,12 @@ At the bottom of your Account Dashboard is the API Explorer and the Debugger.
 Twilio API Explorer
 -------------------
 
-The `API Explorer`_ is a helpful application built into the Account Portal that allows you to easily try out the API without getting into the details of scripting and :ref:`HTTP <http>` calls.
+The `API Explorer`_ is a helpful application built into the Account Dashboard that allows you to easily try out Twilio's API without getting into the details of scripting and :ref:`HTTP <http>` calls.
 
-Let's use the `API Explorer`_ to get to know the Twilio API.
+You can get to the `API Explorer`_ from the botton of your Account Dashboard. You may also click on the `Dev Tools <https://www.twilio.com/user/account/developer-tools/api-explorer>`_  tab to access the API Explorer. 
+
+.. image:: _static/api_explorer.png
+	:class: screenshot
 
 Getting Account Information
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -59,9 +62,7 @@ Let's take a look at the key parts of the request we just made:
 
 	GET /2010-04-01/Accounts/AC000.xml
 
-This command is specially formatted to function on the command line. Lets break that down a bit:
-
-- **GET**: this line tells curl to make a ``GET`` request, meaning that the intent of this call is to retrieve information from the server.
+- **GET**: this is the type of request to make, a ``GET`` request, meaning that the intent of this call is to retrieve information from the server.
 - **/2010-04-01/Accounts/AC000.xml**: this is the endpoint for retrieving Account data from the Twilio API. Lets break it down further:
 	- **/2010-04-01/** is the version of the API that we want to request. The version of the API we want to talk to is important because we want to make sure that the way we talk to the API doesn't change. If Twilio makes a major change to how to talk to the API the version will change, but the old version will continue to work the same way so that your application doesn't break.
 	- **Accounts/AC000.xml** means that we want to retrieve an Account resource for the account "AC000" and that we want the response in XML format.
@@ -76,19 +77,19 @@ Let's send a text message using the `API Explorer`_. Go to your Twilio `Account 
 .. image:: _static/explore-sms.png
 	:class: screenshot
 
-Here we can try out the Twilio API for sending SMS Messages. All the fields required to send an SMS are visible. This request will add 2 new parameters to the request:
+Here we can try out the Twilio API for sending SMS Messages. All the fields required to send an SMS are visible. This request will add 2 new parameters:
 
 ============ ==========
 Parameter    Definition
 ============ ==========
 `From`       The `From` field tells the API which phone number to use to send the Message. This can only be one of the phone numbers you've purchased or ported into Twilio.
-`To`         The `To` field tells the API where to send the message. The phone number should be in `E.164`_ format. Phone numbers that do not include a "+" with country code will be assumed to be from the same country as the `From` phone number.
+`To`         The `To` field tells the API where to send the message. The phone number should be in `E.164`_ format. Twilio will assume that `To` phone numbers without a "+" will have the same country code as the `From` phone number.
 `Body`       The body is a freeform field to enter your message. You can enter a message up to 160 characters long.
 ============ ==========
 
-Enter your cell phone number in the `To` field along with a text message `Body`, and click the `Make Request` button at the bottom of the page. This will send an SMS. You may be prompted to confirm the use of funds from your account. Aren't you glad you got the Promo credit?
+Enter your cell phone number in the `To` field along with a text message `Body`, and click the `Make Request` button at the bottom of the page. This will send the information you've just entered to the Twilio API. You will be prompted to confirm the use of funds from your account. Aren't you glad you got the Promo credit?
 
-Your phone should receive a text message shortly.
+Twilio will process the information you have submitted and your phone will receive a text message shortly.
 
 **So how was that different from our Accounts information request?**
 
@@ -100,7 +101,7 @@ Lets take a look at the key parts of this request:
 	
 There are a few key differences to note:
 
-- **POST** tells curl to make a ``POST`` request, meaning that the purpose of this request is to pass data in to the API for the purposes of modifying the ``SMS Messages`` resource.
+- **POST** this time we're making a ``POST`` request, meaning that the purpose of this request is to pass data in to the API for the purposes of modifying the ``SMS Messages`` resource.
 - **Parameters**: if you look at the `Code Example` right above the `Make Request` button you see **-d 'From=xxx'*** et al... these tell curl what data to pass to the API. You can see each entry you modified in the form is represented here. You'll also notice that each entry contains special characters (ie: ``%2B`` instead of ``+``). This is called `Url Encoding`_ and is required to make sure that special characters are properly transmitted to the API.
 
 Now lets examine the response. You'll see that the message was given a `Sid`, a unique identifier, how Twilio interpreted the information you sent, and you can see that it was queued for delivery. 
@@ -112,7 +113,7 @@ Now click on `Make Request` to see the current status of the message. You can se
 Making a Phone Call
 ^^^^^^^^^^^^^^^^^^^
 
-Now let's make a phone call using the `API Explorer`_. Go to your Twilio `Account Portal`_, click on `Dev Tools`, then click on `Phone Calls`, then on `Make call`.
+Now let's make a phone call using the `API Explorer`_. Click on the Calls link on the left hand sidebar, then on the sublink `"Make call" <https://www.twilio.com/user/account/developer-tools/api-explorer#POST/2010-04-01/Accounts/[AccountSid]/Calls.[format]>`_.
 
 .. image:: _static/explore-call.png
 	:class: screenshot
@@ -125,13 +126,13 @@ Parameter    Definition
 `Url`        The `Url` field tells the API where to load TwiML instructions for handling the call. `TwiML`_ is a set of instructions that tells Twilio what to do. Don't worry, we'll get more into TwiML later. 
 ============ ==========
 
-Enter your cell phone number in the `To` field. To make things easy, we're going to use a `Twimlet`_ for the `Url`. We'll get into the details of building TwiML later on. Copy the url below into the `Url` field.
+Enter your cell phone number in the `To` field. To make things easy, we're going to use a `Twimlet`_ for the `Url`. We'll get into the details of building TwiML later on. For now, copy the url below into the `Url` field.
 
 .. code-block:: bash
 
 	http://twimlets.com/message?Message=Hello+World
 
-Click on the `Make Request` button at the bottom of the page. Your phone should start ringing momentarily.
+Click on the `Make Request` button at the bottom of the page. Again, the information you've submitted is sent off to Twilio and your phone should start ringing momentarily.
 
 **How was that different from our SMS request?**
 
@@ -139,9 +140,11 @@ In this request we replaced the `Body` parameter with a `Url` parameter. The url
 
 If you load the Url we supplied directly in to a web browser you can see the TwiML that was used to handle the phone call. Don't worry about understanding it right now, we'll get in to that in the next section.
 
-If you examine the response you'll notice it looks much like the response we got from sending the SMS, but with a few different values. Click on the `Sid` in the response to be taken to a page where we can request call details. 
+If you examine the API response you'll notice it looks much like the response we got from sending the SMS, but with a few different values. Click on the `Sid` in the response to be taken to a page where we can request call details. 
 
 Click on `Make Request` to see the details on the completed call.
+
+**Have any questions? Ask your TA!**
 
 Additional Information
 ----------------------

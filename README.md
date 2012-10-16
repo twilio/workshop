@@ -1,3 +1,7 @@
-# Twilio Workshop
+# TwilioCon Workshop
 
-Check out the [html version](http://twilio-workshop-cal.readthedocs.org/en/latest) of the guide here.
+Hello and welcome to TwilioCon Workshop Day
+
+You'll want to open the [workshop
+guide](http://twiliocon-workshop.readthedocs.org/en/latest/), which contains
+all the information for the rest of the day.
