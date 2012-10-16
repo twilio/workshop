@@ -296,7 +296,7 @@ Remember to change the ``waitUrlMethod`` from ``GET`` to ``POST`` now that we ar
            response = twiml.Response()
            response.say("You are number %s in line." % self.request.get('QueuePosition'))
            response.say("You've been in line for %s seconds." % self.request.get('QueueTime'))
-           response.say("The average wait time is currently %s seconds." % self.request.get('AverageQueueTime'))
+           response.say("The average wait time is currently %s seconds." % self.request.get('AvgQueueTime'))
            response.play("http://com.twilio.music.rock.s3.amazonaws.com/nickleus_-_original_guitar_song_200907251723.mp3")
            self.response.out.write(str(response))
 
