@@ -62,9 +62,7 @@ Let's take a look at the key parts of the request we just made:
 
 	GET /2010-04-01/Accounts/AC000.xml
 
-This command is specially formatted to function on the command line. Lets break that down a bit:
-
-- **GET**: this line tells curl to make a ``GET`` request, meaning that the intent of this call is to retrieve information from the server.
+- **GET**: this is the type of request to make, a ``GET`` request, meaning that the intent of this call is to retrieve information from the server.
 - **/2010-04-01/Accounts/AC000.xml**: this is the endpoint for retrieving Account data from the Twilio API. Lets break it down further:
 	- **/2010-04-01/** is the version of the API that we want to request. The version of the API we want to talk to is important because we want to make sure that the way we talk to the API doesn't change. If Twilio makes a major change to how to talk to the API the version will change, but the old version will continue to work the same way so that your application doesn't break.
 	- **Accounts/AC000.xml** means that we want to retrieve an Account resource for the account "AC000" and that we want the response in XML format.
@@ -79,7 +77,7 @@ Let's send a text message using the `API Explorer`_. Go to your Twilio `Account 
 .. image:: _static/explore-sms.png
 	:class: screenshot
 
-Here we can try out the Twilio API for sending SMS Messages. All the fields required to send an SMS are visible. This request will add 2 new parameters to the request:
+Here we can try out the Twilio API for sending SMS Messages. All the fields required to send an SMS are visible. This request will add 2 new parameters:
 
 ============ ==========
 Parameter    Definition
@@ -89,7 +87,7 @@ Parameter    Definition
 `Body`       The body is a freeform field to enter your message. You can enter a message up to 160 characters long.
 ============ ==========
 
-Enter your cell phone number in the `To` field along with a text message `Body`, and click the `Make Request` button at the bottom of the page. This will send the information you've just entered and pass onto Twilio. You will be prompted to confirm the use of funds from your account. Aren't you glad you got the Promo credit?
+Enter your cell phone number in the `To` field along with a text message `Body`, and click the `Make Request` button at the bottom of the page. This will send the information you've just entered to the Twilio API. You will be prompted to confirm the use of funds from your account. Aren't you glad you got the Promo credit?
 
 Twilio will process the information you have submitted and your phone will receive a text message shortly.
 
@@ -103,7 +101,7 @@ Lets take a look at the key parts of this request:
 	
 There are a few key differences to note:
 
-- **POST** tells curl to make a ``POST`` request, meaning that the purpose of this request is to pass data in to the API for the purposes of modifying the ``SMS Messages`` resource.
+- **POST** this time we're making a ``POST`` request, meaning that the purpose of this request is to pass data in to the API for the purposes of modifying the ``SMS Messages`` resource.
 - **Parameters**: if you look at the `Code Example` right above the `Make Request` button you see **-d 'From=xxx'*** et al... these tell curl what data to pass to the API. You can see each entry you modified in the form is represented here. You'll also notice that each entry contains special characters (ie: ``%2B`` instead of ``+``). This is called `Url Encoding`_ and is required to make sure that special characters are properly transmitted to the API.
 
 Now lets examine the response. You'll see that the message was given a `Sid`, a unique identifier, how Twilio interpreted the information you sent, and you can see that it was queued for delivery. 
@@ -134,9 +132,7 @@ Enter your cell phone number in the `To` field. To make things easy, we're going
 
 	http://twimlets.com/message?Message=Hello+World
 
-Click on the `Make Request` button at the bottom of the page. Again, the information you've submitted are sent off to Twilio and your phone should start ringing momentarily.
-
-Have any questions? Ask your TA!
+Click on the `Make Request` button at the bottom of the page. Again, the information you've submitted is sent off to Twilio and your phone should start ringing momentarily.
 
 **How was that different from our SMS request?**
 
@@ -144,9 +140,11 @@ In this request we replaced the `Body` parameter with a `Url` parameter. The url
 
 If you load the Url we supplied directly in to a web browser you can see the TwiML that was used to handle the phone call. Don't worry about understanding it right now, we'll get in to that in the next section.
 
-If you examine the response you'll notice it looks much like the response we got from sending the SMS, but with a few different values. Click on the `Sid` in the response to be taken to a page where we can request call details. 
+If you examine the API response you'll notice it looks much like the response we got from sending the SMS, but with a few different values. Click on the `Sid` in the response to be taken to a page where we can request call details. 
 
 Click on `Make Request` to see the details on the completed call.
+
+**Have any questions? Ask your TA!**
 
 Additional Information
 ----------------------
