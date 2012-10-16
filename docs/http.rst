@@ -7,8 +7,7 @@ Introduction to HTTP
 
 When a web browser requests a web page it needs to talk to a web server.
 Browsers talk to servers using a language known as HTTP, or Hypertext Transfer
-Protocol. The language is simple and easy to understand and this
-request/response model of communication is referred to as REST, or
+Protocol. This request/response model of communication is referred to as REST, or
 `REpresentational State Transfer`. 
 
 A simple HTTP request might look like:
@@ -28,9 +27,11 @@ And the server response would be:
 	Response body appears here…
 
 The response is comprised of a header block and a content block. The ``Content
-Type`` header tells the browser how to interpret the response. If it had been
-``image/png`` the browser would have known to expect PNG data, or in the case
-of ``application/json`` it would have expected a JSON formatted data response.
+Type`` header tells the browser how to interpret the response. If the header 
+includes ``image/png`` the browser expects PNG data, or in the case
+of ``application/xml`` it will expect a XML formatted data response.
+
+
 
 HTTP Headers
 ------------
