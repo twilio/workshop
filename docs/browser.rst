@@ -63,7 +63,7 @@ Here is the function we'll use for generating the Capability Token.
 
     from twilio.util import TwilioCapability
 
-    def gen_token(account_sid, auth_token, application_sid):
+    def generate_token(account_sid, auth_token, application_sid):
         capability = TwilioCapability(account_sid, auth_token)
         # Allow access to the Call-in ApplicationSid we created
         capability.allow_client_outgoing(application_sid)
@@ -74,17 +74,23 @@ Answering Queues in the Browser
 -------------------------------
 
 The first thing we'll need to build is a web interface. Let's start by adding a
-new AppEngine RequestHandler into ``main.py``.
+new AppEngine RequestHandler into ``main.py``. 
+
+We have included some helper functions
+for generating `Capability Tokens <https://www.twilio.com/docs/client/capability-tokens>`_ and 
+rendering templates on AppEngine. Those are imported from ``util.py``.
 
 .. code-block:: python
+
+    from util import gen_token, render_template
 
     class IndexPage(webapp2.RequestHandler):
 
         def get(self):
             params = {
-                "token": gen_token(ACCOUNT_SID, AUTH_TOKEN, APP_SID)
+                "token": generate_token(ACCOUNT_SID, AUTH_TOKEN, APP_SID)
             }
-            self.response.out.write(render_template("index.html", params))
+            self.response.out.write(util.render_template("index.html", params))
 
 
 Here is the ``index.html`` file we are rendering.
@@ -184,10 +190,10 @@ current call, and dial the next person in the queue.
 
     <?xml version="1.0" encoding="UTF-8"?>
     <Response>
-        <Dial finishOnKey="#">
+        <Dial hangupOnStar="true">
             <Queue>radio-callin-queue</Queue>
         </Dial>
-        <Redirect></Redirect>
+        <Redirect method="GET"></Redirect>
     </Response>
 
 Change your application's Voice URL so it serves this TwiML when dialed.
@@ -196,8 +202,8 @@ Getting the Next Caller From the <Queue>
 -----------------------------------------
 
 We want to make it easy to hangup the current call and move to the next one by
-pressing the "#" key on the phone. Twilio Client has a feature for sending DTMF
-tones (the tone when you press "#" on your phone) programmatically.
+pressing the "*" key on the phone. Twilio Client has a feature for sending DTMF
+tones (the tone when you press "*" on your phone) programmatically.
 
 First, we need to hold on to the response of ``Twilio.Device.connect()`` so
 let's add a global variable called ``connection`` and have every ``call()``
@@ -217,19 +223,19 @@ Now, we can add a new function, called ``next()``:
 
     function next() {
         if (connection) {
-            connection.sendDTMF("#");
+            connection.sendDigits("*");
         }
     }
 
-Because we added a `finishOnKey` attribute to our TwiML, sending a "#" symbol
+Because we added a `hangupOnStar` attribute to our TwiML, sending a "*" symbol
 via DTMF tone will hang up on the current caller, and connect the browser to
-the next caller. 
+the next caller.
 
 Now we just need to add another button to trigger the hangup.
 
 .. code-block:: html
 
-    <button class="next" onclick="next();">
+    <button class="hangup" onclick="next();">
         Next Caller
     </button>
 
@@ -247,11 +253,19 @@ JSON.
 
     class QueueStatusPage(webapp2.RequestHandler):
 
-        queue_sid = "QQ123"
         def get(self):
             client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
-            q_data = {"queues": client.queues.get(queue_sid)}
-            self.response.out.write(json.dumps(q_data))
+
+            queue = [x for x in client.queues.list() if x.friendly_name == 'radio-callin-queue']
+
+            if queue:
+                q_data = {
+                    "current_size": queue[0].current_size,
+                    'average_wait_time': queue[0].average_wait_time,
+                }
+                self.response.out.write(json.dumps(q_data))
+            else:
+                self.abort(404)
 
 
 Add this QueueStatusPage into the WSGIApplication's routing map as

@@ -103,7 +103,7 @@ We can spice up our TwiML endpoint by adding some wait music, using the
     <?xml version="1.0" encoding="UTF-8"?>
     <Response>
         <Say>You are being enqueued now.</Say>
-        <Enqueue waitUrl="/twiml/wait" waitMethod="GET">
+        <Enqueue waitUrl="/twiml/wait" waitUrlMethod="GET">
           radio-callin-queue
         </Enqueue>
     </Response>
@@ -126,7 +126,7 @@ including ``<Say>`` and ``<Play>``.
            resp = twiml.Response()
            resp.say("You are being enqueued now.")
            resp.enqueue("radio-callin-queue",
-               waitUrl="/twiml/wait", waitMethod="GET")
+               waitUrl="/twiml/wait", waitUrlMethod="GET")
            self.response.write(str(resp))
 
    app = webapp2.WSGIApplication([
@@ -200,7 +200,7 @@ You will want to create a second Twilio Application for your DJ number, and
 configure that application's Voice URL to point to the TwiML above.
 
 .. code-block:: python
-   :emphasize-lines: 14-24, 28
+   :emphasize-lines: 14-24, 27
 
    import webapp2
    from twilio import twiml
@@ -271,8 +271,11 @@ CurrentQueueSize The current number of enqueued calls in this queue.
 Utilizing this information, we can inform our users what position they are in
 the queue and how long they can expect to wait before an answer.
 
+Remember to change the ``waitUrlMethod`` from ``GET`` to ``POST`` now that we are using
+``POST`` data for the ``waitUrl``
+
 .. code-block:: python
-   :emphasize-lines: 9-16
+   :emphasize-lines: 12, 15-22
 
    import webapp2
    from twilio import twiml
@@ -280,14 +283,20 @@ the queue and how long they can expect to wait before an answer.
    class EnqueueHandler(webapp2.RequestHandler):
 
        def get(self):
-           # Same as above
+          self.response.headers['Content-Type'] = 'application/xml'
+
+          resp = twiml.Response()
+          resp.say("You are being enqueued now.")
+          resp.enqueue("radio-callin-queue",
+              waitUrl="/twiml/wait", waitUrlMethod="POST")
+          self.response.write(str(resp))
 
    class WaitHandler(webapp2.RequestHandler):
        def post(self):
            response = twiml.Response()
            response.say("You are number %s in line." % self.request.get('QueuePosition'))
            response.say("You've been in line for %s seconds." % self.request.get('QueueTime'))
-           response.say("The average wait time is currently %s seconds." % self.request.get('AverageQueueTime'))
+           response.say("The average wait time is currently %s seconds." % self.request.get('AvgQueueTime'))
            response.play("http://com.twilio.music.rock.s3.amazonaws.com/nickleus_-_original_guitar_song_200907251723.mp3")
            self.response.out.write(str(response))
 
