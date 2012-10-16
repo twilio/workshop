@@ -84,7 +84,7 @@ new AppEngine RequestHandler into ``main.py``.
             params = {
                 "token": gen_token(ACCOUNT_SID, AUTH_TOKEN, APP_SID)
             }
-            self.response.out.write(render_template("index.html", params))
+            self.response.out.write(util.render_template("index.html", params))
 
 
 Here is the ``index.html`` file we are rendering.
