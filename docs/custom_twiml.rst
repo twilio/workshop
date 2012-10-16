@@ -6,7 +6,7 @@ Introduction to TwiML
 We've successfully made a phone ring, but how do we actually control call flow?
 `TwiML <https://www.twilio.com/docs/api/twiml>`_ is the
 answer. TwiML is a set of instructions you can use to tell Twilio what to do
-when you receive an incoming call or SMS. TwiML's are formatted in XML and case sensitive.
+when you receive an incoming call or SMS. TwiML instructions are formatted in XML and are case sensitive.
      
 When someone makes a call or sends an SMS to one of your Twilio numbers, Twilio
 will look up the URL associated with that phone number and make a request to
@@ -44,7 +44,7 @@ dynamically by a web application. To make developing Twilio applications
 easier, you can host your TwiML on `Twimlbin`_. Applications with Twimlbin 
 will autosave and let you know when there might be potential errors with
 your TwiML. While we love Twimlbin, we recommend that you host your Twilio
-production application on your own se   rver. 
+production application on your own server. 
 
 Let's rebuild the "Hello World" greeting in `Twimlbin`_.
 
@@ -69,7 +69,7 @@ Configuring your phone number
 ------------------------------
 
 Once you're done building your application, we'll want to configure your Twilio
-phone number. By configuring our Twilio phone number, whenever an incoming call
+phone number. By configuring the Twilio phone number, whenever an incoming call
 is received on this number, Twilio will fetch the TwiML that is located at that
 URL.
 
@@ -122,7 +122,7 @@ and paste the following TwiML into your Twimlbin.
 This TwiML is invalid. We open the Response and never close it. 
 
 Call your phone number. Do you hear application recorded message that says "We're
-sorry, an application error has occurred".
+sorry, an application error has occurred"?
 
 Now let's find out why your application error has occurred. The first place
 we'll want to look is the `debugger
