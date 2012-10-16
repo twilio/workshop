@@ -36,7 +36,7 @@ class WaitHandler(webapp2.RequestHandler):
         messages = [
             "You are number %s in line." % self.request.get('QueuePosition'),
             "You've been in line for %s seconds." % self.request.get('QueueTime'),
-            "Average wait time is %s seconds." % self.request.get('AverageQueueTime'),
+            "Average wait time is %s seconds." % self.request.get('AvgQueueTime'),
         ]
 
         for message in messages:
@@ -139,7 +139,7 @@ class CallHandler(webapp2.RequestHandler):
         sid = self.request.params.get('sid')
 
         if sid == '':
-            return 
+            return
 
         call = client.calls.get(sid)
         call.redirect('/twiml/boss')
