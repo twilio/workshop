@@ -265,8 +265,8 @@ Parameter 	 Description
 QueuePosition 	 The current queue position for the enqueued call.
 QueueSid 	 The SID of the Queue that the caller is in.
 QueueTime 	 The time in seconds that the caller has been in the queue.
-AvgQueueTime An average of how long time the current enqueued callers has been in the queue.
-CurrentQueueSize The current number of enqueued calls in this queue.
+AvgQueueTime 	 An average of how long time the current enqueued callers has been in the queue.
+CurrentQueueSize 	The current number of enqueued calls in this queue.
 ================ ===========
 
 Utilizing this information, we can inform our users what position they are in
