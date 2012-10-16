@@ -38,9 +38,6 @@ You can get to the `API Explorer`_ from the botton of your Account Dashboard. Yo
 Getting Account Information
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-<<<<<<< HEAD
-Head over to the `API Explorer`_ and let's try it out by `sending an SMS message <https://www.twilio.com/user/account/developer-tools/api-explorer#POST/2010-04-01/Accounts/[AccountSid]/SMS/Messages.[format]>`_. 
-=======
 Let's start of with a basic request for your account information. Go to your Twilio Account Portal, click on `Dev Tools`, then click on `Accounts` (on the right near the bottom), then click on `View Account`.
 
 .. image:: _static/explore-account.png
@@ -78,25 +75,15 @@ Sending an SMS
 ^^^^^^^^^^^^^^
 
 Let's send a text message using the `API Explorer`_. Go to your Twilio `Account Portal`_, click on `Dev Tools`, then click on `SMS Messages`, then on `Send SMS`.
->>>>>>> ca8d5a1bc8561250878127831b4eb30e6811a985
 
-<<<<<<< HEAD
-All the fields required to send an SMS are visible.
-=======
 .. image:: _static/explore-sms.png
 	:class: screenshot
 
 Here we can try out the Twilio API for sending SMS Messages. All the fields required to send an SMS are visible. This request will add 2 new parameters to the request:
->>>>>>> 6f76e154250bcc4d9d8169c4374036ea97b6b27a
 
 ============ ==========
 Parameter    Definition
 ============ ==========
-<<<<<<< HEAD
-`Format`     The `Format` field tells the API what format we want Twilio to response with. For our purposes this isn't important right now. You can request the response in either `XML`_ or `JSON`_ format.
-`AccountSid` The `AccountSid` field tells the API which Twilio Account will send the SMS message. This is pre-populated with your account.
-=======
->>>>>>> 6f76e154250bcc4d9d8169c4374036ea97b6b27a
 `From`       The `From` field tells the API which phone number to use to send the Message. This can only be one of the phone numbers you've purchased or ported into Twilio.
 `To`         The `To` field tells the API where to send the message. The phone number should be in `E.164`_ format. Twilio will assume that `To` phone numbers without a "+" will have the same country code as the `From` phone number.
 `Body`       The body is a freeform field to enter your message. You can enter a message up to 160 characters long.
@@ -138,13 +125,6 @@ The request parameters should look familiar by now. This request replaces the `B
 ============ ==========
 Parameter    Definition
 ============ ==========
-<<<<<<< HEAD
-`Format`     The `Format` field tells the API what format we want Twilio to response with. For our purposes this isn't important right now. You can request the response in either `XML`_ or `JSON`_ format.
-`AccountSid` The `AccountSid` field tells the API which Twilio Account will make the call. This is prepopulated with your account.
-`From`       The `From` field tells the Twilio API which phone number to use to make the call. This can be a number that you've purchased from Twilio or any phone number that you've validated on your account.
-`To`         The `To` field tells the API what phone number to call. The phone number should be in `E.164`_ format or be a valid Twilio Client ID. Twilio will assume that `To` phone numbers without a "+" will have the same country code as the `From` phone number.
-=======
->>>>>>> 6f76e154250bcc4d9d8169c4374036ea97b6b27a
 `Url`        The `Url` field tells the API where to load TwiML instructions for handling the call. `TwiML`_ is a set of instructions that tells Twilio what to do. Don't worry, we'll get more into TwiML later. 
 ============ ==========
 
@@ -175,7 +155,7 @@ Additional Information
 - `Twilio REST API - SMS/Messages Resource <http://www.twilio.com/docs/api/rest/sms>`_
 
 .. _API Explorer: https://www.twilio.com/user/account/developer-tools/api-explorer
-.. _Account Dashboard: https://www.twilio.com/user/account 
+.. _Account Portal: https://www.twilio.com/user/account 
 .. _XML: http://en.wikipedia.org/wiki/XML
 .. _JSON: http://en.wikipedia.org/wiki/JSON
 .. _E.164: http://en.wikipedia.org/wiki/E.164
