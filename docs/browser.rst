@@ -121,7 +121,7 @@ started listening for incoming calls (if applicable).
 This code defines a new function called ``call`` that just wraps
 ``Twilio.Device.connect``, which initiates an outgoing call to the Application
 we created earlier. In this case, calling ``call()`` should execute the TwiML
-below. We've made a small change so that the DJ can press "#" to end the
+below. We've made a small change so that the DJ can press "*" to end the
 current call, and dial the next person in the queue.
 
 .. code-block:: xml
@@ -186,7 +186,7 @@ new queue status endpoint, which will return the current queue status as JSON.
 .. code-block:: python
 
     import json
-    from twilio import TwilioRestClient
+    from twilio.rest import TwilioRestClient
 
     class QueueStatusPage(webapp2.RequestHandler):
 
