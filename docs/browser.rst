@@ -276,12 +276,12 @@ into the page.
 
 .. code-block:: javascript
 
-    function getQueueStatistics() {
+    var getQueueStatistics = function() {
       $.getJSON("/queue-status", function(result) {
         $("#current-size").text(result.current_size);
         $("#average-wait-time").text(result.average_wait_time);
       });
-    }
+    };
 
     // run the queue fetcher once on page load
     $(function() {
