@@ -6,7 +6,7 @@ Into the Browser
 Using Twilio Client
 -------------------
 
-Using Twilio Client, we can be hooked into the full power of the Twilio API
+Using Twilio Client, we can hook in to the full power of the Twilio API
 from your Web Browser. This includes the ability to make and receive phone
 calls, opening up the world of telephony to your dynamic web applications.
 
@@ -19,17 +19,17 @@ How Client Works
 
 This is what an outbound Client call looks like:
 
-1. Your server creates a Capability Token with the Application Sid you would
+1. Your server creates a `Capability Token`_ with the Application Sid you would
    like to use to handle outbound calls. 
-2. User triggers a ``connect()`` action in the ``twilio.js`` Javascript library.
+2. A user triggers a ``connect()`` action in the ``twilio.js`` Javascript library.
 3. Twilio looks up the Application Sid for the Client, and retrieves the Voice
    URL for that application.
 4. Twilio makes an HTTP request to the Voice URL and plays the TwiML it
    retrieves back to the user's browser.
 
-To connect an inbound call to your Client browser, generate a Capability Token
-that allows incoming connections. Then return this TwiML in response to an
-inbound call:
+To connect an inbound call to your Client browser, generate a `Capability
+Token`_ that allows incoming connections. Then return this TwiML in response to
+an inbound call:
 
 .. code-block:: xml
 
@@ -38,6 +38,8 @@ inbound call:
             <Client>client-name</Client>
         </Dial>
     </Response>
+
+.. _Capability Token: http://www.twilio.com/docs/client/capability-tokens
 
 Creating an Application
 -----------------------
