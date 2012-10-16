@@ -176,33 +176,33 @@ current weather in his or her zipcode.
 To begin, we need data on the weather. Let's import the weather data from Yahoo! Weather API, ``from util import current_weather``. 
 Insert this code in line 2 right before we import our helper library.
 
-Now that we have data on the weather, let's make sure our application can get the current weather of a particular zipcode. Use the following code ``weather = current_weather(self.request.get(94117"))`` so that we can get the weather from San Francisco's area code 94117. Let's also include the city so we can acknowledge to our callers where they are getting their weather from, ``city = self.request.get(San Francisco")``.
+Now that we have data on the weather, let's make sure our application can get the current weather of a particular zipcode. Use the following code ``weather = current_weather("94117")`` so that we can get the weather from San Francisco's area code 94117. Let's also include the city so we can acknowledge to our callers where they are getting their weather from, ``city = "San Francisco"``.
 
 Finally, let's add our TwiML and so Twilio knows how to respond to the caller. In the end your application should look like this:
 
 .. code-block:: python
    :emphasize-lines: 2,10,11,14,15
 
-   import webapp2
-   from util import current_weather
-   from twilio import twiml
-    
-   class HelloWorld(webapp2.RequestHandler):
-    
-       def get(self):
-           self.response.headers['Content-Type'] = "application/xml"
+	import webapp2
+	from util import current_weather
+	from twilio import twiml
 
-           weather = current_weather(self.request.get(94117"))
-           city = self.request.get(San Francisco")
+	class HelloWorld(webapp2.RequestHandler):
 
-           response = twiml.Response()
-           response.say("Hello from " + city)
-           response.say("The current weather is " + weather)
-           self.response.write(str(response))
+	    def get(self):
+	        self.response.headers['Content-Type'] = "application/xml"
 
-   app = webapp2.WSGIApplication([
-       ('/', HelloWorld),
-   ], debug=True)
+	        weather = current_weather("94117")
+	        city = "San Francisco"
+
+	        response = twiml.Response()
+	        response.say("Hello from " + city)
+	        response.say("The current weather is " + weather)
+	        self.response.write(str(response))
+
+	app = webapp2.WSGIApplication([
+	    ('/', HelloWorld),
+	], debug=True)
 
 
 When you visit your localhost:8080 page. You'll see the following message.
