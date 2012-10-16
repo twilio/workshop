@@ -90,7 +90,7 @@ rendering templates on AppEngine. Those are imported from ``util.py``.
             params = {
                 "token": generate_token(ACCOUNT_SID, AUTH_TOKEN, APP_SID)
             }
-            self.response.out.write(render_template("index.html", params))
+            self.response.out.write(util.render_template("index.html", params))
 
 
 Here is the ``index.html`` file we are rendering.
